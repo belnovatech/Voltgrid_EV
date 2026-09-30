@@ -1,0 +1,302 @@
+/* ================================================================
+   POWERGRID CUSTOMER SIDEBAR — SCOPED NAMESPACE: .powergrid-customer-sidebar
+   ================================================================ */
+
+:root {
+  --powergrid-customer-sidebar-width: 250px;
+}
+
+.powergrid-customer-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--powergrid-customer-sidebar-width, 250px);
+  height: 100vh;
+  height: 100dvh;
+  background-color: #060d19;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px 20px 16px;
+  box-sizing: border-box;
+  z-index: 50;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+/* 1. BRAND (FIXED TOP) */
+.powergrid-customer-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 24px 8px;
+  flex-shrink: 0;
+}
+
+.powergrid-customer-sidebar__brand-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #9ae600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.powergrid-customer-sidebar__brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.powergrid-customer-sidebar__brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.powergrid-customer-sidebar__brand-sub {
+  font-size: 0.725rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.powergrid-customer-sidebar__close-mobile {
+  display: none;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-left: auto;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* 2. NAVIGATION (SCROLLABLE INTERNALLY ONLY IF OVERFLOWING) */
+.powergrid-customer-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin-bottom: 12px;
+}
+
+.powergrid-customer-sidebar__nav::-webkit-scrollbar {
+  display: none;
+}
+
+.powergrid-customer-sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  position: relative;
+}
+
+.powergrid-customer-sidebar__nav-item:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.powergrid-customer-sidebar__nav-item--active {
+  background-color: #9ae600 !important;
+  color: #060d19 !important;
+  font-weight: 700;
+}
+
+.powergrid-customer-sidebar__nav-item--active .powergrid-customer-sidebar__nav-icon {
+  color: #060d19;
+}
+
+.powergrid-customer-sidebar__nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.powergrid-customer-sidebar__nav-label {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.powergrid-customer-sidebar__badge-pill {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* 3. ACCOUNT AREA (ANCHORED BOTTOM) */
+.powergrid-customer-sidebar__account {
+  position: relative;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.powergrid-customer-sidebar__profile-popup {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background-color: #0d172e;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 60;
+  animation: pg-popup-slide 0.15s ease;
+}
+
+.powergrid-customer-sidebar__popup-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: #cbd5e1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  text-align: left;
+}
+
+.powergrid-customer-sidebar__popup-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.powergrid-customer-sidebar__popup-divider {
+  height: 1px;
+  background-color: #1e293b;
+  margin: 4px 0;
+}
+
+.powergrid-customer-sidebar__popup-item--logout {
+  color: #f87171;
+}
+
+.powergrid-customer-sidebar__popup-item--logout:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+.powergrid-customer-sidebar__user-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+
+.powergrid-customer-sidebar__user-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.powergrid-customer-sidebar__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #5eead4;
+  color: #042f2e;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.powergrid-customer-sidebar__user-meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.powergrid-customer-sidebar__user-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.powergrid-customer-sidebar__user-wallet {
+  font-size: 0.775rem;
+  color: #64748b;
+}
+
+.powergrid-customer-sidebar__user-arrow {
+  color: #64748b;
+  transition: transform 0.15s ease;
+}
+
+.powergrid-customer-sidebar__user-arrow--open {
+  transform: rotate(90deg);
+}
+
+@keyframes pg-popup-slide {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MOBILE DRAWER (<= 900px) */
+@media (max-width: 900px) {
+  .powergrid-customer-sidebar {
+    width: min(300px, 85vw);
+    transform: translateX(-100%);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .powergrid-customer-sidebar--open-mobile {
+    transform: translateX(0);
+  }
+
+  .powergrid-customer-sidebar__close-mobile {
+    display: block;
+  }
+}

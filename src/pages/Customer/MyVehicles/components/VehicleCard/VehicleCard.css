@@ -1,0 +1,257 @@
+.pg-veh-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.pg-veh-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.pg-veh-card--primary {
+  border-color: #e2e8f0;
+}
+
+.pg-veh-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.pg-veh-card__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border-radius: 14px;
+}
+
+.pg-veh-card__icon-wrap--car {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.pg-veh-card__icon-wrap--bike {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.pg-veh-card__icon-wrap--bus {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.pg-veh-card__title-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.pg-veh-card__name-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.pg-veh-card__name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #071322;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-veh-card__badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pg-veh-card__primary-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.pg-veh-card__star {
+  font-size: 0.85rem;
+}
+
+.pg-veh-card__type-badge {
+  padding: 3px 9px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.pg-veh-card__badge--car {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.pg-veh-card__badge--bike {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.pg-veh-card__badge--bus {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.pg-veh-card__model {
+  font-size: 0.86rem;
+  color: #64748b;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-veh-card__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.pg-veh-card__stat-box {
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pg-veh-card__stat-label {
+  font-size: 0.76rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.pg-veh-card__stat-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #071322;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-veh-card__rate-bar {
+  background: #071322;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pg-veh-card__rate-label {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.pg-veh-card__rate-val {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #c6ff00;
+}
+
+.pg-veh-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+
+.pg-veh-card__primary-btn {
+  flex: 1;
+  max-width: 220px;
+  padding: 9px 16px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pg-veh-card__primary-btn:hover {
+  border-color: #071322;
+  color: #071322;
+  background: #f8fafc;
+}
+
+.pg-veh-card__icon-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pg-veh-card__icon-actions--right {
+  margin-left: auto;
+}
+
+.pg-veh-card__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pg-veh-card__action-btn:hover {
+  background: #f1f5f9;
+  color: #071322;
+  border-color: #cbd5e1;
+}
+
+.pg-veh-card__action-btn--delete:hover {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+@media (max-width: 600px) {
+  .pg-veh-card {
+    padding: 18px 16px;
+  }
+  .pg-veh-card__name-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

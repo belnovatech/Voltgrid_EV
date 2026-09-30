@@ -1,0 +1,111 @@
+.pg-step-vehicle {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.pg-step-vehicle__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pg-step-vehicle__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 24px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.pg-step-vehicle__card:hover {
+  border-color: #071322;
+  box-shadow: 0 4px 12px rgba(7, 19, 34, 0.08);
+  transform: translateY(-1px);
+}
+
+.pg-step-vehicle__card--selected {
+  border-color: #071322;
+  box-shadow: 0 0 0 2px #071322;
+  background: #ffffff;
+}
+
+.pg-step-vehicle__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: #f1f5f9;
+  border-radius: 12px;
+  color: #334155;
+}
+
+.pg-step-vehicle__card--selected .pg-step-vehicle__icon-wrap {
+  background: #071322;
+  color: #c6ff00;
+}
+
+.pg-step-vehicle__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pg-step-vehicle__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #071322;
+  margin: 0 0 4px 0;
+}
+
+.pg-step-vehicle__meta {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.pg-step-vehicle__rate-side {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.pg-step-vehicle__rate {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #071322;
+}
+
+.pg-step-vehicle__type {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+.pg-step-vehicle__loading,
+.pg-step-vehicle__empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: #64748b;
+}
+
+.pg-step-vehicle__spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #c6ff00;
+  border-radius: 50%;
+  animation: pgStepSpin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}

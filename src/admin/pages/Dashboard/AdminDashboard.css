@@ -1,0 +1,866 @@
+/* ================================================================
+   POWERGRID ADMIN DASHBOARD STYLES
+   Exact Visual Reference Implementation
+   Scoped strictly under .pg-admin-dashboard and children
+   ================================================================ */
+
+.pg-admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 1. TOP HEADER SECTION */
+.pg-admin-dashboard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-dashboard__header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pg-admin-dashboard__live-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 2px;
+}
+
+.pg-admin-dashboard__live-dot {
+  width: 7.5px;
+  height: 7.5px;
+  border-radius: 50%;
+  background-color: #84cc16;
+  box-shadow: 0 0 8px rgba(132, 204, 22, 0.8);
+  animation: pgAdminPulse 1.8s infinite;
+}
+
+@keyframes pgAdminPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(132, 204, 22, 0.8); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(132, 204, 22, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(132, 204, 22, 0); }
+}
+
+.pg-admin-dashboard__live-text {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: 0.1px;
+}
+
+.pg-admin-dashboard__title {
+  font-size: 25px;
+  font-weight: 800;
+  color: #071321;
+  letter-spacing: -0.4px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.pg-admin-dashboard__subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+.pg-admin-dashboard__refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.15s ease;
+}
+
+.pg-admin-dashboard__refresh-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.pg-admin-dashboard__refresh-btn--loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.pg-admin-spin {
+  animation: pgAdminSpin 0.8s linear infinite;
+}
+
+@keyframes pgAdminSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================================================================
+   2. TOP 6 KPI CARDS — ONE ROW ON DESKTOP
+   ================================================================ */
+.pg-admin-dashboard__primary-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.pg-admin-dash-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+  min-height: 125px;
+  cursor: pointer;
+}
+
+.pg-admin-dash-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -4px rgba(15, 23, 42, 0.08);
+}
+
+.pg-admin-dash-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.pg-admin-dash-card__icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #f1f5f9;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pg-admin-dash-card__icon-badge--dark-zone {
+  background: rgba(132, 204, 22, 0.2);
+  color: #a3e635;
+}
+
+.pg-admin-dash-card__icon-badge--available {
+  background: #e6fcf5;
+  color: #0d9488;
+}
+
+.pg-admin-dash-card__icon-badge--charging {
+  background: #ecfeff;
+  color: #06b6d4;
+}
+
+.pg-admin-dash-card__icon-badge--reserved {
+  background: #fffbeb;
+  color: #f59e0b;
+}
+
+.pg-admin-dash-card__icon-badge--maintenance {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.pg-admin-dash-card__number {
+  font-size: 26px;
+  font-weight: 800;
+  color: #071321;
+  line-height: 1.1;
+  letter-spacing: -0.4px;
+  margin-bottom: 4px;
+}
+
+.pg-admin-dash-card__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-admin-dash-card__subtext {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Card 1 Dark Style (Reference Screenshot) */
+.pg-admin-dash-card--dark {
+  background: #09131f !important;
+  border-color: #09131f !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 18px rgba(9, 19, 31, 0.35);
+}
+
+.pg-admin-dash-card--dark .pg-admin-dash-card__number {
+  color: #ffffff;
+}
+
+.pg-admin-dash-card--dark .pg-admin-dash-card__label {
+  color: #e2e8f0;
+}
+
+.pg-admin-dash-card--dark .pg-admin-dash-card__subtext {
+  color: #94a3b8;
+}
+
+/* ================================================================
+   3. SECONDARY FINANCIAL 4 CARDS (ONE ROW ON DESKTOP)
+   ================================================================ */
+.pg-admin-dashboard__financial-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.pg-admin-dash-card--stat {
+  padding: 20px 22px;
+  cursor: default;
+}
+
+.pg-admin-dash-card__number--revenue {
+  color: #059669;
+}
+
+.pg-admin-dash-card__number--sessions {
+  color: #06b6d4;
+}
+
+.pg-admin-dash-card__unit {
+  font-size: 17px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.pg-admin-dash-card__subtext--growth {
+  color: #059669;
+  font-weight: 600;
+}
+
+/* ================================================================
+   4. CHARTS SECTION (REVENUE TREND + VEHICLE CATEGORY)
+   ================================================================ */
+.pg-admin-dashboard__charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.pg-admin-chart-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-admin-chart-box__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.pg-admin-chart-box__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.pg-admin-chart-box__subtitle {
+  font-size: 12px;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+/* Trend Chart */
+.pg-admin-trend-chart {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  position: relative;
+  height: 210px;
+}
+
+.pg-admin-trend-chart__y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+  padding-bottom: 24px;
+  text-align: right;
+  min-width: 44px;
+}
+
+.pg-admin-trend-chart__plot-area {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-admin-trend-chart__svg {
+  width: 100%;
+  height: 175px;
+}
+
+.pg-admin-trend-chart__tooltip {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.pg-admin-trend-chart__tooltip-month {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pg-admin-trend-chart__tooltip-rev {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.pg-admin-trend-chart__x-axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+  padding-top: 6px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.pg-admin-trend-chart__x-axis span {
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.pg-admin-trend-chart__x-axis span.active,
+.pg-admin-trend-chart__x-axis span:hover {
+  color: #0f172a;
+  font-weight: 700;
+  background: #f1f5f9;
+}
+
+/* Pie Chart */
+.pg-admin-pie-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.pg-admin-pie-svg {
+  width: 130px;
+  height: 130px;
+}
+
+.pg-admin-pie-legend {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+}
+
+.pg-admin-pie-legend__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+}
+
+.pg-admin-pie-legend__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pg-admin-pie-legend__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.pg-admin-pie-legend__name {
+  font-weight: 600;
+  color: #475569;
+}
+
+.pg-admin-pie-legend__val {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ================================================================
+   5. ZONE PERFORMANCE BAR CHART (SCREENSHOT 3)
+   ================================================================ */
+.pg-admin-zone-perf-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pg-admin-zone-perf-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-admin-zone-perf-card__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.pg-admin-zone-perf-card__subtitle {
+  font-size: 12.5px;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+.pg-admin-zone-perf-card__link {
+  background: none;
+  border: none;
+  color: #0284c7;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pg-admin-zone-bar-chart {
+  display: flex;
+  gap: 12px;
+  height: 180px;
+  padding-top: 10px;
+}
+
+.pg-admin-zone-bar-chart__y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #94a3b8;
+  padding-bottom: 22px;
+  text-align: right;
+  min-width: 32px;
+}
+
+.pg-admin-zone-bar-chart__bars {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 4px;
+  gap: 12px;
+}
+
+.pg-admin-zone-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.pg-admin-zone-bar-col__track {
+  width: 22px;
+  height: calc(100% - 24px);
+  display: flex;
+  align-items: flex-end;
+  border-radius: 4px;
+}
+
+.pg-admin-zone-bar-col__fill {
+  width: 100%;
+  border-radius: 4px;
+  transition: height 0.4s ease;
+}
+
+.pg-admin-zone-bar-col__label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* ================================================================
+   6. LIVE CHARGER STATUS (FIRST 12 CHARGERS - 4 COLUMNS DESKTOP)
+   ================================================================ */
+.pg-admin-chargers-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.pg-admin-chargers-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-admin-chargers-section__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.pg-admin-chargers-section__subtitle {
+  font-size: 12.5px;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+.pg-admin-chargers-section__link {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 8px;
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pg-admin-chargers-section__link:hover {
+  background: #f1f5f9;
+}
+
+.pg-admin-chargers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+
+.pg-admin-charger-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.pg-admin-charger-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+/* Border styles matching screenshot 4 */
+.pg-admin-charger-box--available {
+  border-color: #a7f3d0;
+  background: #fcfdfd;
+}
+
+.pg-admin-charger-box--charging {
+  border-color: #a5f3fc;
+  background: #fafffe;
+}
+
+.pg-admin-charger-box--reserved {
+  border-color: #fde68a;
+  background: #fffdfa;
+}
+
+.pg-admin-charger-box--maintenance {
+  border-color: #fed7aa;
+  background: #fffdfb;
+}
+
+.pg-admin-charger-box__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-admin-charger-box__code {
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.pg-admin-charger-box__badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.pg-admin-charger-box__badge--available {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.pg-admin-charger-box__badge--charging {
+  background: #ecfeff;
+  color: #0891b2;
+  border: 1px solid #a5f3fc;
+}
+
+.pg-admin-charger-box__badge--reserved {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.pg-admin-charger-box__badge--maintenance {
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #fed7aa;
+}
+
+.pg-admin-charger-box__power {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pg-admin-charger-box__driver-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.pg-admin-charger-box__driver-name {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.pg-admin-charger-box__session-info {
+  font-size: 12px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.pg-admin-charger-box__note {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.pg-admin-charger-box__note--reserved {
+  color: #d97706;
+}
+
+.pg-admin-charger-box__note--maintenance {
+  color: #ea580c;
+}
+
+/* ================================================================
+   7. ZONE OVERVIEW TABLE (SCREENSHOT 5)
+   ================================================================ */
+.pg-admin-zone-overview-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pg-admin-zone-overview-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-admin-zone-overview-card__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.pg-admin-zone-overview-card__link {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.pg-admin-zone-overview-card__link:hover {
+  color: #0f172a;
+}
+
+.pg-admin-zone-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pg-admin-zone-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.pg-admin-zone-table th {
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.pg-admin-zone-table td {
+  padding: 14px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+.pg-admin-zone-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-admin-zone-cell__code {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pg-admin-zone-cell__name {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.pg-admin-num-pill {
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+.pg-admin-num-pill--green {
+  color: #059669;
+}
+
+.pg-admin-num-pill--blue {
+  color: #0284c7;
+}
+
+.pg-admin-num-pill--orange {
+  color: #ea580c;
+}
+
+.pg-admin-zone-rev-cell {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pg-admin-status-pill--active {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS (1920px -> 360px)
+   ================================================================ */
+
+@media (max-width: 1200px) {
+  .pg-admin-dashboard__primary-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .pg-admin-dashboard__financial-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pg-admin-dashboard__charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-admin-chargers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pg-admin-dashboard__primary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-admin-dashboard__financial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-admin-dashboard__title {
+    font-size: 22px;
+  }
+
+  .pg-admin-chargers-grid {
+    grid-template-columns: 1fr;
+  }
+}

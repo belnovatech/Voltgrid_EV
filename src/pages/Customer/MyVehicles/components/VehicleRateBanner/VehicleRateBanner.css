@@ -1,0 +1,102 @@
+.pg-rate-banner {
+  width: 100%;
+  background: #071322;
+  border-radius: 16px;
+  padding: 16px 22px;
+  margin-bottom: 28px;
+  box-sizing: border-box;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(7, 19, 34, 0.12);
+}
+
+.pg-rate-banner__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.pg-rate-banner__left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pg-rate-banner__title {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.pg-rate-banner__rates {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pg-rate-banner__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pg-rate-banner__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.pg-rate-banner__icon-wrap--bike {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.pg-rate-banner__icon-wrap--car {
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+}
+
+.pg-rate-banner__icon-wrap--bus {
+  background: rgba(249, 115, 22, 0.15);
+  color: #fb923c;
+}
+
+.pg-rate-banner__text {
+  font-size: 0.88rem;
+  color: #f1f5f9;
+}
+
+.pg-rate-banner__text strong {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pg-rate-banner__sub {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .pg-rate-banner__content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .pg-rate-banner__left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .pg-rate-banner__rates {
+    gap: 14px;
+  }
+}

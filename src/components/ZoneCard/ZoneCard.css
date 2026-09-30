@@ -1,0 +1,31 @@
+.vg-zone-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 110px;
+  padding: 18px 20px !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.vg-zone-card__header {
+  margin-bottom: 12px;
+}
+
+.vg-zone-card__city {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.vg-zone-card__hub {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.vg-zone-card__distance {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}

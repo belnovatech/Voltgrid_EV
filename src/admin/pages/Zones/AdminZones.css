@@ -1,0 +1,672 @@
+/* ================================================================
+   POWERGRID ADMIN ZONES PAGE STYLES
+   Exact Visual Reference Implementation
+   Scoped strictly to .pg-admin-zones and .pg-admin-zone-*
+   ================================================================ */
+
+.pg-admin-zones {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 1. PAGE HEADER */
+.pg-admin-zones-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-zones-header__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pg-admin-zones-title {
+  font-size: 25px;
+  font-weight: 800;
+  color: #071321;
+  letter-spacing: -0.4px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.pg-admin-zones-subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+.pg-admin-zones-add-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--pg-admin-primary, #a3e635);
+  color: #071321;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(163, 230, 53, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.pg-admin-zones-add-button:hover {
+  background-color: #84cc16;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(163, 230, 53, 0.45);
+}
+
+.pg-admin-zones-add-button__plus {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Success Banner */
+.pg-admin-zones-success-banner {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  animation: pgAdminFade 0.2s ease-out;
+}
+
+/* ================================================================
+   2. DESKTOP ZONES TABLE
+   ================================================================ */
+.pg-admin-zones-table-shell {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.pg-admin-zones-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+  table-layout: auto;
+}
+
+.pg-admin-zones-table-head {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pg-admin-zones-th {
+  padding: 16px 14px;
+  color: #64748b;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pg-admin-zones-th--center,
+.pg-admin-zones-td--center {
+  text-align: center;
+}
+
+.pg-admin-zones-table-row {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.12s ease;
+}
+
+.pg-admin-zones-table-row:last-child {
+  border-bottom: none;
+}
+
+.pg-admin-zones-table-row:hover {
+  background-color: #fafbfc;
+}
+
+.pg-admin-zones-table-cell {
+  padding: 18px 14px;
+  vertical-align: middle;
+  color: #0f172a;
+}
+
+/* Zone ID */
+.pg-admin-zones-id {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+/* Name + Address Box */
+.pg-admin-zones-name-box {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 240px;
+}
+
+.pg-admin-zones-name-title {
+  font-weight: 700;
+  color: #071321;
+  font-size: 13.5px;
+  line-height: 1.25;
+}
+
+.pg-admin-zones-address-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pg-admin-zones-address-pin {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.pg-admin-zones-address-text {
+  font-size: 11.5px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+/* City */
+.pg-admin-zones-city {
+  color: #475569;
+  font-size: 13px;
+}
+
+/* Availability */
+.pg-admin-zones-avail-green {
+  font-weight: 800;
+  color: #059669;
+  font-size: 14px;
+}
+
+.pg-admin-zones-avail-total {
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* Charging */
+.pg-admin-zones-charging {
+  font-weight: 700;
+  color: #06b6d4;
+  font-size: 14px;
+}
+
+/* Reserved */
+.pg-admin-zones-reserved {
+  font-weight: 700;
+  color: #ea580c;
+  font-size: 14px;
+}
+
+/* Maintenance */
+.pg-admin-zones-maintenance {
+  font-weight: 700;
+  color: #ea580c;
+  font-size: 14px;
+}
+
+/* Revenue */
+.pg-admin-zones-revenue {
+  font-weight: 800;
+  color: #071321;
+  font-size: 13.5px;
+  white-space: nowrap;
+}
+
+/* Status Badge */
+.pg-admin-zones-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pg-admin-zones-status-badge--active {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+/* Actions Icons */
+.pg-admin-zones-action-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pg-admin-zones-action-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.pg-admin-zones-action-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Loading & Empty */
+.pg-admin-zones-loading {
+  padding: 60px 20px;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.pg-admin-zones-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #84cc16;
+  border-radius: 50%;
+  animation: pgAdminSpin 0.7s linear infinite;
+  margin: 0 auto 10px auto;
+}
+
+/* ================================================================
+   3. MOBILE RESPONSIVE ZONE CARDS (< 768px)
+   ================================================================ */
+.pg-admin-zones-mobile-list {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.pg-admin-zones-mobile-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.pg-admin-zones-mobile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pg-admin-zones-mobile-id {
+  font-family: monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #64748b;
+  display: block;
+}
+
+.pg-admin-zones-mobile-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #071321;
+  margin: 2px 0 0 0;
+}
+
+.pg-admin-zones-mobile-city {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.pg-admin-zones-mobile-address {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.pg-admin-zones-mobile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #f1f5f9;
+}
+
+.pg-admin-zones-mobile-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.pg-admin-zones-mobile-stat__label {
+  font-size: 10.5px;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.pg-admin-zones-mobile-stat__val {
+  font-weight: 800;
+  font-size: 13.5px;
+}
+
+.pg-admin-zones-mobile-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.pg-admin-zones-mobile-revenue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pg-admin-zones-mobile-rev-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.pg-admin-zones-mobile-rev-val {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #071321;
+}
+
+.pg-admin-zones-mobile-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.pg-admin-zones-mobile-action-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ================================================================
+   4. ADD NEW ZONE MODAL (SCREENSHOT 2)
+   ================================================================ */
+.pg-admin-zone-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 19, 31, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: pgAdminFade 0.15s ease-out;
+  box-sizing: border-box;
+}
+
+.pg-admin-zone-modal {
+  background: #ffffff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 580px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  animation: pgAdminScale 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pgAdminScale {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.pg-admin-zone-modal-header {
+  padding: 22px 26px 16px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pg-admin-zone-modal-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.pg-admin-zone-modal-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.pg-admin-zone-modal-close:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.pg-admin-zone-modal-form {
+  padding: 4px 26px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pg-admin-zone-modal-error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* 2-Column Grid Row on Desktop */
+.pg-admin-zone-modal-grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+}
+
+.pg-admin-zone-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.pg-admin-zone-modal-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.pg-admin-zone-modal-input {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 13.5px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.pg-admin-zone-modal-input::placeholder {
+  color: #94a3b8;
+}
+
+.pg-admin-zone-modal-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* Submit Button in PowerGrid Lime Accent */
+.pg-admin-zone-modal-submit {
+  width: 100%;
+  background-color: var(--pg-admin-primary, #d9f99d);
+  background: #dcfce7;
+  background: #d4f796;
+  background: var(--pg-admin-primary, #a3e635);
+  color: #071321;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  cursor: pointer;
+  margin-top: 6px;
+  box-shadow: 0 2px 8px rgba(163, 230, 53, 0.25);
+  transition: all 0.15s ease;
+}
+
+.pg-admin-zone-modal-submit:hover:not(:disabled) {
+  background-color: #84cc16;
+  box-shadow: 0 4px 12px rgba(163, 230, 53, 0.35);
+}
+
+.pg-admin-zone-modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Telemetry View Content */
+.pg-admin-zone-telemetry-content {
+  padding: 0 26px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pg-admin-zone-telemetry-item {
+  background: #f8fafc;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.pg-admin-zone-telemetry-row {
+  display: flex;
+  gap: 12px;
+}
+
+.pg-admin-zone-telemetry-label {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.pg-admin-zone-telemetry-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS (1920px -> 360px)
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  .pg-admin-zones-table-shell {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Switch from Desktop Table to Mobile Cards */
+  .pg-admin-zones-table-shell {
+    display: none;
+  }
+
+  .pg-admin-zones-mobile-list {
+    display: flex;
+  }
+
+  .pg-admin-zones-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pg-admin-zones-add-button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .pg-admin-zone-modal-grid-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-admin-zone-modal-header,
+  .pg-admin-zone-modal-form,
+  .pg-admin-zone-telemetry-content {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .pg-admin-zone-telemetry-row {
+    flex-direction: column;
+  }
+}

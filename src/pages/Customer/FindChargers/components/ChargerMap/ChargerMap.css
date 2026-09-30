@@ -1,0 +1,214 @@
+.pg-cmap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 540px;
+  background: #060c18;
+  border-radius: 16px;
+  overflow: hidden;
+  user-select: none;
+  cursor: grab;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.pg-cmap:active {
+  cursor: grabbing;
+}
+
+.pg-cmap__canvas {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.pg-cmap__grid-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pg-cmap__markers-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Region Tag Top-Left */
+.pg-cmap__region-tag {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  z-index: 10;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #38bdf8;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+/* Map Controls Top-Right */
+.pg-cmap__controls {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pg-cmap__ctrl-btn {
+  width: 36px;
+  height: 36px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.pg-cmap__ctrl-btn:hover {
+  background: #1e293b;
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.pg-cmap__ctrl-btn--locate {
+  color: #38bdf8;
+}
+
+/* Marker Item */
+.pg-cmap__marker {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+.pg-cmap__marker:hover,
+.pg-cmap__marker--selected {
+  transform: translate(-50%, -100%) scale(1.18);
+  z-index: 10;
+}
+
+/* Marker Badge Pill */
+.pg-cmap__badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+
+.pg-cmap__badge--available {
+  background: rgba(154, 230, 0, 0.15);
+  border: 1.5px solid #9ae600;
+  color: #9ae600;
+}
+
+.pg-cmap__badge--partial {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1.5px solid #38bdf8;
+  color: #38bdf8;
+}
+
+.pg-cmap__badge--full {
+  background: #ef4444;
+  border: 1.5px solid #ef4444;
+  color: #ffffff;
+}
+
+/* Pin point and glowing ripple */
+.pg-cmap__pin-point {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.pg-cmap__pulse-ring {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  animation: pg-map-pulse 1.6s infinite ease-out;
+}
+
+@keyframes pg-map-pulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* Legend Bottom-Left */
+.pg-cmap__legend {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(11, 19, 36, 0.85);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.pg-cmap__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.pg-cmap__legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.pg-cmap__legend-dot--available {
+  background: #9ae600;
+}
+
+.pg-cmap__legend-dot--partial {
+  background: #38bdf8;
+}
+
+.pg-cmap__legend-dot--full {
+  background: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .pg-cmap {
+    min-height: 380px;
+  }
+}

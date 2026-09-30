@@ -1,0 +1,12 @@
+.vg-footer {
+  width: 100%;
+  padding: 40px 0 32px 0;
+  background-color: var(--color-background);
+  text-align: center;
+}
+
+.vg-footer__text {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}

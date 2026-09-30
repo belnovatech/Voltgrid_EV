@@ -1,0 +1,57 @@
+/* ================================================================
+   POWERGRID ADMIN LAYOUT & SHELL ARCHITECTURE
+   Scoped to .pg-admin-layout
+   ================================================================ */
+
+.pg-admin-layout {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  background-color: var(--pg-admin-bg, #f8fafc);
+  color: var(--pg-admin-text-main, #071321);
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Main Content Area beside fixed desktop sidebar */
+.pg-admin-main-wrapper {
+  flex: 1;
+  margin-left: var(--pg-admin-sidebar-width, 260px);
+  width: calc(100% - var(--pg-admin-sidebar-width, 260px));
+  min-width: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.pg-admin-content {
+  flex: 1;
+  padding: 28px 36px 48px 36px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Backdrop for Mobile Drawer */
+.pg-admin-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(6, 13, 25, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  animation: pg-admin-fade 0.2s ease-out;
+}
+
+@keyframes pg-admin-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pg-admin-skeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

@@ -1,0 +1,38 @@
+/* Scoped Admin Layout CSS */
+.pg-admin-main-content {
+  flex: 1;
+  padding: 32px 40px 60px 40px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1280px) {
+  .pg-admin-main-content {
+    padding: 24px 28px 48px 28px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .pg-admin-layout {
+    flex-direction: column;
+  }
+
+  .pg-admin-main-wrapper {
+    margin-left: 0;
+    width: 100%;
+    min-height: calc(100vh - 56px);
+  }
+
+  .pg-admin-main-content {
+    padding: 20px 16px 40px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pg-admin-main-content {
+    padding: 16px 12px 32px 12px;
+  }
+}

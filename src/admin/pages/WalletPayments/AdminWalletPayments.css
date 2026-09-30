@@ -1,0 +1,86 @@
+/* Scoped Wallet Payments CSS */
+.pg-admin-wall {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.pg-admin-wall__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.pg-admin-wall__title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #071321;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.pg-admin-wall__subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 4px 0 0 0;
+}
+
+.pg-admin-wall__ref {
+  font-family: monospace;
+  font-weight: 700;
+  color: #0284c7;
+  background: #f0f9ff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.pg-admin-wall__user {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.pg-admin-wall__uid {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.pg-admin-wall__type {
+  font-weight: 600;
+  color: #334155;
+  font-size: 13px;
+}
+
+.pg-admin-wall__amt {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.pg-admin-wall__amt--credit {
+  color: #059669;
+}
+
+.pg-admin-wall__amt--debit {
+  color: #0f172a;
+}
+
+.pg-admin-wall__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pg-admin-wall__badge--success {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.pg-admin-wall__time {
+  font-size: 12px;
+  color: #64748b;
+}

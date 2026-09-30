@@ -1,0 +1,88 @@
+.vg-header {
+  width: 100%;
+  height: var(--header-height);
+  background-color: var(--color-background);
+  border-bottom: 1px solid transparent;
+  display: flex;
+  align-items: center;
+}
+
+.vg-header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vg-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+
+.vg-header__logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vg-header__brand-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.vg-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.vg-header__nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: color var(--transition-fast);
+  padding: 8px 4px;
+}
+
+.vg-header__nav-link:hover {
+  color: var(--color-primary);
+}
+
+.vg-header__signin-btn {
+  padding: 8px 18px !important;
+  font-size: 0.9rem !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.vg-header__auth-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .vg-header {
+    height: 64px;
+  }
+
+  .vg-header__nav {
+    gap: 12px;
+  }
+
+  .vg-header__nav-link {
+    display: none; /* Hide secondary link on small screens for clean look */
+  }
+
+  .vg-header__brand-name {
+    font-size: 1.15rem;
+  }
+}

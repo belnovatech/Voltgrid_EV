@@ -1,0 +1,673 @@
+/* ============================================================
+   POWERGRID ADMIN — CHARGING SESSIONS PAGE STYLES
+   CSS ISOLATION: ALL SELECTORS STRICTLY SCOPED
+   ============================================================ */
+
+.pg-admin-sessions-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #0f172a;
+}
+
+/* ------------------------------------------------------------
+   1. PAGE HEADER
+   ------------------------------------------------------------ */
+.pg-admin-sessions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+}
+
+.pg-admin-sessions-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pg-admin-sessions-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #09131f;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.pg-admin-sessions-subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Export Button */
+.pg-admin-sessions-export {
+  display: flex;
+  align-items: center;
+}
+
+.pg-admin-sessions-export-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.pg-admin-sessions-export-button:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.pg-admin-sessions-export-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------
+   2. SUMMARY CARDS (4 IN 1 ROW ON DESKTOP)
+   ------------------------------------------------------------ */
+.pg-admin-sessions-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pg-admin-sessions-summary-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pg-admin-sessions-summary-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pg-admin-sessions-summary-value {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.pg-admin-sessions-summary-value--sessions {
+  color: #09131f;
+}
+
+.pg-admin-sessions-summary-value--active {
+  color: #06b6d4;
+}
+
+.pg-admin-sessions-summary-value--revenue {
+  color: #16a34a;
+}
+
+.pg-admin-sessions-summary-value--energy {
+  color: #09131f;
+}
+
+.pg-admin-sessions-summary-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* ------------------------------------------------------------
+   3. FILTER BAR
+   ------------------------------------------------------------ */
+.pg-admin-sessions-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pg-admin-sessions-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-sessions-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.pg-admin-sessions-filter-pill:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.pg-admin-sessions-filter-pill--active {
+  background: #09131f !important;
+  color: #ffffff !important;
+  border-color: #09131f !important;
+}
+
+/* Date Range Filter */
+.pg-admin-sessions-date-filter {
+  position: relative;
+}
+
+.pg-admin-sessions-date-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-admin-sessions-date-button:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.pg-admin-sessions-date-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.pg-admin-sessions-date-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  width: 170px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 50;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-admin-sessions-date-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #334155;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pg-admin-sessions-date-item:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.pg-admin-sessions-date-item--active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   4. DATA TABLE (DESKTOP)
+   ------------------------------------------------------------ */
+.pg-admin-sessions-table-shell {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.pg-admin-sessions-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+  min-width: 980px;
+}
+
+.pg-admin-sessions-table-header th.pg-admin-sessions-table-cell {
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.pg-admin-sessions-table-row {
+  transition: background 0.15s ease;
+}
+
+.pg-admin-sessions-table-row:hover {
+  background: #f8fafc;
+}
+
+td.pg-admin-sessions-table-cell {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  color: #0f172a;
+}
+
+.pg-admin-sessions-table tbody tr:last-child td.pg-admin-sessions-table-cell {
+  border-bottom: none;
+}
+
+/* Cell Specific Styles */
+.pg-admin-sessions-id {
+  font-weight: 700;
+  color: #334155;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace, sans-serif;
+}
+
+.pg-admin-sessions-user {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pg-admin-sessions-user-name {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 13.5px;
+}
+
+.pg-admin-sessions-user-id {
+  font-size: 11.5px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.pg-admin-sessions-vehicle {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 13px;
+}
+
+/* Vehicle Type Badges (CAR / BIKE / BUS) */
+.pg-admin-sessions-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+.pg-admin-sessions-type--car {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.pg-admin-sessions-type--bike {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.pg-admin-sessions-type--bus {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.pg-admin-sessions-station {
+  color: #475569;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.pg-admin-sessions-charger {
+  color: #334155;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.pg-admin-sessions-start {
+  color: #475569;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pg-admin-sessions-energy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.pg-admin-sessions-energy strong {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.pg-admin-sessions-energy span {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.pg-admin-sessions-duration {
+  font-weight: 600;
+  color: #475569;
+  font-size: 13px;
+}
+
+.pg-admin-sessions-cost {
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 13.5px;
+  letter-spacing: -0.2px;
+}
+
+/* Status Badges */
+.pg-admin-sessions-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pg-admin-sessions-status--completed {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.pg-admin-sessions-status--active {
+  background: #eff6ff;
+  color: #0284c7;
+  border: 1px solid #bfdbfe;
+}
+
+/* ------------------------------------------------------------
+   5. MOBILE SESSIONS CARD LIST (< 768px)
+   ------------------------------------------------------------ */
+.pg-admin-sessions-mobile-list {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pg-admin-sessions-mobile-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+.pg-admin-sessions-mobile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-admin-sessions-mobile-user-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-admin-sessions-mobile-user {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.pg-admin-sessions-mobile-user strong {
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.pg-admin-sessions-mobile-vehicle-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.pg-admin-sessions-mobile-station-bullet {
+  color: #cbd5e1;
+}
+
+.pg-admin-sessions-mobile-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 10px;
+}
+
+.pg-admin-sessions-mobile-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pg-admin-sessions-mobile-label {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.pg-admin-sessions-mobile-val {
+  font-size: 13px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   6. LOADING & EMPTY STATES
+   ------------------------------------------------------------ */
+.pg-admin-sessions-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+  color: #64748b;
+  font-size: 13.5px;
+}
+
+.pg-admin-sessions-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #09131f;
+  border-radius: 50%;
+  animation: pgAdminSessionsSpin 0.7s linear infinite;
+}
+
+@keyframes pgAdminSessionsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pg-admin-sessions-empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.pg-admin-sessions-empty-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.pg-admin-sessions-empty h3 {
+  margin: 0 0 6px 0;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.pg-admin-sessions-empty p {
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.pg-admin-sessions-reset-btn {
+  padding: 7px 16px;
+  background: #09131f;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------
+   7. RESPONSIVE BREAKPOINTS
+   ------------------------------------------------------------ */
+
+/* Desktop (>= 1200px): 4 summary cards in 1 row */
+@media (min-width: 1200px) {
+  .pg-admin-sessions-summary {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Tablet (768px - 1199px): 2 x 2 summary cards */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .pg-admin-sessions-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile (< 768px): 1 column summary cards, hide desktop table & show mobile cards */
+@media (max-width: 767px) {
+  .pg-admin-sessions-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .pg-admin-sessions-export-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pg-admin-sessions-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .pg-admin-sessions-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .pg-admin-sessions-filter-group {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .pg-admin-sessions-date-button {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pg-admin-sessions-date-menu {
+    width: 100%;
+  }
+
+  /* Hide Desktop Table and Show Mobile Cards */
+  .pg-admin-sessions-table-shell {
+    display: none;
+  }
+
+  .pg-admin-sessions-mobile-list {
+    display: flex;
+  }
+}

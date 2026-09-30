@@ -1,0 +1,75 @@
+.pg-fchips-container {
+  width: 100%;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pg-fchips-container::-webkit-scrollbar {
+  display: none;
+}
+
+.pg-fchips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: max-content;
+}
+
+.pg-fchip {
+  height: 36px;
+  padding: 0 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.pg-fchip:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.pg-fchip--active {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+}
+
+.pg-fchip--active:hover {
+  background: #1e293b;
+  color: #ffffff;
+}
+
+.pg-fchip__icon {
+  font-size: 0.95rem;
+}
+
+.pg-fchip__rate {
+  font-size: 0.78rem;
+  color: #9ae600;
+  font-weight: 800;
+  margin-left: 2px;
+}
+
+.pg-fchip--filters-btn {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #64748b;
+  margin-left: auto;
+}
+
+.pg-fchip--filters-btn:hover {
+  color: #0f172a;
+  border-color: #94a3b8;
+}

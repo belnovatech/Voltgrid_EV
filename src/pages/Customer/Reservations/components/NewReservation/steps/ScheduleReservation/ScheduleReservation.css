@@ -1,0 +1,134 @@
+.pg-step-schedule {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.pg-step-schedule__form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pg-step-schedule__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pg-step-schedule__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.pg-step-schedule__input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.pg-step-schedule__input {
+  width: 100%;
+  padding: 14px 18px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #071322;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.pg-step-schedule__input:focus {
+  background: #ffffff;
+  border-color: #071322;
+  box-shadow: 0 0 0 2px rgba(7, 19, 34, 0.1);
+}
+
+.pg-step-schedule__durations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.pg-step-schedule__duration-btn {
+  padding: 12px 10px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.pg-step-schedule__duration-btn:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
+.pg-step-schedule__duration-btn--active {
+  background: #071322;
+  border-color: #071322;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(7, 19, 34, 0.15);
+}
+
+.pg-step-schedule__cost-card {
+  padding: 20px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  margin-top: 4px;
+}
+
+.pg-step-schedule__cost-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.pg-step-schedule__cost-val {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #071322;
+  margin-bottom: 6px;
+}
+
+.pg-step-schedule__cost-sub {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.pg-step-schedule__submit-btn {
+  width: 100%;
+  padding: 16px 24px;
+  background: #c6ff00;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #071322;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(198, 255, 0, 0.25);
+}
+
+.pg-step-schedule__submit-btn:hover {
+  background: #b5ee00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(198, 255, 0, 0.35);
+}
+
+@media (max-width: 480px) {
+  .pg-step-schedule__durations {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

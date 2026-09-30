@@ -1,0 +1,170 @@
+.pg-clogin-page {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.pg-clogin-container {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pg-clogin-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.pg-clogin-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: #060d19;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.pg-clogin-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.pg-clogin-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+/* CARD */
+.pg-clogin-card {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+}
+
+.pg-clogin-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.pg-clogin-field {
+  margin-bottom: 20px;
+}
+
+.pg-clogin-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.pg-clogin-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pg-clogin-prefix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 16px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  user-select: none;
+}
+
+.pg-clogin-input {
+  flex: 1;
+  height: 46px;
+  padding: 0 16px;
+  background-color: #ffffff;
+  border: 1px solid #38bdf8;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+}
+
+.pg-clogin-btn {
+  width: 100%;
+  height: 46px;
+  background-color: #9ae600;
+  color: #060d19;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: 16px;
+}
+
+.pg-clogin-btn:hover:not(:disabled) {
+  background-color: #84cc16;
+}
+
+.pg-clogin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pg-clogin-terms {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.pg-clogin-back-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.pg-clogin-back-btn:hover {
+  color: #0f172a;
+}
+
+.pg-clogin-demo-hint {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 16px;
+}
+
+.pg-clogin-demo-hint strong {
+  color: #0f172a;
+}

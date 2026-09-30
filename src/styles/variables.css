@@ -1,0 +1,74 @@
+:root {
+  /* Brand Colors */
+  --color-primary: #00875a;
+  --color-primary-hover: #00744c;
+  --color-primary-active: #00603f;
+  --color-primary-light: #e8f7ee;
+  --color-primary-tint: #d1fae5;
+  --color-primary-border: #a7f3d0;
+
+  /* PowerGrid Enterprise Palette */
+  --color-pg-bg: #060c18;
+  --color-pg-bg-elevated: #0a1224;
+  --color-pg-card: #0d172e;
+  --color-pg-border: #1a2744;
+  --color-pg-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-pg-lime: #9ae600;
+  --color-pg-lime-hover: #84cc16;
+  --color-pg-lime-light: rgba(154, 230, 0, 0.12);
+  --color-pg-lime-border: rgba(154, 230, 0, 0.28);
+  --color-pg-cyan: #38bdf8;
+  --color-pg-cyan-hover: #0ea5e9;
+  --color-pg-cyan-light: rgba(56, 189, 248, 0.12);
+  --color-pg-cyan-border: rgba(56, 189, 248, 0.3);
+
+  /* Accent & Status */
+  --color-accent-teal: #0d9488;
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-error-light: #fef2f2;
+  --color-error-border: #fecaca;
+  --color-warning: #f59e0b;
+
+  /* Neutral & Base Colors */
+  --color-background: #ffffff;
+  --color-background-subtle: #f8fafc;
+  --color-card: #ffffff;
+  --color-card-hover: #ffffff;
+
+  /* Text Colors */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-text-inverse: #ffffff;
+
+  /* Borders & Dividers */
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+  --color-border-focus: #00875a;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-card: 0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+  --shadow-card-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-auth: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+  --shadow-button: 0 1px 3px rgba(0, 135, 90, 0.2);
+  --shadow-lime-glow: 0 0 24px rgba(154, 230, 0, 0.25);
+  --shadow-cyan-glow: 0 0 24px rgba(56, 189, 248, 0.25);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Spacing & Layout */
+  --max-width: 1440px;
+  --header-height: 72px;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}

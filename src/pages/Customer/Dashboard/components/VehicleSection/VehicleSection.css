@@ -1,0 +1,284 @@
+.pg-vsec {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-vsec__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.pg-vsec__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.pg-vsec__manage-btn {
+  background: none;
+  border: none;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.pg-vsec__manage-btn:hover {
+  color: #0f172a;
+  background: #f1f5f9;
+}
+
+.pg-vsec__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.pg-vsec__card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.pg-vsec__card:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.pg-vsec__card--primary {
+  border-color: #cbd5e1;
+}
+
+.pg-vsec__card-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.pg-vsec__card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pg-vsec__card-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.pg-vsec__card-name {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-vsec__primary-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: #e2e8f0;
+  color: #475569;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.pg-vsec__card-meta {
+  display: block;
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.pg-vsec__card-rate {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.pg-vsec__card-battery {
+  width: 72px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pg-vsec__battery-pct {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.pg-vsec__battery-track {
+  width: 100%;
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pg-vsec__battery-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.pg-vsec__add-vehicle-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px dashed #cbd5e1;
+  background: #fcfdfe;
+  border-radius: 12px;
+  color: #64748b;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pg-vsec__add-vehicle-card:hover {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
+.pg-vsec__add-plus {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #9ae600;
+}
+
+/* Rate Card */
+.pg-vsec__rate-card {
+  background: #0f172a;
+  border-radius: 14px;
+  padding: 20px;
+  color: #ffffff;
+  margin-top: auto;
+}
+
+.pg-vsec__rate-header {
+  margin-bottom: 16px;
+}
+
+.pg-vsec__rate-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.pg-vsec__rate-val {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.pg-vsec__rate-veh {
+  font-size: 0.8rem;
+  color: #9ae600;
+  font-weight: 600;
+}
+
+.pg-vsec__rate-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.pg-vsec__tier-chip {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pg-vsec__tier-chip:hover {
+  background: #27354f;
+  border-color: #475569;
+}
+
+.pg-vsec__tier-chip--active {
+  background: #9ae600;
+  border-color: #9ae600;
+}
+
+.pg-vsec__tier-chip--active .pg-vsec__tier-price,
+.pg-vsec__tier-chip--active .pg-vsec__tier-label {
+  color: #060d19;
+}
+
+.pg-vsec__tier-price {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.pg-vsec__tier-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.pg-vsec__loading,
+.pg-vsec__empty {
+  padding: 30px 16px;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.pg-vsec__add-btn {
+  margin-top: 10px;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}

@@ -1,0 +1,85 @@
+.powergrid-history-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.powergrid-history-filters__tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.powergrid-history-filters__tab {
+  padding: 8px 18px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.powergrid-history-filters__tab:hover {
+  border-color: #cbd5e1;
+  color: #071322;
+}
+
+.powergrid-history-filters__tab--active {
+  background: #071322;
+  border-color: #071322;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(7, 19, 34, 0.15);
+}
+
+.powergrid-history-filters__tab--active:hover {
+  background: #071322;
+  color: #ffffff;
+}
+
+.powergrid-history-filters__more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.powergrid-history-filters__more-btn:hover {
+  border-color: #071322;
+  color: #071322;
+}
+
+.powergrid-history-filters__more-btn--active {
+  border-color: #071322;
+  color: #071322;
+  background: #f8fafc;
+}
+
+.powergrid-history-filters__active-dot {
+  width: 8px;
+  height: 8px;
+  background: #c6ff00;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #071322;
+}
+
+@media (max-width: 768px) {
+  .powergrid-history-filters {
+    gap: 12px;
+  }
+}

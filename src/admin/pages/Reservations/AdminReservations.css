@@ -1,0 +1,108 @@
+/* Scoped Reservations CSS */
+.pg-admin-res {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.pg-admin-res__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.pg-admin-res__title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #071321;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.pg-admin-res__subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 4px 0 0 0;
+}
+
+.pg-admin-res__code {
+  font-family: monospace;
+  font-weight: 700;
+  color: #0284c7;
+  background: #f0f9ff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.pg-admin-res__user {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.pg-admin-res__phone {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.pg-admin-res__station {
+  font-weight: 600;
+  color: #334155;
+}
+
+.pg-admin-res__slot {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.pg-admin-res__plate {
+  font-family: monospace;
+  font-weight: 600;
+  color: #0f172a;
+  background: #f8fafc;
+  padding: 2px 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.pg-admin-res__duration {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.pg-admin-res__fee {
+  font-weight: 700;
+  color: #059669;
+}
+
+.pg-admin-res__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pg-admin-res__badge--confirmed {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.pg-admin-res__badge--active {
+  background: #eff6ff;
+  color: #0284c7;
+}
+
+.pg-admin-res__badge--completed {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.pg-admin-res__badge--cancelled {
+  background: #fef2f2;
+  color: #dc2626;
+}

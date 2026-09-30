@@ -1,0 +1,762 @@
+/* ================================================================
+   POWERGRID CUSTOMER PROFILE — SCOPED NAMESPACE: .powergrid-profile
+   ================================================================ */
+
+.powergrid-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 680px;
+  box-sizing: border-box;
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+  color: #071321;
+}
+
+/* Toast Notification */
+.powergrid-profile__toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background-color: #071321;
+  color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  border-left: 4px solid #a3e635;
+  animation: powergrid-profile-toast-in 0.25s ease-out;
+}
+
+.powergrid-profile__toast-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background-color: #a3e635;
+  color: #071321;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.powergrid-profile__toast-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+@keyframes powergrid-profile-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ================================================================
+   TOP HEADER
+   ================================================================ */
+.powergrid-profile__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.powergrid-profile__title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #071321;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.powergrid-profile__edit-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #071321;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.15s ease;
+}
+
+.powergrid-profile__edit-trigger:hover:not(:disabled) {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.powergrid-profile__edit-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ================================================================
+   BODY CONTAINER
+   ================================================================ */
+.powergrid-profile__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ================================================================
+   IDENTITY HERO (AVATAR & INFO)
+   ================================================================ */
+.powergrid-profile__identity {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.powergrid-profile__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a3e635 0%, #2dd4bf 100%);
+  color: #071321;
+  font-size: 1.85rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.02em;
+  box-shadow: 0 6px 16px -2px rgba(45, 212, 191, 0.35);
+  flex-shrink: 0;
+}
+
+.powergrid-profile__identity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.powergrid-profile__name {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #071321;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.powergrid-profile__badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.powergrid-profile__verified-badge {
+  display: inline-block;
+  background-color: #ecfdf5;
+  color: #059669;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid #d1fae5;
+}
+
+.powergrid-profile__member-since {
+  font-size: 0.84rem;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+/* ================================================================
+   PERSONAL INFORMATION CARD
+   ================================================================ */
+.powergrid-profile__card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 8px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.powergrid-profile__info-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.powergrid-profile__info-row--last {
+  border-bottom: none;
+}
+
+.powergrid-profile__info-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.powergrid-profile__info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.powergrid-profile__info-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: capitalize;
+}
+
+.powergrid-profile__info-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #071321;
+  word-break: break-word;
+}
+
+/* ================================================================
+   STATISTICS GRID (3 COLUMNS)
+   ================================================================ */
+.powergrid-profile__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.powergrid-profile__stat-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  outline: none;
+}
+
+.powergrid-profile__stat-card:hover {
+  transform: translateY(-2px);
+  border-color: #071321;
+  box-shadow: 0 6px 16px -4px rgba(7, 19, 33, 0.08);
+}
+
+.powergrid-profile__stat-card:focus-visible {
+  border-color: #071321;
+  box-shadow: 0 0 0 3px rgba(7, 19, 33, 0.1);
+}
+
+.powergrid-profile__stat-val {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #071321;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.powergrid-profile__stat-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* ================================================================
+   QUICK LOWER NAVIGATION
+   ================================================================ */
+.powergrid-profile__nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.powergrid-profile__nav-item {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  outline: none;
+}
+
+.powergrid-profile__nav-item:hover {
+  border-color: #071321;
+  background-color: #fafbfc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(7, 19, 33, 0.05);
+}
+
+.powergrid-profile__nav-item:hover .powergrid-profile__nav-arrow {
+  transform: translateX(3px);
+  color: #071321;
+}
+
+.powergrid-profile__nav-item:focus-visible {
+  border-color: #071321;
+  box-shadow: 0 0 0 3px rgba(7, 19, 33, 0.1);
+}
+
+.powergrid-profile__nav-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.powergrid-profile__nav-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.powergrid-profile__nav-icon-box--yellow {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.powergrid-profile__nav-icon-box--green {
+  background-color: #dcfce7;
+  color: #059669;
+}
+
+.powergrid-profile__nav-icon-box--indigo {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+}
+
+.powergrid-profile__nav-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.powergrid-profile__nav-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #071321;
+  margin: 0;
+}
+
+.powergrid-profile__nav-desc {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.powergrid-profile__nav-arrow {
+  color: #94a3b8;
+  transition: transform 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
+}
+
+/* ================================================================
+   LOGOUT BUTTON
+   ================================================================ */
+.powergrid-profile__logout-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 6px;
+}
+
+.powergrid-profile__logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1.5px solid #fee2e2;
+  color: #dc2626;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.powergrid-profile__logout-btn:hover {
+  background-color: #fef2f2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+/* ================================================================
+   MODAL DIALOGS
+   ================================================================ */
+.powergrid-profile__modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(7, 19, 33, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.powergrid-profile__modal {
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.powergrid-profile__modal--small {
+  max-width: 400px;
+}
+
+.powergrid-profile__modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.powergrid-profile__modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #071321;
+  margin: 0;
+}
+
+.powergrid-profile__dialog-text {
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 10px 0 24px 0;
+}
+
+.powergrid-profile__modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.powergrid-profile__modal-close:hover {
+  background-color: #f1f5f9;
+  color: #071321;
+}
+
+.powergrid-profile__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.powergrid-profile__form-error {
+  padding: 10px 14px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.powergrid-profile__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.powergrid-profile__label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.powergrid-profile__input,
+.powergrid-profile__select {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: #071321;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.powergrid-profile__input:focus,
+.powergrid-profile__select:focus {
+  border-color: #071321;
+}
+
+.powergrid-profile__input--disabled {
+  background-color: #f8fafc;
+  color: #64748b !important;
+  cursor: not-allowed;
+}
+
+.powergrid-profile__field-hint {
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+
+.powergrid-profile__modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.powergrid-profile__cancel-btn {
+  height: 44px;
+  padding: 0 18px;
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.powergrid-profile__cancel-btn:hover {
+  background-color: #f1f5f9;
+  color: #071321;
+}
+
+.powergrid-profile__save-btn {
+  height: 44px;
+  padding: 0 22px;
+  background-color: #a3e635;
+  color: #071321;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.powergrid-profile__save-btn:hover:not(:disabled) {
+  background-color: #93d726;
+}
+
+.powergrid-profile__save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.powergrid-profile__danger-btn {
+  height: 44px;
+  padding: 0 20px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.powergrid-profile__danger-btn:hover {
+  background-color: #b91c1c;
+}
+
+/* ================================================================
+   LOADING SKELETON
+   ================================================================ */
+.powergrid-profile__skeleton-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.powergrid-profile__skeleton-identity {
+  height: 80px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: powergrid-skeleton 1.5s infinite;
+}
+
+.powergrid-profile__skeleton-card {
+  height: 200px;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: powergrid-skeleton 1.5s infinite;
+}
+
+.powergrid-profile__skeleton-stats {
+  height: 85px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: powergrid-skeleton 1.5s infinite;
+}
+
+.powergrid-profile__skeleton-nav {
+  height: 180px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: powergrid-skeleton 1.5s infinite;
+}
+
+/* Error State */
+.powergrid-profile__error-card {
+  background-color: #ffffff;
+  border: 1px solid #fee2e2;
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.powergrid-profile__error-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.powergrid-profile__error-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #991b1b;
+  margin: 0 0 8px 0;
+}
+
+.powergrid-profile__error-desc {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin: 0 0 16px 0;
+}
+
+.powergrid-profile__retry-btn {
+  background-color: #071321;
+  color: #ffffff;
+  border: none;
+  padding: 8px 22px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ================================================================
+   RESPONSIVE DESIGN
+   ================================================================ */
+@media (max-width: 640px) {
+  .powergrid-profile {
+    gap: 18px;
+  }
+
+  .powergrid-profile__identity {
+    gap: 16px;
+  }
+
+  .powergrid-profile__avatar {
+    width: 68px;
+    height: 68px;
+    font-size: 1.6rem;
+  }
+
+  .powergrid-profile__name {
+    font-size: 1.25rem;
+  }
+
+  .powergrid-profile__card {
+    padding: 6px 18px;
+  }
+
+  .powergrid-profile__info-row {
+    padding: 14px 0;
+    gap: 12px;
+  }
+
+  .powergrid-profile__info-icon-box {
+    width: 36px;
+    height: 36px;
+  }
+
+  .powergrid-profile__stat-card {
+    padding: 14px 10px;
+  }
+
+  .powergrid-profile__stat-val {
+    font-size: 1.3rem;
+  }
+
+  .powergrid-profile__stat-label {
+    font-size: 0.75rem;
+  }
+
+  .powergrid-profile__nav-item {
+    padding: 14px 16px;
+  }
+
+  .powergrid-profile__nav-icon-box {
+    width: 38px;
+    height: 38px;
+  }
+}

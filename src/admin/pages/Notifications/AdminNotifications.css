@@ -1,0 +1,108 @@
+/* Scoped Notifications CSS */
+.pg-admin-notif {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.pg-admin-notif__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pg-admin-notif__title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #071321;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.pg-admin-notif__subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 4px 0 0 0;
+}
+
+.pg-admin-notif__btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pg-admin-notif__btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.pg-admin-notif__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pg-admin-notif__item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: all 0.15s;
+}
+
+.pg-admin-notif__item--unread {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  border-left: 4px solid #0284c7;
+}
+
+.pg-admin-notif__icon {
+  font-size: 20px;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+.pg-admin-notif__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pg-admin-notif__item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-notif__item-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pg-admin-notif__time {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.pg-admin-notif__msg {
+  font-size: 13.5px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.4;
+}

@@ -1,0 +1,106 @@
+.vg-nearby-zone-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.vg-nearby-zone-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.vg-nearby-zone-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vg-nearby-zone-card__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vg-nearby-zone-card__meta {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vg-nearby-zone-card__badge-wrapper {
+  flex-shrink: 0;
+}
+
+/* Skeleton Styles */
+.vg-nearby-zone-card--skeleton {
+  pointer-events: none;
+}
+
+.vg-skeleton-text-title {
+  width: 140px;
+  height: 18px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: vg-shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+}
+
+.vg-skeleton-text-sub {
+  width: 190px;
+  height: 14px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: vg-shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+.vg-skeleton-badge {
+  width: 84px;
+  height: 28px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: vg-shimmer 1.5s infinite;
+  border-radius: var(--radius-full);
+}
+
+@media (max-width: 640px) {
+  .vg-nearby-zone-card {
+    padding: 16px 18px;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .vg-nearby-zone-card__name {
+    font-size: 0.975rem;
+  }
+
+  .vg-nearby-zone-card__meta {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .vg-nearby-zone-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

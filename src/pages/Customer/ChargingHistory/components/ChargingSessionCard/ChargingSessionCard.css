@@ -1,0 +1,144 @@
+.powergrid-session-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.powergrid-session-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.powergrid-session-card__left {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.powergrid-session-card__icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  color: #64748b;
+}
+
+.powergrid-session-card__icon-box--active {
+  background: #071322;
+  color: #c6ff00;
+  border-color: #071322;
+}
+
+.powergrid-session-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.powergrid-session-card__station {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #071322;
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.powergrid-session-card__sub {
+  font-size: 0.86rem;
+  color: #64748b;
+  margin: 0 0 10px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.powergrid-session-card__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.84rem;
+  color: #475569;
+}
+
+.powergrid-session-card__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+
+.powergrid-session-card__meta-item--date {
+  color: #64748b;
+}
+
+.powergrid-session-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  text-align: right;
+  min-width: 110px;
+}
+
+.powergrid-session-card__cost {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #071322;
+}
+
+.powergrid-session-card__status-pill {
+  padding: 3px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.powergrid-session-card__status-pill--completed {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.powergrid-session-card__status-pill--active {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.powergrid-session-card__status-pill--failed,
+.powergrid-session-card__status-pill--cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+@media (max-width: 640px) {
+  .powergrid-session-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+  }
+  .powergrid-session-card__right {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+  }
+}

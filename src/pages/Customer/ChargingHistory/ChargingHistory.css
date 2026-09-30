@@ -1,0 +1,66 @@
+.powergrid-charging-history-page {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+  box-sizing: border-box;
+}
+
+.powergrid-charging-history__toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #071322;
+  color: #c6ff00;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: pgHistToastSlide 0.3s ease;
+  border: 1px solid rgba(198, 255, 0, 0.3);
+}
+
+@keyframes pgHistToastSlide {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.powergrid-charging-history__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.powergrid-charging-history__error {
+  background: #ffffff;
+  border: 1.5px solid #fee2e2;
+  border-radius: 18px;
+  padding: 40px 24px;
+  text-align: center;
+  color: #dc2626;
+}
+
+.powergrid-charging-history__retry-btn {
+  margin-top: 12px;
+  padding: 8px 18px;
+  background: #071322;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .powergrid-charging-history-page {
+    padding: 20px 16px 40px;
+  }
+}

@@ -1,0 +1,45 @@
+.pg-network-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pg-network-bg__svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+}
+
+.pg-network-bg__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.pg-network-bg__glow--center {
+  width: 500px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(154, 230, 0, 0.07) 0%, rgba(154, 230, 0, 0) 70%);
+  top: 40%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+}
+
+.pg-network-bg__glow--cyan {
+  width: 450px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.06) 0%, rgba(56, 189, 248, 0) 70%);
+  top: 45%;
+  left: 65%;
+  transform: translate(-50%, -50%);
+}

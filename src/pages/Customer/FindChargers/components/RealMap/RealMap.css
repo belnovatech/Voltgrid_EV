@@ -1,0 +1,243 @@
+.pg-realmap-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: #f1f5f9;
+}
+
+.pg-realmap__container {
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  z-index: 1;
+}
+
+/* Ensure Leaflet tiles fill and render properly */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+  background-color: #e5e7eb;
+}
+
+.leaflet-tile {
+  visibility: inherit !important;
+}
+
+/* Top Badge Overlay */
+.pg-realmap__top-badge {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.88);
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+.pg-realmap__live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #9ae600;
+  box-shadow: 0 0 8px #9ae600;
+}
+
+/* Map Controls Top-Right */
+.pg-realmap__controls {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pg-realmap__ctrl-btn {
+  width: 36px;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #0f172a;
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.pg-realmap__ctrl-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.pg-realmap__ctrl-btn--locate {
+  color: #0284c7;
+}
+
+/* Custom Marker Styling */
+.pg-leaflet-custom-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.pg-rmarker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pg-rmarker:hover,
+.pg-rmarker--selected {
+  transform: scale(1.22) translateY(-2px);
+  z-index: 1000 !important;
+}
+
+.pg-rmarker__badge {
+  padding: 2px 7px;
+  border-radius: 12px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  margin-bottom: 2px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+}
+
+.pg-rmarker__pin {
+  width: 26px;
+  height: 26px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+  border: 2px solid #ffffff;
+}
+
+.pg-rmarker__pin svg {
+  transform: rotate(45deg);
+}
+
+/* Marker Status Themes */
+.pg-rmarker--available .pg-rmarker__badge,
+.pg-rmarker--available .pg-rmarker__pin {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.pg-rmarker--partial .pg-rmarker__badge,
+.pg-rmarker--partial .pg-rmarker__pin {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.pg-rmarker--full .pg-rmarker__badge,
+.pg-rmarker--full .pg-rmarker__pin {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* Selected Marker Glow */
+.pg-rmarker--selected .pg-rmarker__pin {
+  box-shadow: 0 0 0 4px rgba(154, 230, 0, 0.55), 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Tooltips */
+.pg-map-tooltip {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: 1px solid #334155 !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  font-size: 0.78rem !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.pg-map-tooltip::before {
+  border-top-color: #0f172a !important;
+}
+
+.pg-tip-content strong {
+  display: block;
+  font-size: 0.82rem;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.pg-tip-content span {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+/* Legend Bottom-Left */
+.pg-realmap__legend {
+  position: absolute;
+  bottom: 16px;
+  left: 18px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.pg-realmap__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.pg-realmap__legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.pg-realmap__legend-dot--available {
+  background: #16a34a;
+}
+
+.pg-realmap__legend-dot--partial {
+  background: #0284c7;
+}
+
+.pg-realmap__legend-dot--full {
+  background: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .pg-realmap-wrapper,
+  .pg-realmap__container {
+    min-height: 380px;
+  }
+}

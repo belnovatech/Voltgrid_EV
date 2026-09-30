@@ -1,0 +1,105 @@
+/* Scoped Admin Stat Card */
+.pg-admin-stat-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
+  min-height: 140px;
+  box-sizing: border-box;
+}
+
+.pg-admin-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+  border-color: #cbd5e1;
+}
+
+/* Dark variant (matching the Zones card in reference screenshot) */
+.pg-admin-stat-card--dark {
+  background: #09131f !important;
+  border-color: #09131f !important;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(9, 19, 31, 0.35);
+}
+
+.pg-admin-stat-card--dark .pg-admin-stat-card__value {
+  color: #ffffff;
+}
+
+.pg-admin-stat-card--dark .pg-admin-stat-card__label {
+  color: #cbd5e1;
+}
+
+.pg-admin-stat-card--dark .pg-admin-stat-card__subtext {
+  color: #94a3b8;
+}
+
+/* Card Top Row */
+.pg-admin-stat-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.pg-admin-stat-card__icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pg-admin-stat-card__trend {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.pg-admin-stat-card__trend--up {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.pg-admin-stat-card__trend--down {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* Card Body */
+.pg-admin-stat-card__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-admin-stat-card__value {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.pg-admin-stat-card__label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 2px;
+}
+
+.pg-admin-stat-card__subtext {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 400;
+}

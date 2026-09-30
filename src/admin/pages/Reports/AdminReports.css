@@ -1,0 +1,795 @@
+/* ==========================================================================
+   POWERGRID ADMIN — ANALYTICS & REPORTS ISOLATED STYLES
+   Prefix: .pg-admin-reports-*
+   ========================================================================== */
+
+.pg-admin-reports-page {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 8px 4px 40px;
+  color: #09131f;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Toast */
+.pg-admin-reports-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #09131f;
+  color: #bef264;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: pgReportsSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pgReportsSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 1. Page Header */
+.pg-admin-reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-reports-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pg-admin-reports-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #09131f;
+  letter-spacing: -0.02em;
+}
+
+.pg-admin-reports-subtitle {
+  margin: 0;
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Export Buttons Group */
+.pg-admin-reports-export-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pg-admin-reports-export-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.pg-admin-reports-export-button:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #09131f;
+}
+
+.pg-admin-reports-export-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 2. Filter Toolbar */
+.pg-admin-reports-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Quick Period Pills */
+.pg-admin-reports-period-filter {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 3px;
+  gap: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.pg-admin-reports-period-button {
+  background: transparent;
+  border: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 6px 14px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-admin-reports-period-button:hover {
+  color: #09131f;
+}
+
+.pg-admin-reports-period-button--active {
+  background: #09131f;
+  color: #ffffff;
+}
+
+.pg-admin-reports-period-button--active:hover {
+  color: #ffffff;
+}
+
+/* Custom Date Range */
+.pg-admin-reports-date-range {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.pg-admin-reports-date-box {
+  display: flex;
+  align-items: center;
+}
+
+.pg-admin-reports-date-input {
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: #1e293b;
+  font-weight: 500;
+  outline: none;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 4px 2px;
+}
+
+.pg-admin-reports-date-separator {
+  font-size: 12.5px;
+  color: #94a3b8;
+  font-weight: 500;
+  padding: 0 4px;
+}
+
+/* 3. Chart Grid */
+.pg-admin-reports-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pg-admin-reports-chart-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.pg-admin-reports-chart-header {
+  margin-bottom: 18px;
+}
+
+.pg-admin-reports-chart-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #09131f;
+  letter-spacing: -0.01em;
+}
+
+.pg-admin-reports-chart-subtitle {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.pg-admin-reports-chart-body {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Line & Bar Chart Canvas Wrappers */
+.pg-admin-reports-line-chart-wrapper,
+.pg-admin-reports-bar-chart-wrapper {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+
+.pg-admin-reports-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 180px;
+  font-size: 11.5px;
+  color: #94a3b8;
+  font-weight: 500;
+  min-width: 38px;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.pg-admin-reports-chart-canvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pg-admin-reports-svg-chart {
+  width: 100%;
+  height: 180px;
+  overflow: visible;
+}
+
+.pg-admin-reports-x-axis {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+  user-select: none;
+}
+
+/* Legend Below Bar Chart */
+.pg-admin-reports-chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 14px;
+  padding-left: 50px;
+}
+
+.pg-admin-reports-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.pg-admin-reports-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.pg-admin-reports-legend-dot--cyan {
+  background: #06b6d4;
+}
+
+.pg-admin-reports-legend-dot--lime {
+  background: #bef264;
+}
+
+.pg-admin-reports-legend-dot--orange {
+  background: #f97316;
+}
+
+/* Vehicle Category Analysis Card */
+.pg-admin-reports-vehicle-analysis-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 8px;
+}
+
+.pg-admin-reports-vehicle-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pg-admin-reports-vehicle-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pg-admin-reports-vehicle-label-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pg-admin-reports-vehicle-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.pg-admin-reports-vehicle-dot--cyan {
+  background: #06b6d4;
+}
+
+.pg-admin-reports-vehicle-dot--lime {
+  background: #bef264;
+}
+
+.pg-admin-reports-vehicle-dot--orange {
+  background: #f97316;
+}
+
+.pg-admin-reports-vehicle-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #09131f;
+}
+
+.pg-admin-reports-vehicle-metrics {
+  font-size: 12.5px;
+  color: #64748b;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pg-admin-reports-dot-sep {
+  color: #cbd5e1;
+}
+
+.pg-admin-reports-vehicle-rev {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.pg-admin-reports-vehicle-progress {
+  width: 100%;
+  height: 5px;
+  background: #f1f5f9;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pg-admin-reports-vehicle-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.pg-admin-reports-vehicle-progress-fill--cyan {
+  background: #06b6d4;
+}
+
+.pg-admin-reports-vehicle-progress-fill--lime {
+  background: #bef264;
+}
+
+.pg-admin-reports-vehicle-progress-fill--orange {
+  background: #f97316;
+}
+
+/* 4. Zone Performance Comparison Table */
+.pg-admin-reports-zone-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  margin-top: 24px;
+  box-sizing: border-box;
+}
+
+.pg-admin-reports-zone-header {
+  margin-bottom: 16px;
+}
+
+.pg-admin-reports-zone-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #09131f;
+  letter-spacing: -0.01em;
+}
+
+.pg-admin-reports-zone-subtitle {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.pg-admin-reports-zone-table-shell {
+  width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.pg-admin-reports-zone-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.pg-admin-reports-zone-row {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.1s ease;
+}
+
+.pg-admin-reports-zone-table tbody .pg-admin-reports-zone-row:last-child {
+  border-bottom: none;
+}
+
+.pg-admin-reports-zone-table tbody .pg-admin-reports-zone-row:hover {
+  background: #f8fafc;
+}
+
+.pg-admin-reports-zone-cell {
+  padding: 14px 12px;
+  color: #334155;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pg-admin-reports-zone-table thead .pg-admin-reports-zone-cell {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pg-admin-reports-zone-code {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #09131f;
+}
+
+.pg-admin-reports-zone-rev {
+  font-weight: 700;
+  color: #09131f;
+}
+
+/* Utilization Track & Fill */
+.pg-admin-reports-utilization {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 150px;
+}
+
+.pg-admin-reports-utilization-track {
+  flex: 1;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pg-admin-reports-utilization-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.pg-admin-reports-utilization-fill--cyan {
+  background: #06b6d4;
+}
+
+.pg-admin-reports-utilization-fill--lime {
+  background: #bef264;
+}
+
+.pg-admin-reports-utilization-fill--gray {
+  background: #cbd5e1;
+}
+
+.pg-admin-reports-utilization-val {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+  min-width: 34px;
+}
+
+/* Performance Badges */
+.pg-admin-reports-performance {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pg-admin-reports-performance--high {
+  color: #06b6d4;
+}
+
+.pg-admin-reports-performance--moderate {
+  color: #65a30d;
+}
+
+.pg-admin-reports-performance--low {
+  color: #64748b;
+}
+
+/* Mobile Zone Cards (< 768px) */
+.pg-admin-reports-mobile-zone-list {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pg-admin-reports-mobile-zone-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pg-admin-reports-mobile-zone-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-admin-reports-mobile-zone-name {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.pg-admin-reports-mobile-zone-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.pg-admin-reports-mobile-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pg-admin-reports-mobile-stat span {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.pg-admin-reports-mobile-stat strong {
+  font-size: 12.5px;
+  color: #09131f;
+  font-weight: 700;
+}
+
+.pg-admin-reports-mobile-zone-util {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pg-admin-reports-mobile-util-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.pg-admin-reports-mobile-util-header strong {
+  color: #09131f;
+}
+
+/* Loading & Error States */
+.pg-admin-reports-loading {
+  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.pg-admin-reports-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #bef264;
+  border-radius: 50%;
+  animation: pgReportsSpin 0.7s linear infinite;
+}
+
+@keyframes pgReportsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pg-admin-reports-error-box {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+}
+
+.pg-admin-reports-error-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.pg-admin-reports-retry-btn {
+  background: #9f1239;
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (1920px to 360px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .pg-admin-reports-chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .pg-admin-reports-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pg-admin-reports-export-group {
+    justify-content: stretch;
+  }
+
+  .pg-admin-reports-export-button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .pg-admin-reports-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .pg-admin-reports-period-filter {
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pg-admin-reports-period-button {
+    flex: 1;
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 11.5px;
+  }
+
+  .pg-admin-reports-date-range {
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pg-admin-reports-date-box {
+    flex: 1;
+  }
+
+  .pg-admin-reports-date-input {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Hide Desktop Table on Mobile and show responsive cards */
+  .pg-admin-reports-zone-table-shell {
+    display: none;
+  }
+
+  .pg-admin-reports-mobile-zone-list {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .pg-admin-reports-page {
+    padding: 4px 2px 30px;
+  }
+
+  .pg-admin-reports-chart-card,
+  .pg-admin-reports-zone-section {
+    padding: 16px 14px;
+  }
+
+  .pg-admin-reports-title {
+    font-size: 20px;
+  }
+
+  .pg-admin-reports-vehicle-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .pg-admin-reports-vehicle-metrics {
+    font-size: 11.5px;
+  }
+
+  .pg-admin-reports-y-axis {
+    font-size: 10px;
+    min-width: 32px;
+  }
+
+  .pg-admin-reports-x-axis {
+    font-size: 10px;
+  }
+}

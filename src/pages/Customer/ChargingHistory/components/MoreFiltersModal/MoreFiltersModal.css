@@ -1,0 +1,166 @@
+.powergrid-filter-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 19, 34, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+  animation: pgFilterFade 0.2s ease;
+}
+
+@keyframes pgFilterFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.powergrid-filter-modal__card {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 460px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  animation: pgFilterPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pgFilterPop {
+  from {
+    transform: scale(0.96) translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.powergrid-filter-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.powergrid-filter-modal__title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #071322;
+  margin: 0;
+}
+
+.powergrid-filter-modal__close-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.powergrid-filter-modal__close-btn:hover {
+  background: #f1f5f9;
+  color: #071322;
+}
+
+.powergrid-filter-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.powergrid-filter-modal__row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.powergrid-filter-modal__col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.powergrid-filter-modal__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.powergrid-filter-modal__input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  color: #071322;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.powergrid-filter-modal__input:focus {
+  border-color: #071322;
+  box-shadow: 0 0 0 2px rgba(7, 19, 34, 0.08);
+}
+
+.powergrid-filter-modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.powergrid-filter-modal__reset-btn {
+  flex: 1;
+  padding: 13px;
+  background: #f1f5f9;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.powergrid-filter-modal__reset-btn:hover {
+  background: #e2e8f0;
+  color: #071322;
+}
+
+.powergrid-filter-modal__apply-btn {
+  flex: 1.5;
+  padding: 13px;
+  background: #071322;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #c6ff00;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(7, 19, 34, 0.2);
+}
+
+.powergrid-filter-modal__apply-btn:hover {
+  background: #1e293b;
+}
+
+@media (max-width: 480px) {
+  .powergrid-filter-modal__row {
+    grid-template-columns: 1fr;
+  }
+}

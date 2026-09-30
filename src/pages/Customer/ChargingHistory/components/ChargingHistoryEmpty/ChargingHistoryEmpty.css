@@ -1,0 +1,46 @@
+.powergrid-history-empty {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 56px 24px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.powergrid-history-empty__icon {
+  font-size: 2.8rem;
+  margin-bottom: 16px;
+}
+
+.powergrid-history-empty__title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #071322;
+  margin: 0 0 8px 0;
+}
+
+.powergrid-history-empty__desc {
+  font-size: 0.92rem;
+  color: #64748b;
+  margin: 0 auto 24px auto;
+  max-width: 440px;
+  line-height: 1.5;
+}
+
+.powergrid-history-empty__btn {
+  padding: 12px 24px;
+  background: #071322;
+  color: #c6ff00;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(7, 19, 34, 0.2);
+}
+
+.powergrid-history-empty__btn:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+}

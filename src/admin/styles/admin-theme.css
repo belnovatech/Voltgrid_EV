@@ -1,0 +1,25 @@
+/* ================================================================
+   POWERGRID ADMIN MODULE — THEME & VARIABLES
+   Strictly scoped to .pg-admin-layout and .pg-admin-*
+   ================================================================ */
+
+:root {
+  --pg-admin-sidebar-width: 260px;
+  --pg-admin-navy: #060d19;
+  --pg-admin-navy-surface: #0a1424;
+  --pg-admin-navy-border: #162238;
+  --pg-admin-lime: #9ae600;
+  --pg-admin-lime-hover: #84cc16;
+  --pg-admin-lime-dark: #060d19;
+  --pg-admin-bg: #f8fafc;
+  --pg-admin-card-bg: #ffffff;
+  --pg-admin-text-main: #071321;
+  --pg-admin-text-muted: #64748b;
+  --pg-admin-border: #e2e8f0;
+  --pg-admin-border-subtle: #f1f5f9;
+  --pg-admin-radius-card: 16px;
+  --pg-admin-radius-sm: 10px;
+  --pg-admin-radius-pill: 9999px;
+  --pg-admin-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.02);
+  --pg-admin-shadow-md: 0 4px 14px rgba(7, 19, 33, 0.05);
+}

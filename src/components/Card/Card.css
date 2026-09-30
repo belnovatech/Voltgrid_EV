@@ -1,0 +1,33 @@
+.vg-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-normal);
+}
+
+.vg-card--pad-none {
+  padding: 0;
+}
+
+.vg-card--pad-sm {
+  padding: 12px 16px;
+}
+
+.vg-card--pad-md {
+  padding: 16px 20px;
+}
+
+.vg-card--pad-lg {
+  padding: 24px 28px;
+}
+
+.vg-card--interactive {
+  cursor: pointer;
+}
+
+.vg-card--interactive:hover {
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}

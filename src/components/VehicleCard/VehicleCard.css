@@ -1,0 +1,41 @@
+.vg-vehicle-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 170px;
+  padding: 12px 20px !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.vg-vehicle-card__icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.vg-vehicle-card__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.vg-vehicle-card__type {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.vg-vehicle-card__rate {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .vg-vehicle-card {
+    min-width: 140px;
+    padding: 10px 16px !important;
+  }
+}

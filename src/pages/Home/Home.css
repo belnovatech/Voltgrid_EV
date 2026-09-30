@@ -1,0 +1,25 @@
+.pg-home-layout {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-pg-bg);
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-home-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 880px) {
+  .pg-home-container {
+    flex-direction: column;
+    min-height: auto;
+  }
+}

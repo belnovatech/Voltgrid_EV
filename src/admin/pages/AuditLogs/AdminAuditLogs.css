@@ -1,0 +1,1226 @@
+/* ==========================================================================
+   POWERGRID ADMIN — AUDIT LOGS & SECURITY ACTIVITY CENTER
+   Prefix: .pg-admin-audit-*
+   ========================================================================== */
+
+.pg-admin-audit-page {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 8px 4px 40px;
+  color: #09131f;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Toast */
+.pg-admin-audit-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #09131f;
+  color: #bef264;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: pgAuditSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pgAuditSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 1. Header */
+.pg-admin-audit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-audit-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pg-admin-audit-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-audit-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #09131f;
+  letter-spacing: -0.02em;
+}
+
+.pg-admin-audit-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pg-admin-audit-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pgAuditPulse 2s infinite;
+}
+
+@keyframes pgAuditPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+.pg-admin-audit-subtitle {
+  margin: 0;
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.pg-admin-audit-meta-tagline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: #94a3b8;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-audit-tagline-sep {
+  color: #cbd5e1;
+}
+
+/* Header Buttons */
+.pg-admin-audit-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pg-admin-audit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  font-family: inherit;
+}
+
+.pg-admin-audit-btn--primary {
+  background: #bef264;
+  color: #09131f;
+  font-weight: 700;
+}
+
+.pg-admin-audit-btn--primary:hover:not(:disabled) {
+  background: #a3e635;
+  box-shadow: 0 2px 8px rgba(163, 230, 53, 0.35);
+}
+
+.pg-admin-audit-btn--secondary {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.pg-admin-audit-btn--secondary:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #09131f;
+}
+
+.pg-admin-audit-spin {
+  animation: pgAuditSpin 0.8s linear infinite;
+}
+
+@keyframes pgAuditSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 2. Security Information Banner */
+.pg-admin-audit-security-banner {
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+  border-left: 4px solid #84cc16;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.pg-admin-audit-security-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #dcfce7;
+  color: #4d7c0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pg-admin-audit-security-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #365314;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.pg-admin-audit-security-desc {
+  font-size: 13px;
+  color: #4d7c0f;
+  line-height: 1.4;
+}
+
+/* 3. Summary Grid (4 Cards) */
+.pg-admin-audit-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pg-admin-audit-summary-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pg-admin-audit-summary-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #09131f;
+  letter-spacing: -0.02em;
+}
+
+.pg-admin-audit-summary-value--today {
+  color: #0284c7;
+}
+
+.pg-admin-audit-summary-value--alert {
+  color: #f97316;
+}
+
+.pg-admin-audit-summary-label {
+  font-size: 12.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* 4. Search & Filter Toolbar */
+.pg-admin-audit-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-audit-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  flex: 1;
+  min-width: 260px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.pg-admin-audit-search-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 13px;
+  color: #09131f;
+  outline: none;
+  font-family: inherit;
+}
+
+.pg-admin-audit-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.pg-admin-audit-search-clear {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+}
+
+.pg-admin-audit-search-clear:hover {
+  color: #09131f;
+}
+
+.pg-admin-audit-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pg-admin-audit-filter-select-wrapper {
+  position: relative;
+}
+
+.pg-admin-audit-filter-select {
+  appearance: none;
+  background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 10px center;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 30px 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.15s ease;
+}
+
+.pg-admin-audit-filter-select:hover {
+  border-color: #cbd5e1;
+}
+
+.pg-admin-audit-filter-select:focus {
+  border-color: #bef264;
+  box-shadow: 0 0 0 2px rgba(190, 242, 100, 0.2);
+}
+
+.pg-admin-audit-clear-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-admin-audit-clear-btn:hover {
+  background: #e2e8f0;
+  color: #09131f;
+}
+
+/* 5. Main Desktop Table */
+.pg-admin-audit-table-shell {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.pg-admin-audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.pg-admin-audit-row {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.12s ease;
+  cursor: pointer;
+}
+
+.pg-admin-audit-table tbody .pg-admin-audit-row:hover {
+  background: #f8fafc;
+}
+
+.pg-admin-audit-cell {
+  padding: 14px 14px;
+  color: #334155;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.pg-admin-audit-table thead .pg-admin-audit-cell {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-bottom: 12px;
+  background: #fafafa;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ID Badge */
+.pg-admin-audit-id-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Admin Identity */
+.pg-admin-audit-admin-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pg-admin-audit-admin-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #09131f;
+  color: #bef264;
+  font-size: 11.5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.pg-admin-audit-admin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.pg-admin-audit-admin-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #09131f;
+}
+
+.pg-admin-audit-admin-role {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Action Text */
+.pg-admin-audit-action-text {
+  font-size: 13px;
+  color: #1e293b;
+  line-height: 1.4;
+  font-weight: 500;
+  max-width: 340px;
+}
+
+/* Module Badges */
+.pg-admin-audit-module-badge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.pg-admin-audit-module-badge--pricing {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.pg-admin-audit-module-badge--chargers {
+  background: #ffedd5;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+
+.pg-admin-audit-module-badge--payments {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.pg-admin-audit-module-badge--support {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.pg-admin-audit-module-badge--zones {
+  background: #ecfccb;
+  color: #3f6212;
+  border: 1px solid #d9f99d;
+}
+
+.pg-admin-audit-module-badge--users {
+  background: #ccfbf1;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+}
+
+.pg-admin-audit-module-badge--security {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* Record Code */
+.pg-admin-audit-record-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  color: #334155;
+  background: #f8fafc;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Timestamp */
+.pg-admin-audit-timestamp-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pg-admin-audit-time-main {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #09131f;
+  font-family: ui-monospace, monospace;
+}
+
+.pg-admin-audit-date-sub {
+  font-size: 11px;
+  color: #64748b;
+}
+
+/* IP & Device */
+.pg-admin-audit-ip-code {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  color: #475569;
+}
+
+.pg-admin-audit-device-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* View Action Button */
+.pg-admin-audit-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-admin-audit-view-btn:hover {
+  background: #09131f;
+  border-color: #09131f;
+  color: #bef264;
+}
+
+/* 6. Mobile List View (< 768px) */
+.pg-admin-audit-mobile-list {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pg-admin-audit-mobile-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+}
+
+.pg-admin-audit-mobile-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-admin-audit-mobile-admin-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pg-admin-audit-mobile-action-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #09131f;
+  line-height: 1.4;
+}
+
+.pg-admin-audit-mobile-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.pg-admin-audit-mobile-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pg-admin-audit-mobile-meta-item span {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.pg-admin-audit-mobile-meta-item strong {
+  font-size: 12px;
+  color: #09131f;
+}
+
+.pg-admin-audit-mobile-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 7. Pagination */
+.pg-admin-audit-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pg-admin-audit-pagination-info {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.pg-admin-audit-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pg-admin-audit-page-btn {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-admin-audit-page-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.pg-admin-audit-page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pg-admin-audit-page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pg-admin-audit-page-num {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 600;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pg-admin-audit-page-num--active {
+  background: #09131f;
+  border-color: #09131f;
+  color: #bef264;
+}
+
+/* 8. Details Drawer / Inspector Modal */
+.pg-admin-audit-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(9, 19, 31, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 10000;
+  display: flex;
+  justify-content: flex-end;
+  animation: pgAuditFadeIn 0.2s ease;
+}
+
+@keyframes pgAuditFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pg-admin-audit-drawer {
+  width: 480px;
+  max-width: 100vw;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.18);
+  animation: pgAuditSlideLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+@keyframes pgAuditSlideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.pg-admin-audit-drawer-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fafafa;
+}
+
+.pg-admin-audit-drawer-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pg-admin-audit-drawer-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  font-family: ui-monospace, monospace;
+}
+
+.pg-admin-audit-drawer-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #09131f;
+}
+
+.pg-admin-audit-drawer-close {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-admin-audit-drawer-close:hover {
+  background: #e2e8f0;
+  color: #09131f;
+}
+
+.pg-admin-audit-drawer-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+.pg-admin-audit-drawer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pg-admin-audit-drawer-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.pg-admin-audit-drawer-admin-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.pg-admin-audit-drawer-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #09131f;
+  color: #bef264;
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pg-admin-audit-drawer-admin-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #09131f;
+}
+
+.pg-admin-audit-drawer-admin-role {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.pg-admin-audit-drawer-admin-email {
+  font-size: 11.5px;
+  color: #0284c7;
+  font-family: ui-monospace, monospace;
+}
+
+.pg-admin-audit-drawer-action-callout {
+  background: #f8fafc;
+  border-left: 4px solid #bef264;
+  border: 1px solid #e2e8f0;
+  border-left-width: 4px;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #09131f;
+  line-height: 1.4;
+}
+
+.pg-admin-audit-drawer-desc-sub {
+  margin: 0;
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.pg-admin-audit-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.pg-admin-audit-drawer-grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pg-admin-audit-drawer-grid-item span {
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.03em;
+}
+
+.pg-admin-audit-drawer-grid-item strong {
+  font-size: 12.5px;
+  color: #09131f;
+}
+
+.pg-admin-audit-severity-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.pg-admin-audit-severity-tag--info {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.pg-admin-audit-severity-tag--notice {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.pg-admin-audit-severity-tag--warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.pg-admin-audit-severity-tag--critical {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Diff View */
+.pg-admin-audit-drawer-diff {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pg-admin-audit-drawer-diff-box {
+  padding: 10px 12px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.pg-admin-audit-drawer-diff-box--prev {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.pg-admin-audit-drawer-diff-box--new {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.pg-admin-audit-diff-title {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pg-admin-audit-drawer-diff-box code {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+/* Telemetry Steps */
+.pg-admin-audit-drawer-telemetry {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fafafa;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 11.5px;
+  color: #475569;
+}
+
+.pg-admin-audit-telemetry-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pg-admin-audit-telemetry-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #06b6d4;
+  flex-shrink: 0;
+}
+
+.pg-admin-audit-drawer-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e2e8f0;
+  background: #fafafa;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Skeleton & Error */
+.pg-admin-audit-skeleton-table {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pg-admin-audit-skeleton-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.pg-admin-audit-skeleton-col {
+  height: 20px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  animation: pgAuditPulse 1.5s infinite;
+}
+
+.pg-admin-audit-skeleton-col--sm { width: 60px; }
+.pg-admin-audit-skeleton-col--md { width: 140px; }
+.pg-admin-audit-skeleton-col--lg { flex: 1; }
+
+.pg-admin-audit-empty-state {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 60px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.pg-admin-audit-empty-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #09131f;
+}
+
+.pg-admin-audit-empty-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.pg-admin-audit-error-box {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+}
+
+.pg-admin-audit-error-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.pg-admin-audit-retry-btn {
+  background: #9f1239;
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (1920px to 360px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .pg-admin-audit-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .pg-admin-audit-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pg-admin-audit-header-actions {
+    justify-content: stretch;
+  }
+
+  .pg-admin-audit-header-actions .pg-admin-audit-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .pg-admin-audit-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .pg-admin-audit-search {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pg-admin-audit-filter-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pg-admin-audit-filter-select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pg-admin-audit-clear-btn {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  /* Transform Desktop Table to Mobile Cards */
+  .pg-admin-audit-table-shell {
+    display: none;
+  }
+
+  .pg-admin-audit-mobile-list {
+    display: flex;
+  }
+
+  /* Drawer turns into Bottom Sheet on Mobile */
+  .pg-admin-audit-drawer-overlay {
+    align-items: flex-end;
+  }
+
+  .pg-admin-audit-drawer {
+    width: 100vw;
+    height: 85vh;
+    border-radius: 16px 16px 0 0;
+    animation: pgAuditSlideUpDrawer 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes pgAuditSlideUpDrawer {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+}
+
+@media (max-width: 480px) {
+  .pg-admin-audit-page {
+    padding: 4px 2px 30px;
+  }
+
+  .pg-admin-audit-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .pg-admin-audit-summary-card {
+    padding: 12px 14px;
+  }
+
+  .pg-admin-audit-summary-value {
+    font-size: 20px;
+  }
+
+  .pg-admin-audit-filter-group {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-admin-audit-drawer-body {
+    padding: 16px;
+  }
+
+  .pg-admin-audit-drawer-grid {
+    grid-template-columns: 1fr;
+  }
+}

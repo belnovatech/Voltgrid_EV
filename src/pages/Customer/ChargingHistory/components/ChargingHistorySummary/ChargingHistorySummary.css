@@ -1,0 +1,55 @@
+.powergrid-history-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.powergrid-history-summary__card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 22px 18px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.powergrid-history-summary__card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.powergrid-history-summary__value {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #071322;
+  margin-bottom: 6px;
+}
+
+.powergrid-history-summary__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+@media (max-width: 900px) {
+  .powergrid-history-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .powergrid-history-summary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .powergrid-history-summary__card {
+    padding: 16px 12px;
+  }
+  .powergrid-history-summary__value {
+    font-size: 1.35rem;
+  }
+}
