@@ -1,0 +1,277 @@
+/* ==========================================================================
+   VOLTGRID CHARGER FOUND CONFIRMATION MODAL - CLEAN RESPONSIVE DESIGN
+   ========================================================================== */
+
+.voltgrid-charger-found-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 9, 20, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+  animation: voltgridFadeIn 0.2s ease-out;
+}
+
+.voltgrid-charger-found-modal {
+  background: #0d172e;
+  border: 1px solid #1a2744;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 460px;
+  max-height: calc(100vh - 2.5rem);
+  max-height: min(92vh, 640px);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(154, 230, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  margin: auto;
+  position: relative;
+  box-sizing: border-box;
+  animation: voltgridScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom scrollbar for modal */
+.voltgrid-charger-found-modal::-webkit-scrollbar {
+  width: 6px;
+}
+.voltgrid-charger-found-modal::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+.voltgrid-charger-found-header {
+  padding: 1.25rem 1.5rem 0.85rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.voltgrid-charger-found-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(154, 230, 0, 0.12);
+  border: 1px solid rgba(154, 230, 0, 0.3);
+  color: #9ae600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 18px rgba(154, 230, 0, 0.2);
+}
+
+.voltgrid-charger-found-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.voltgrid-charger-found-subtitle {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+/* Card Body */
+.voltgrid-charger-found-body {
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  flex: 1;
+}
+
+.voltgrid-charger-card-summary {
+  background: #060c18;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.voltgrid-charger-card-summary__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.voltgrid-charger-card-summary__station {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.2rem 0;
+}
+
+.voltgrid-charger-card-summary__loc {
+  font-size: 0.775rem;
+  color: #94a3b8;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.voltgrid-charger-card-summary__id-badge {
+  background: rgba(154, 230, 0, 0.15);
+  color: #9ae600;
+  border: 1px solid rgba(154, 230, 0, 0.3);
+  font-weight: 700;
+  font-size: 0.775rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.voltgrid-charger-card-summary__specs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.voltgrid-charger-spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.voltgrid-charger-spec-item__label {
+  font-size: 0.675rem;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.voltgrid-charger-spec-item__val {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+/* Vehicle Selector/Preview */
+.voltgrid-charger-vehicle-preview {
+  background: #060c18;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.voltgrid-charger-vehicle-preview__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.voltgrid-charger-vehicle-preview__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.voltgrid-charger-vehicle-preview__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.15rem 0;
+}
+
+.voltgrid-charger-vehicle-preview__plate {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Actions */
+.voltgrid-charger-found-actions {
+  padding: 0.75rem 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.voltgrid-start-charging-btn {
+  background: linear-gradient(135deg, #9ae600 0%, #84cc16 100%);
+  color: #060c18;
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(154, 230, 0, 0.35);
+  transition: all 0.2s ease;
+}
+
+.voltgrid-start-charging-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(154, 230, 0, 0.45);
+}
+
+.voltgrid-start-charging-btn:active {
+  transform: translateY(0);
+}
+
+.voltgrid-rescan-btn {
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.voltgrid-rescan-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+@media (max-width: 480px) {
+  .voltgrid-charger-found-backdrop {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .voltgrid-charger-found-header {
+    padding: 1rem 1.25rem 0.75rem;
+  }
+
+  .voltgrid-charger-found-body {
+    padding: 0.85rem 1.25rem;
+  }
+
+  .voltgrid-charger-found-actions {
+    padding: 0.65rem 1.25rem 1rem;
+  }
+}

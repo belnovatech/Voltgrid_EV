@@ -5,12 +5,14 @@ import './ReservationCard.css';
 interface ReservationCardProps {
   reservation: CustomerReservation;
   onStartCharging: (id: string) => void;
+  onViewSession?: (id: string) => void;
   onCancel: (id: string) => void;
 }
 
 export const ReservationCard: React.FC<ReservationCardProps> = ({
   reservation,
   onStartCharging,
+  onViewSession,
   onCancel,
 }) => {
   const isUpcoming = reservation.status === 'upcoming';
@@ -106,7 +108,7 @@ export const ReservationCard: React.FC<ReservationCardProps> = ({
               <button
                 type="button"
                 className="pg-res-card__start-btn"
-                onClick={() => onStartCharging(reservation.id)}
+                onClick={() => (onViewSession ? onViewSession(reservation.id) : onStartCharging(reservation.id))}
               >
                 View Session
               </button>

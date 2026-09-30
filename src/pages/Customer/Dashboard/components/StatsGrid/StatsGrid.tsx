@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CustomerDashboardData } from '../../../../../types/customer';
 import { formatCurrencyINR } from '../../../../../utils/dashboardHelpers';
 import './StatsGrid.css';
@@ -9,6 +10,7 @@ interface StatsGridProps {
 }
 
 export const StatsGrid: React.FC<StatsGridProps> = ({ data, isLoading = false }) => {
+  const navigate = useNavigate();
   const walletBalance = data?.walletBalance ?? 1250;
   const activeSession = data?.activeSession;
   const lastCharging = data?.lastCharging;
@@ -17,7 +19,18 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ data, isLoading = false })
   return (
     <section className="pg-sgrid" aria-label="Charging and Wallet Metrics">
       {/* 1. Wallet Balance (Dark Card) */}
-      <div className="pg-sgrid__card pg-sgrid__card--dark">
+      <div
+        className="pg-sgrid__card pg-sgrid__card--dark"
+        onClick={() => navigate('/customer/wallet')}
+        role="button"
+        tabIndex={0}
+        aria-label="View Wallet details"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            navigate('/customer/wallet');
+          }
+        }}
+      >
         <div className="pg-sgrid__icon-wrap pg-sgrid__icon-wrap--dark" aria-hidden="true">
           <span className="pg-sgrid__rupee-sym">₹</span>
         </div>
@@ -29,7 +42,18 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ data, isLoading = false })
       </div>
 
       {/* 2. Active Session */}
-      <div className="pg-sgrid__card">
+      <div
+        className="pg-sgrid__card"
+        onClick={() => navigate('/customer/charging')}
+        role="button"
+        tabIndex={0}
+        aria-label="View Charging Session"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            navigate('/customer/charging');
+          }
+        }}
+      >
         <div className="pg-sgrid__icon-wrap" aria-hidden="true">
           <svg
             width="18"
@@ -54,7 +78,18 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ data, isLoading = false })
       </div>
 
       {/* 3. Last Charging */}
-      <div className="pg-sgrid__card">
+      <div
+        className="pg-sgrid__card"
+        onClick={() => navigate('/customer/history')}
+        role="button"
+        tabIndex={0}
+        aria-label="View Charging History"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            navigate('/customer/history');
+          }
+        }}
+      >
         <div className="pg-sgrid__icon-wrap" aria-hidden="true">
           <svg
             width="18"
@@ -80,7 +115,18 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ data, isLoading = false })
       </div>
 
       {/* 4. Total Energy */}
-      <div className="pg-sgrid__card">
+      <div
+        className="pg-sgrid__card"
+        onClick={() => navigate('/customer/history')}
+        role="button"
+        tabIndex={0}
+        aria-label="View Energy Consumption History"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            navigate('/customer/history');
+          }
+        }}
+      >
         <div className="pg-sgrid__icon-wrap" aria-hidden="true">
           <svg
             width="18"

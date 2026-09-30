@@ -1,22 +1,44 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CustomerLayout } from '../../../components/customer/CustomerLayout/CustomerLayout';
 import { customerService } from '../../../services/customerService';
-import { CustomerReservation } from '../../../types/customer';
+import { chargingSessionService } from '../../../services/chargingSessionService';
+import { CustomerReservation, CustomerVehicle } from '../../../types/customer';
+import { ChargerQRPayload } from '../../../types/charging';
 import { ReservationCard } from './components/ReservationCard/ReservationCard';
 import { NewReservation } from './components/NewReservation/NewReservation';
+import { QRScannerModal } from '../Charging/components/QRScannerModal/QRScannerModal';
+import { ChargerFoundModal } from '../Charging/components/ChargerFoundModal/ChargerFoundModal';
+import { SessionDetailsModal } from './components/SessionDetailsModal/SessionDetailsModal';
 import './Reservations.css';
 
 export const Reservations: React.FC = () => {
+  const navigate = useNavigate();
   const [reservations, setReservations] = useState<CustomerReservation[]>([]);
+  const [vehicles, setVehicles] = useState<CustomerVehicle[]>([]);
+  const [selectedVehicleId, setSelectedVehicleId] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isWizardOpen, setIsWizardOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  // QR Scanning & Charger Found States
+  const [scanningReservation, setScanningReservation] = useState<CustomerReservation | null>(null);
+  const [isScannerOpen, setIsScannerOpen] = useState<boolean>(false);
+  const [detectedCharger, setDetectedCharger] = useState<ChargerQRPayload | null>(null);
+  const [viewingSessionReservation, setViewingSessionReservation] = useState<CustomerReservation | null>(null);
+
   const fetchReservations = async () => {
     setIsLoading(true);
     try {
-      const res = await customerService.getReservations();
+      const [res, vehs] = await Promise.all([
+        customerService.getReservations(),
+        customerService.getVehicles(),
+      ]);
       setReservations(res);
+      setVehicles(vehs);
+      if (vehs.length > 0) {
+        setSelectedVehicleId(vehs.find((v) => v.isDefault)?.id || vehs[0].id);
+      }
     } catch {
       // ignore
     } finally {
@@ -41,13 +63,93 @@ export const Reservations: React.FC = () => {
 
   const handleStartCharging = (id: string) => {
     const target = reservations.find((r) => r.id === id);
-    if (target) {
-      setToastMessage(`Plugged into ${target.stationName} (${target.chargerId || target.chargerType}). Charging session started!`);
-      setReservations((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, status: 'active' } : r))
-      );
-      setTimeout(() => setToastMessage(null), 4000);
+    if (!target) return;
+
+    // If reservation is already active and session is running, navigate directly to live charging
+    if (target.status === 'active' && chargingSessionService.hasActiveSession()) {
+      navigate('/customer/charging');
+      return;
     }
+
+    // Otherwise open QR Scanner
+    setScanningReservation(target);
+    setIsScannerOpen(true);
+  };
+
+  const handleViewSession = (id: string) => {
+    const target = reservations.find((r) => r.id === id);
+    if (!target) return;
+
+    // If an active session is currently running for this, navigate directly or open modal
+    setViewingSessionReservation(target);
+  };
+
+  const handleOpenLiveFromSessionModal = async (res: CustomerReservation) => {
+    setViewingSessionReservation(null);
+
+    // If session is already running, navigate directly
+    if (chargingSessionService.hasActiveSession()) {
+      navigate('/customer/charging');
+      return;
+    }
+
+    // Otherwise initialize session for this active reservation
+    const chosenVehicle =
+      vehicles.find((v) => v.name.toLowerCase() === res.vehicleName?.toLowerCase()) ||
+      vehicles.find((v) => v.isDefault) ||
+      vehicles[0];
+
+    const chargerPayload: ChargerQRPayload = {
+      chargerId: res.chargerId || 'CH-028',
+      stationId: res.stationId || 'st-tpt-01',
+      stationName: res.stationName,
+      location: `${res.city}, Andhra Pradesh`,
+      connectorType: res.chargerType.includes('CCS2') ? 'CCS2' : 'Type 2',
+      powerKw: res.powerKw || 60,
+      ratePerKwh: res.ratePerKWh || 8,
+      isAvailable: true,
+    };
+
+    await chargingSessionService.startSession({
+      charger: chargerPayload,
+      vehicle: chosenVehicle,
+      reservation: res,
+    });
+
+    navigate('/customer/charging');
+  };
+
+  const handleChargerDetected = (charger: ChargerQRPayload) => {
+    setIsScannerOpen(false);
+    setDetectedCharger(charger);
+  };
+
+  const handleConfirmStartCharging = async () => {
+    if (!detectedCharger) return;
+
+    const chosenVehicle =
+      vehicles.find((v) => v.id === selectedVehicleId) ||
+      vehicles.find((v) => v.isDefault) ||
+      vehicles[0];
+
+    await chargingSessionService.startSession({
+      charger: detectedCharger,
+      vehicle: chosenVehicle,
+      reservation: scanningReservation || undefined,
+    });
+
+    // Update local reservation status to active
+    if (scanningReservation) {
+      setReservations((prev) =>
+        prev.map((r) => (r.id === scanningReservation.id ? { ...r, status: 'active' } : r))
+      );
+    }
+
+    setDetectedCharger(null);
+    setScanningReservation(null);
+
+    // Navigate to live charging screen
+    navigate('/customer/charging');
   };
 
   const handleReservationCreated = (newRes: CustomerReservation) => {
@@ -127,11 +229,48 @@ export const Reservations: React.FC = () => {
                 key={res.id}
                 reservation={res}
                 onStartCharging={handleStartCharging}
+                onViewSession={handleViewSession}
                 onCancel={handleCancel}
               />
             ))}
           </div>
         )}
+
+        {/* Active Session Details Popup Modal */}
+        <SessionDetailsModal
+          isOpen={!!viewingSessionReservation}
+          reservation={viewingSessionReservation}
+          onClose={() => setViewingSessionReservation(null)}
+          onOpenLiveScreen={handleOpenLiveFromSessionModal}
+        />
+
+        {/* QR Scanner & Confirmation Modals */}
+        <QRScannerModal
+          isOpen={isScannerOpen}
+          reservation={scanningReservation}
+          onClose={() => {
+            setIsScannerOpen(false);
+            setScanningReservation(null);
+          }}
+          onChargerDetected={handleChargerDetected}
+        />
+
+        <ChargerFoundModal
+          charger={detectedCharger}
+          reservation={scanningReservation}
+          vehicles={vehicles}
+          selectedVehicleId={selectedVehicleId}
+          onSelectVehicle={setSelectedVehicleId}
+          onConfirmStart={handleConfirmStartCharging}
+          onRescan={() => {
+            setDetectedCharger(null);
+            setIsScannerOpen(true);
+          }}
+          onClose={() => {
+            setDetectedCharger(null);
+            setScanningReservation(null);
+          }}
+        />
       </div>
     </CustomerLayout>
   );

@@ -14,6 +14,7 @@ import { Notifications } from '../pages/Customer/Notifications/Notifications';
 import { Support } from '../pages/Customer/Support/Support';
 import { Profile } from '../pages/Customer/Profile/Profile';
 import { Settings } from '../pages/Customer/Settings/Settings';
+import { LiveCharging } from '../pages/Customer/Charging/LiveCharging';
 import { AdminLayout } from '../admin/components/AdminLayout/AdminLayout';
 import { AdminDashboard } from '../admin/pages/Dashboard/AdminDashboard';
 import { AdminZones } from '../admin/pages/Zones/AdminZones';
@@ -75,6 +76,18 @@ export const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/customer/charging"
+        element={
+          <ProtectedRoute allowedRoles={['customer', 'admin']}>
+            <LiveCharging />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/customer/live-charging" element={<Navigate to="/customer/charging" replace />} />
+      <Route path="/customer/charging-session" element={<Navigate to="/customer/charging" replace />} />
+      <Route path="/charging" element={<Navigate to="/customer/charging" replace />} />
 
       <Route
         path="/customer/vehicles"

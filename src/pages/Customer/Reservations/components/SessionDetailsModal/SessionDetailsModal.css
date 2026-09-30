@@ -1,0 +1,280 @@
+/* ==========================================================================
+   VOLTGRID ACTIVE SESSION DETAILS MODAL POPUP
+   ========================================================================== */
+
+.voltgrid-session-details-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 9, 20, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+  animation: voltgridFadeIn 0.2s ease-out;
+}
+
+.voltgrid-session-details-modal {
+  background: #0d172e;
+  border: 1px solid #1a2744;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - 2.5rem);
+  max-height: min(92vh, 660px);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(56, 189, 248, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  margin: auto;
+  position: relative;
+  box-sizing: border-box;
+  animation: voltgridScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.voltgrid-session-details-modal::-webkit-scrollbar {
+  width: 6px;
+}
+.voltgrid-session-details-modal::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+/* Header */
+.voltgrid-session-details-header {
+  padding: 1.25rem 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.voltgrid-session-details-header__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.voltgrid-session-details-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voltgrid-session-details-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.voltgrid-session-details-sub {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.voltgrid-session-details-close {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.voltgrid-session-details-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* Body */
+.voltgrid-session-details-body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+/* Station Banner */
+.voltgrid-session-station-banner {
+  background: #060c18;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.voltgrid-session-station-banner__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.2rem 0;
+}
+
+.voltgrid-session-station-banner__loc {
+  font-size: 0.775rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.voltgrid-session-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(154, 230, 0, 0.15);
+  border: 1px solid rgba(154, 230, 0, 0.3);
+  color: #9ae600;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Stats 2x2 Grid */
+.voltgrid-session-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.voltgrid-session-grid-item {
+  background: #060c18;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.voltgrid-session-grid-item__label {
+  font-size: 0.675rem;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.voltgrid-session-grid-item__val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.voltgrid-session-grid-item__val--lime {
+  color: #9ae600;
+}
+
+.voltgrid-session-grid-item__val--cyan {
+  color: #38bdf8;
+}
+
+/* Vehicle card */
+.voltgrid-session-vehicle-card {
+  background: #060c18;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.voltgrid-session-vehicle-card__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(154, 230, 0, 0.1);
+  color: #9ae600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voltgrid-session-vehicle-card__name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.15rem 0;
+}
+
+.voltgrid-session-vehicle-card__meta {
+  font-size: 0.775rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Actions */
+.voltgrid-session-details-actions {
+  padding: 0.75rem 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.voltgrid-session-live-btn {
+  background: linear-gradient(135deg, #9ae600 0%, #84cc16 100%);
+  color: #060c18;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(154, 230, 0, 0.35);
+  transition: all 0.2s ease;
+}
+
+.voltgrid-session-live-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(154, 230, 0, 0.45);
+}
+
+.voltgrid-session-close-btn {
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.voltgrid-session-close-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+@media (max-width: 480px) {
+  .voltgrid-session-details-backdrop {
+    padding: 0.75rem 0.5rem;
+  }
+}

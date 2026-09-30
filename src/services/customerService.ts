@@ -383,6 +383,24 @@ class CustomerService {
       }
     }
 
+    const savedReservations = sessionStorage.getItem('vg_customer_reservations');
+    if (savedReservations) {
+      try {
+        this.reservations = JSON.parse(savedReservations);
+      } catch {
+        // use default
+      }
+    }
+
+    const savedHistory = sessionStorage.getItem('vg_customer_history');
+    if (savedHistory) {
+      try {
+        this.history = JSON.parse(savedHistory);
+      } catch {
+        // use default
+      }
+    }
+
     const savedNotifications = sessionStorage.getItem('vg_customer_notifications');
     if (savedNotifications) {
       try {
@@ -565,6 +583,7 @@ class CustomerService {
       status: 'upcoming',
     };
     this.reservations.unshift(newReservation);
+    sessionStorage.setItem('vg_customer_reservations', JSON.stringify(this.reservations));
     this.notifications.unshift({
       id: `notif_${Date.now()}`,
       title: 'Reservation Confirmed',
@@ -582,6 +601,7 @@ class CustomerService {
     this.reservations = this.reservations.map((r) =>
       r.id === id ? { ...r, status: 'cancelled' } : r
     );
+    sessionStorage.setItem('vg_customer_reservations', JSON.stringify(this.reservations));
     return true;
   }
 
