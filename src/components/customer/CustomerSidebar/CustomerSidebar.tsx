@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { CustomerProfile } from '../../../types/customer';
 import { useAuth } from '../../../context/AuthContext';
 import { formatCurrencyINR } from '../../../utils/dashboardHelpers';
+import { chargingSessionService } from '../../../services/chargingSessionService';
 import './CustomerSidebar.css';
 
 interface CustomerSidebarProps {
@@ -21,7 +22,15 @@ export const CustomerSidebar: React.FC<CustomerSidebarProps> = ({
   const navigate = useNavigate();
   const { logoutUser } = useAuth();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false);
+  const [isChargingActive, setIsChargingActive] = useState<boolean>(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const unsub = chargingSessionService.subscribe((s) => {
+      setIsChargingActive(!!s && s.status === 'CHARGING');
+    });
+    return () => unsub();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -58,6 +67,16 @@ export const CustomerSidebar: React.FC<CustomerSidebarProps> = ({
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
           <circle cx="12" cy="10" r="3" />
+        </svg>
+      ),
+    },
+    {
+      to: '/customer/charging',
+      label: isChargingActive ? 'Live Charging' : 'Quick Charge',
+      badge: isChargingActive ? '● LIVE' : undefined,
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
         </svg>
       ),
     },

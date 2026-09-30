@@ -1,0 +1,243 @@
+/* ==========================================================================
+   VOLTGRID LIVE CHARGING SESSION - CLEAN STRUCTURED PREMIUM EV STYLING
+   ========================================================================== */
+
+.voltgrid-charging-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 1.5rem 1.25rem 4rem;
+  background-color: #060c18;
+  color: #ffffff;
+  box-sizing: border-box;
+  animation: voltgridFadeIn 0.3s ease-out;
+}
+
+/* Centered Unified Container for Header + Main Stack */
+.voltgrid-charging-container {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Page Header */
+.voltgrid-charging-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 1.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 1.25rem;
+}
+
+.voltgrid-charging-header__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.voltgrid-charging-header__sub {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.voltgrid-charging-header__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.voltgrid-charging-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.voltgrid-charging-status-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  animation: voltgridPulseDot 1.6s infinite ease-in-out;
+}
+
+/* Main Content Container */
+.voltgrid-charging-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Stop Charging Trigger Button */
+.voltgrid-stop-charging-action-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.voltgrid-stop-charging-trigger-btn {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  border-radius: 12px;
+  padding: 0.85rem 2.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.15);
+}
+
+.voltgrid-stop-charging-trigger-btn:hover {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: #ef4444;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+}
+
+.voltgrid-stop-charging-trigger-btn:active {
+  transform: translateY(0);
+}
+
+/* Empty / Idle State */
+.voltgrid-charging-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3.5rem 2rem;
+  background: #0d172e;
+  border: 1px solid #1a2744;
+  border-radius: 20px;
+  max-width: 480px;
+  width: 100%;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+.voltgrid-charging-empty__icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(154, 230, 0, 0.1);
+  border: 1px solid rgba(154, 230, 0, 0.25);
+  color: #9ae600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px rgba(154, 230, 0, 0.15);
+}
+
+.voltgrid-charging-empty__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.voltgrid-charging-empty__text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+.voltgrid-charging-scan-btn {
+  background: linear-gradient(135deg, #9ae600 0%, #84cc16 100%);
+  color: #060c18;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(154, 230, 0, 0.35);
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.voltgrid-charging-scan-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(154, 230, 0, 0.45);
+}
+
+@keyframes voltgridPulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.4;
+  }
+}
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 768px) {
+  .voltgrid-charging-page {
+    padding: 1rem 0.875rem 3rem;
+  }
+
+  .voltgrid-charging-header {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .voltgrid-charging-header__title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .voltgrid-charging-header {
+    gap: 0.5rem;
+  }
+
+  .voltgrid-charging-header__title {
+    font-size: 1rem;
+  }
+
+  .voltgrid-charging-status-badge {
+    padding: 0.25rem 0.65rem;
+    font-size: 0.7rem;
+  }
+
+  .voltgrid-stop-charging-trigger-btn {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+  }
+}

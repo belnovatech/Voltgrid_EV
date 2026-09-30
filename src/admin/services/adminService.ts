@@ -895,6 +895,41 @@ class AdminService {
   private maintenance = [...INITIAL_MAINTENANCE];
   private auditLogs = [...INITIAL_AUDIT_LOGS];
 
+  constructor() {
+    const savedZones = sessionStorage.getItem('vg_admin_zones');
+    if (savedZones) {
+      try {
+        this.zones = JSON.parse(savedZones);
+      } catch {
+        // use default
+      }
+    }
+    const savedChargers = sessionStorage.getItem('vg_admin_chargers');
+    if (savedChargers) {
+      try {
+        this.chargers = JSON.parse(savedChargers);
+      } catch {
+        // use default
+      }
+    }
+    const savedTariffs = sessionStorage.getItem('vg_admin_tariffs');
+    if (savedTariffs) {
+      try {
+        this.tariffs = JSON.parse(savedTariffs);
+      } catch {
+        // use default
+      }
+    }
+    const savedMaintenance = sessionStorage.getItem('vg_admin_maintenance');
+    if (savedMaintenance) {
+      try {
+        this.maintenance = JSON.parse(savedMaintenance);
+      } catch {
+        // use default
+      }
+    }
+  }
+
   async getDashboardOverview(): Promise<AdminDashboardOverview> {
     await new Promise((res) => setTimeout(res, 200));
 
@@ -982,6 +1017,7 @@ class AdminService {
       status: (newZone.status as 'Active') || 'Active',
     };
     this.zones.push(created);
+    sessionStorage.setItem('vg_admin_zones', JSON.stringify(this.zones));
     return created;
   }
 
@@ -1013,6 +1049,7 @@ class AdminService {
     };
 
     this.chargers.unshift(created);
+    sessionStorage.setItem('vg_admin_chargers', JSON.stringify(this.chargers));
     return created;
   }
 
@@ -1023,12 +1060,14 @@ class AdminService {
       throw new Error('Charging point not found');
     }
     this.chargers[idx] = { ...this.chargers[idx], ...updates };
+    sessionStorage.setItem('vg_admin_chargers', JSON.stringify(this.chargers));
     return this.chargers[idx];
   }
 
   async deleteChargingPoint(id: string): Promise<boolean> {
     await new Promise((res) => setTimeout(res, 300));
     this.chargers = this.chargers.filter((c) => c.id !== id && c.pointCode !== id);
+    sessionStorage.setItem('vg_admin_chargers', JSON.stringify(this.chargers));
     return true;
   }
 
@@ -1055,6 +1094,7 @@ class AdminService {
       lastUpdated: new Date().toISOString().slice(0, 10),
     };
     this.tariffs.push(created);
+    sessionStorage.setItem('vg_admin_tariffs', JSON.stringify(this.tariffs));
     return created;
   }
 
@@ -1069,12 +1109,14 @@ class AdminService {
       ...updates,
       lastUpdated: new Date().toISOString().slice(0, 10),
     };
+    sessionStorage.setItem('vg_admin_tariffs', JSON.stringify(this.tariffs));
     return this.tariffs[idx];
   }
 
   async deleteTariff(id: string): Promise<boolean> {
     await new Promise((res) => setTimeout(res, 300));
     this.tariffs = this.tariffs.filter((t) => t.id !== id);
+    sessionStorage.setItem('vg_admin_tariffs', JSON.stringify(this.tariffs));
     return true;
   }
 

@@ -42,13 +42,15 @@ export function AdminDataTable<T>({
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSearchTerm(val);
+    setCurrentPage(1);
     if (onSearch) {
       onSearch(val);
     }
   };
 
   const totalPages = Math.ceil(data.length / pageSize) || 1;
-  const startIndex = (currentPage - 1) * pageSize;
+  const safePage = Math.min(currentPage, totalPages);
+  const startIndex = (safePage - 1) * pageSize;
   const visibleData = pagination ? data.slice(startIndex, startIndex + pageSize) : data;
 
   return (
@@ -148,18 +150,18 @@ export function AdminDataTable<T>({
             <button
               type="button"
               className="pg-admin-table-pagination__btn"
-              disabled={currentPage === 1}
+              disabled={safePage === 1}
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             >
               Previous
             </button>
             <span className="pg-admin-table-pagination__page">
-              Page {currentPage} of {totalPages}
+              Page {safePage} of {totalPages}
             </span>
             <button
               type="button"
               className="pg-admin-table-pagination__btn"
-              disabled={currentPage === totalPages}
+              disabled={safePage === totalPages}
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             >
               Next

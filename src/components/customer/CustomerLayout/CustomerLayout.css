@@ -12,6 +12,18 @@
   box-sizing: border-box;
 }
 
+.powergrid-customer-shell--dark {
+  background-color: #060c18 !important;
+}
+
+.powergrid-customer-shell--dark .powergrid-customer-shell__main-wrapper {
+  background-color: #060c18 !important;
+}
+
+.powergrid-customer-shell--dark .powergrid-customer-shell__content {
+  background-color: #060c18 !important;
+}
+
 /* Main Content Wrapper with Sidebar Offset */
 .powergrid-customer-shell__main-wrapper {
   flex: 1;

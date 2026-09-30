@@ -1,0 +1,434 @@
+/* ==========================================================================
+   VOLTGRID QR SCANNER MODAL - NAMESPACED BEM STYLES
+   ========================================================================== */
+
+.voltgrid-qr-scanner-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 12, 24, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  animation: voltgridFadeIn 0.2s ease-out;
+}
+
+.voltgrid-qr-scanner-modal {
+  background: #0d172e;
+  border: 1px solid #1a2744;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  overflow-y: auto;
+  position: relative;
+  animation: voltgridScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Header */
+.voltgrid-qr-scanner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.voltgrid-qr-scanner-header__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.voltgrid-qr-scanner-header__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.voltgrid-qr-scanner-header__subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.voltgrid-qr-scanner-header__close {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.voltgrid-qr-scanner-header__close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: scale(1.04);
+}
+
+/* Viewport & Camera Stage */
+.voltgrid-qr-scanner-stage {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.voltgrid-qr-scanner-viewport {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  max-width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #060c18;
+  border: 2px solid rgba(154, 230, 0, 0.25);
+  box-shadow: 0 0 30px rgba(154, 230, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voltgrid-qr-scanner-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.voltgrid-qr-scanner-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+  color: #64748b;
+  gap: 0.75rem;
+}
+
+.voltgrid-qr-scanner-fallback__icon {
+  color: #9ae600;
+  opacity: 0.8;
+  animation: voltgridPulse 2s infinite ease-in-out;
+}
+
+.voltgrid-qr-scanner-fallback__text {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  max-width: 200px;
+}
+
+/* Reticle Corners */
+.voltgrid-qr-scanner-corners {
+  position: absolute;
+  inset: 24px;
+  pointer-events: none;
+}
+
+.voltgrid-qr-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: #9ae600;
+  border-style: solid;
+  filter: drop-shadow(0 0 6px rgba(154, 230, 0, 0.8));
+}
+
+.voltgrid-qr-corner--tl {
+  top: 0;
+  left: 0;
+  border-width: 3.5px 0 0 3.5px;
+  border-top-left-radius: 8px;
+}
+
+.voltgrid-qr-corner--tr {
+  top: 0;
+  right: 0;
+  border-width: 3.5px 3.5px 0 0;
+  border-top-right-radius: 8px;
+}
+
+.voltgrid-qr-corner--bl {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 3.5px 3.5px;
+  border-bottom-left-radius: 8px;
+}
+
+.voltgrid-qr-corner--br {
+  bottom: 0;
+  right: 0;
+  border-width: 0 3.5px 3.5px 0;
+  border-bottom-right-radius: 8px;
+}
+
+/* Scanning Laser Line */
+.voltgrid-qr-scanner-laser {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #9ae600, #38bdf8, #9ae600, transparent);
+  box-shadow: 0 0 16px #9ae600, 0 0 8px #38bdf8;
+  animation: voltgridScanLaser 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Prompt Caption */
+.voltgrid-qr-scanner-instruction {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  text-align: center;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.voltgrid-qr-scanner-instruction__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9ae600;
+  box-shadow: 0 0 10px #9ae600;
+  animation: voltgridBlink 1.4s infinite;
+}
+
+/* Error message banner */
+.voltgrid-qr-scanner-error {
+  width: 100%;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 0.875rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #fca5a5;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* Presets & Quick Simulation Actions */
+.voltgrid-qr-scanner-presets {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.voltgrid-qr-scanner-presets__title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin: 0;
+}
+
+.voltgrid-qr-scanner-presets__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.voltgrid-qr-scanner-preset-btn {
+  background: #060c18;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #ffffff;
+  text-align: left;
+}
+
+.voltgrid-qr-scanner-preset-btn:hover {
+  background: rgba(154, 230, 0, 0.06);
+  border-color: rgba(154, 230, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.voltgrid-qr-scanner-preset-btn__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.voltgrid-qr-scanner-preset-btn__id {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #9ae600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.voltgrid-qr-scanner-preset-btn__meta {
+  font-size: 0.775rem;
+  color: #94a3b8;
+}
+
+.voltgrid-qr-scanner-preset-btn__badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+/* Manual Code Input fallback */
+.voltgrid-qr-scanner-manual {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.voltgrid-qr-scanner-manual__input {
+  flex: 1;
+  background: #060c18;
+  border: 1px solid #1a2744;
+  border-radius: 10px;
+  padding: 0.65rem 0.875rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.voltgrid-qr-scanner-manual__input:focus {
+  border-color: #9ae600;
+}
+
+.voltgrid-qr-scanner-manual__btn {
+  background: rgba(154, 230, 0, 0.15);
+  color: #9ae600;
+  border: 1px solid rgba(154, 230, 0, 0.3);
+  border-radius: 10px;
+  padding: 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.voltgrid-qr-scanner-manual__btn:hover {
+  background: #9ae600;
+  color: #060c18;
+}
+
+/* Footer */
+.voltgrid-qr-scanner-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1.25rem 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 0.75rem;
+}
+
+.voltgrid-qr-scanner-cancel-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.voltgrid-qr-scanner-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Keyframe animations */
+@keyframes voltgridFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes voltgridScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes voltgridScanLaser {
+  0% {
+    top: 24px;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 250px;
+    opacity: 0.8;
+  }
+}
+
+@keyframes voltgridPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes voltgridBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Responsive queries */
+@media (max-width: 480px) {
+  .voltgrid-qr-scanner-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .voltgrid-qr-scanner-modal {
+    max-height: 94vh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .voltgrid-qr-scanner-viewport {
+    width: 240px;
+    height: 240px;
+  }
+
+  @keyframes voltgridScanLaser {
+    0% { top: 20px; }
+    100% { top: 216px; }
+  }
+}

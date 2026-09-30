@@ -7,9 +7,10 @@ import './CustomerLayout.css';
 
 interface CustomerLayoutProps {
   children: ReactNode;
+  dark?: boolean;
 }
 
-export const CustomerLayout: React.FC<CustomerLayoutProps> = ({ children }) => {
+export const CustomerLayout: React.FC<CustomerLayoutProps> = ({ children, dark = false }) => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<CustomerProfile>({
     id: 'usr_bala_01',
@@ -54,7 +55,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({ children }) => {
   }, [isMobileNavOpen]);
 
   return (
-    <div className="powergrid-customer-shell">
+    <div className={`powergrid-customer-shell ${dark ? 'powergrid-customer-shell--dark' : ''}`}>
       {/* Off-canvas mobile backdrop */}
       {isMobileNavOpen && (
         <div

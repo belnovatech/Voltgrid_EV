@@ -1,29 +1,57 @@
+/* ==========================================================================
+   STATION DETAILS MODAL - COMPACT & RESPONSIVE DESIGN
+   ========================================================================== */
+
 .pg-smodal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 16px;
+  padding: 1.25rem 1rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+  animation: pg-modal-fade 0.2s ease-out;
+}
+
+@keyframes pg-modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .pg-smodal {
   background: #ffffff;
   border-radius: 18px;
   width: 100%;
-  max-width: 540px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-  animation: pg-modal-enter 0.2s ease-out;
+  max-width: 500px;
+  max-height: calc(100vh - 2.5rem);
+  max-height: min(88vh, 580px);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  margin: auto;
+  position: relative;
+  box-sizing: border-box;
+  animation: pg-modal-enter 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pg-smodal::-webkit-scrollbar {
+  width: 5px;
+}
+.pg-smodal::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
 }
 
 @keyframes pg-modal-enter {
   from {
     opacity: 0;
-    transform: scale(0.96) translateY(8px);
+    transform: scale(0.96) translateY(6px);
   }
   to {
     opacity: 1;
@@ -31,34 +59,37 @@
   }
 }
 
+/* Header */
 .pg-smodal__header {
-  padding: 24px;
+  padding: 16px 20px 14px;
   background: #0f172a;
   color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-shrink: 0;
 }
 
 .pg-smodal__tag {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: #9ae600;
   text-transform: uppercase;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .pg-smodal__title {
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #ffffff;
-  margin: 0 0 4px 0;
+  margin: 0 0 2px 0;
+  letter-spacing: -0.01em;
 }
 
 .pg-smodal__sub {
-  font-size: 0.82rem;
+  font-size: 0.775rem;
   color: #94a3b8;
   margin: 0;
 }
@@ -67,51 +98,56 @@
   background: rgba(255, 255, 255, 0.1);
   border: none;
   color: #ffffff;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
 .pg-smodal__close-btn:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* Body */
 .pg-smodal__body {
-  padding: 24px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
+  flex: 1;
 }
 
 .pg-smodal__stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 8px;
 }
 
 .pg-smodal__stat-card {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-  padding: 12px 10px;
+  padding: 10px 8px;
   text-align: center;
 }
 
 .pg-smodal__stat-label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.675rem;
   color: #64748b;
   font-weight: 600;
-  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 2px;
 }
 
 .pg-smodal__stat-val {
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: #0f172a;
 }
@@ -121,89 +157,124 @@
 }
 
 .pg-smodal__section-title {
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #334155;
-  margin: 0 0 10px 0;
+  margin: 0 0 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .pg-smodal__connectors {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .pg-smodal__connector-chip {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 10px 14px;
+  border-radius: 8px;
+  padding: 8px 12px;
 }
 
 .pg-smodal__plug-icon {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
 .pg-smodal__connector-chip strong {
   display: block;
-  font-size: 0.88rem;
+  font-size: 0.825rem;
   color: #0f172a;
 }
 
 .pg-smodal__connector-chip span {
-  font-size: 0.76rem;
+  font-size: 0.725rem;
   color: #64748b;
 }
 
 .pg-smodal__amenities {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .pg-smodal__amenity {
   background: #f1f5f9;
   border: 1px solid #e2e8f0;
-  font-size: 0.78rem;
+  font-size: 0.725rem;
   font-weight: 600;
   color: #475569;
-  padding: 6px 10px;
+  padding: 4px 8px;
   border-radius: 6px;
 }
 
+/* Footer */
 .pg-smodal__footer {
-  padding: 16px 24px 24px;
+  padding: 12px 20px 16px;
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 10px;
   border-top: 1px solid #f1f5f9;
+  flex-shrink: 0;
 }
 
 .pg-smodal__cancel-btn {
   background: #f1f5f9;
   border: 1px solid #e2e8f0;
   color: #475569;
-  padding: 10px 18px;
+  padding: 8px 16px;
   border-radius: 8px;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-smodal__cancel-btn:hover {
+  background: #e2e8f0;
 }
 
 .pg-smodal__reserve-btn {
   background: #9ae600;
   border: none;
   color: #060d19;
-  padding: 10px 22px;
+  padding: 8px 20px;
   border-radius: 8px;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(154, 230, 0, 0.3);
 }
 
 .pg-smodal__reserve-btn:hover {
-  background: #a8f500;
+  background: #84cc16;
+  transform: translateY(-1px);
+}
+
+/* Mobile Media Queries */
+@media (max-width: 480px) {
+  .pg-smodal-overlay {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .pg-smodal {
+    max-height: 92vh;
+  }
+
+  .pg-smodal__header {
+    padding: 14px 16px;
+  }
+
+  .pg-smodal__body {
+    padding: 14px 16px;
+  }
+
+  .pg-smodal__footer {
+    padding: 10px 16px 14px;
+  }
 }
