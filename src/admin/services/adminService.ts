@@ -6,6 +6,11 @@ import {
   AdminChargingSession,
   AdminTariffPlan,
   AdminMaintenanceTicket,
+  AdminFieldEngineer,
+  TicketTimelineItem,
+  AdminRolePermission,
+  RoleStaffMember,
+  PermissionDefinition,
   AdminAuditLog,
   AdminDashboardOverview,
 } from '../types/admin';
@@ -655,30 +660,913 @@ const INITIAL_TARIFFS: AdminTariffPlan[] = [
   },
 ];
 
+export const INITIAL_FIELD_ENGINEERS: AdminFieldEngineer[] = [
+  {
+    id: 'ENG-101',
+    name: 'K. Venkatesh',
+    phone: '+91 98480 12345',
+    email: 'k.venkatesh@powergrid.in',
+    zoneCode: 'AP-Z05',
+    zoneName: 'Nellore NH-16 Hub',
+    status: 'On Site',
+    activeJobs: 2,
+    specialization: 'DC Fast Chargers & Solenoid Hardware',
+  },
+  {
+    id: 'ENG-102',
+    name: 'S. Ramana',
+    phone: '+91 98481 23456',
+    email: 's.ramana@powergrid.in',
+    zoneCode: 'AP-Z03',
+    zoneName: 'Tirupati East Hub',
+    status: 'Available',
+    activeJobs: 1,
+    specialization: 'Thermal Management & Liquid Cooling',
+  },
+  {
+    id: 'ENG-103',
+    name: 'P. Rajesh Kumar',
+    phone: '+91 98482 34567',
+    email: 'p.rajesh@powergrid.in',
+    zoneCode: 'AP-Z01',
+    zoneName: 'Vijayawada Central',
+    status: 'Available',
+    activeJobs: 0,
+    specialization: 'Grid Interconnect & High Voltage AC/DC',
+  },
+  {
+    id: 'ENG-104',
+    name: 'A. Suresh Reddy',
+    phone: '+91 98483 45678',
+    email: 'a.suresh@powergrid.in',
+    zoneCode: 'AP-Z02',
+    zoneName: 'Visakhapatnam Port',
+    status: 'Busy',
+    activeJobs: 3,
+    specialization: 'OCPP 2.0.1 Protocol & Gateway Comm',
+  },
+  {
+    id: 'ENG-105',
+    name: 'M. Kalyan Varma',
+    phone: '+91 98484 56789',
+    email: 'm.kalyan@powergrid.in',
+    zoneCode: 'AP-Z08',
+    zoneName: 'Amaravati Capital Zone',
+    status: 'Available',
+    activeJobs: 1,
+    specialization: 'Power Electronics & Inverter Modules',
+  },
+  {
+    id: 'ENG-106',
+    name: 'T. Harish Babu',
+    phone: '+91 98485 67890',
+    email: 't.harish@powergrid.in',
+    zoneCode: 'AP-Z06',
+    zoneName: 'Kurnool IT Park',
+    status: 'Available',
+    activeJobs: 0,
+    specialization: 'Preventive Maintenance & Safety Checks',
+  },
+];
+
 const INITIAL_MAINTENANCE: AdminMaintenanceTicket[] = [
   {
     id: 'MNT-401',
+    ticketCode: 'MT-1024',
     chargerId: 'CH-030',
+    pointCode: 'CH-030',
     stationName: 'Nellore Highway Rest Stop',
-    zoneCode: 'AP-Z06',
+    zoneCode: 'AP-Z05',
+    zoneName: 'Nellore NH-16 Hub',
+    city: 'Nellore',
     faultCode: 'OCPP_CONNECTOR_LOCK_FAIL',
-    severity: 'High',
-    description: 'Connector lock solenoid actuation failed on Gun #2.',
-    reportedAt: '2024-12-15 08:30',
+    issueDescription: 'Connector communication and interlock pin failure on Gun #2',
+    description: 'Connector lock solenoid actuation failed on Gun #2 during initiation handshake. Motor latch did not confirm locked position.',
+    severity: 'Critical',
+    reportedAt: '2026-10-01 12:08',
     status: 'In Progress',
     assignedTechnician: 'K. Venkatesh (Nellore Zone)',
+    technicianAssigned: 'K. Venkatesh',
+    technicianContact: '+91 98480 12345',
+    technicianId: 'ENG-101',
+    slaMinutes: 60,
+    slaRemainingMinutes: 18,
+    slaBreached: false,
+    priority: 'P1',
+    diagnostics: {
+      connectionStatus: 'Online',
+      powerLevelKw: 0,
+      ratedPowerKw: 120,
+      temperatureC: 42,
+      connectorStatus: 'Fault',
+      groundLeakageMa: 0.18,
+      lastHeartbeat: '2 min ago',
+      ocppErrorCode: 'ConnectorLockFailure',
+      vendorErrorCode: 'ERR_SOLENOID_TIMEOUT_402',
+      voltageV: 415,
+      currentA: 0,
+    },
+    timeline: [
+      {
+        id: 'ev-1',
+        timestamp: '12:08:14',
+        actor: 'Telemetry Gateway (OCPP-AP-Z05-02)',
+        action: 'Fault detected: ConnectorLockFailure received',
+        type: 'system',
+      },
+      {
+        id: 'ev-2',
+        timestamp: '12:09:00',
+        actor: 'PowerGrid NOC Automation',
+        action: 'High Priority incident ticket #MT-1024 generated',
+        type: 'system',
+      },
+      {
+        id: 'ev-3',
+        timestamp: '12:14:22',
+        actor: 'Operations Lead',
+        action: 'Assigned field engineer K. Venkatesh (Nellore Hub)',
+        type: 'admin',
+      },
+      {
+        id: 'ev-4',
+        timestamp: '12:22:05',
+        actor: 'K. Venkatesh',
+        action: 'Technician acknowledged dispatch. En route with spare actuator assembly.',
+        type: 'technician',
+      },
+    ],
   },
   {
     id: 'MNT-402',
+    ticketCode: 'MT-1025',
     chargerId: 'CH-028',
+    pointCode: 'CH-028',
     stationName: 'Tirupati East Hub',
     zoneCode: 'AP-Z03',
+    zoneName: 'Tirupati East Hub',
+    city: 'Tirupati',
     faultCode: 'TEMP_SENSOR_HIGH_TRIP',
-    severity: 'Medium',
-    description: 'Ambient heatsink temperature exceeded 65C during 60kW DC session.',
-    reportedAt: '2024-12-14 14:20',
-    status: 'Open',
+    issueDescription: 'Ambient heatsink thermal trip during fast charging session',
+    description: 'Ambient heatsink temperature exceeded 72°C safety threshold during continuous 60kW DC charging cycle. Primary cooling fan RPM dropped below 40%.',
+    severity: 'High',
+    reportedAt: '2026-10-01 11:35',
+    status: 'In Progress',
     assignedTechnician: 'S. Ramana (Tirupati Hub)',
+    technicianAssigned: 'S. Ramana',
+    technicianContact: '+91 98481 23456',
+    technicianId: 'ENG-102',
+    slaMinutes: 120,
+    slaRemainingMinutes: 44,
+    slaBreached: false,
+    priority: 'P2',
+    diagnostics: {
+      connectionStatus: 'Online',
+      powerLevelKw: 35,
+      ratedPowerKw: 60,
+      temperatureC: 68,
+      connectorStatus: 'Warning',
+      groundLeakageMa: 0.22,
+      lastHeartbeat: '1 min ago',
+      ocppErrorCode: 'HighTemperature',
+      vendorErrorCode: 'TH_TRIP_ZONE3_HEATSINK',
+      voltageV: 408,
+      currentA: 86,
+    },
+    timeline: [
+      {
+        id: 'ev-11',
+        timestamp: '11:35:10',
+        actor: 'Internal BMS Telemetry',
+        action: 'Thermal limit warning: Heatsink T1 exceeded 72°C',
+        type: 'system',
+      },
+      {
+        id: 'ev-12',
+        timestamp: '11:36:00',
+        actor: 'PowerGrid NOC System',
+        action: 'Power output throttled to 35kW. Ticket #MT-1025 opened.',
+        type: 'system',
+      },
+      {
+        id: 'ev-13',
+        timestamp: '11:42:30',
+        actor: 'Operations Lead',
+        action: 'Dispatched S. Ramana for heat exchanger inspection.',
+        type: 'admin',
+      },
+    ],
+  },
+  {
+    id: 'MNT-403',
+    ticketCode: 'MT-1026',
+    chargerId: 'CH-014',
+    pointCode: 'CH-014',
+    stationName: 'Visakhapatnam Port Terminal',
+    zoneCode: 'AP-Z02',
+    zoneName: 'Visakhapatnam Port',
+    city: 'Visakhapatnam',
+    faultCode: 'GROUND_FAULT_INTERRUPT',
+    issueDescription: 'RCD ground fault tripped on sub-distribution bus B',
+    description: 'Residual current monitor detected 38mA leakage current on AC phase during vehicle isolation test. Emergency isolation contactor opened.',
+    severity: 'Critical',
+    reportedAt: '2026-10-01 10:15',
+    status: 'Open',
+    assignedTechnician: undefined,
+    technicianAssigned: undefined,
+    technicianContact: undefined,
+    technicianId: undefined,
+    slaMinutes: 90,
+    slaRemainingMinutes: 12,
+    slaBreached: false,
+    priority: 'P1',
+    diagnostics: {
+      connectionStatus: 'Degraded',
+      powerLevelKw: 0,
+      ratedPowerKw: 150,
+      temperatureC: 38,
+      connectorStatus: 'Fault',
+      groundLeakageMa: 38.4,
+      lastHeartbeat: '4 min ago',
+      ocppErrorCode: 'GroundFailure',
+      vendorErrorCode: 'ERR_RCD_ISOLATION_FAULT',
+      voltageV: 0,
+      currentA: 0,
+    },
+    timeline: [
+      {
+        id: 'ev-21',
+        timestamp: '10:15:02',
+        actor: 'Safety Monitoring Relay',
+        action: 'Ground fault interrupt triggered. Emergency contactor opened.',
+        type: 'system',
+      },
+      {
+        id: 'ev-22',
+        timestamp: '10:15:40',
+        actor: 'PowerGrid NOC System',
+        action: 'Critical Incident logged. Unit isolated from client app.',
+        type: 'system',
+      },
+    ],
+  },
+  {
+    id: 'MNT-404',
+    ticketCode: 'MT-1027',
+    chargerId: 'CH-004',
+    pointCode: 'CH-004',
+    stationName: 'Vijayawada Central Hub',
+    zoneCode: 'AP-Z01',
+    zoneName: 'Vijayawada Central',
+    city: 'Vijayawada',
+    faultCode: 'COMMUNICATION_TIMEOUT',
+    issueDescription: 'Periodic cellular telemetry loss on 4G IoT modem',
+    description: 'Station modem dropped 12 consecutive heartbeat frames over 45 minutes. Fallback ethernet interface did not handshake.',
+    severity: 'Medium',
+    reportedAt: '2026-10-01 09:30',
+    status: 'Open',
+    assignedTechnician: undefined,
+    technicianAssigned: undefined,
+    technicianContact: undefined,
+    slaMinutes: 180,
+    slaRemainingMinutes: 75,
+    slaBreached: false,
+    priority: 'P3',
+    diagnostics: {
+      connectionStatus: 'Offline',
+      powerLevelKw: 0,
+      ratedPowerKw: 50,
+      temperatureC: 34,
+      connectorStatus: 'Healthy',
+      groundLeakageMa: 0.05,
+      lastHeartbeat: '48 min ago',
+      ocppErrorCode: 'CommunicationFailure',
+      vendorErrorCode: 'MODEM_NO_CARRIER_SIM2',
+      voltageV: 400,
+      currentA: 0,
+    },
+    timeline: [
+      {
+        id: 'ev-31',
+        timestamp: '09:30:11',
+        actor: 'Watchdog Daemon',
+        action: 'OCPP connection dropped. Retrying TCP handshake.',
+        type: 'system',
+      },
+    ],
+  },
+  {
+    id: 'MNT-405',
+    ticketCode: 'MT-1020',
+    chargerId: 'CH-072',
+    pointCode: 'CH-072',
+    stationName: 'Amaravati Smart Complex',
+    zoneCode: 'AP-Z08',
+    zoneName: 'Amaravati Capital Zone',
+    city: 'Amaravati',
+    faultCode: 'CONTACTOR_WEAR_NOTICE',
+    issueDescription: 'Quarterly scheduled contactor calibration & filter swap',
+    description: 'Completed preventive maintenance routine: replaced intake HEPA air filters, inspected DC bus contactors, torqued lugs, and updated firmware to v3.8.4.',
+    severity: 'Low',
+    reportedAt: '2026-10-01 07:00',
+    status: 'Resolved',
+    assignedTechnician: 'M. Kalyan Varma (Amaravati Zone)',
+    technicianAssigned: 'M. Kalyan Varma',
+    technicianContact: '+91 98484 56789',
+    technicianId: 'ENG-105',
+    slaMinutes: 240,
+    slaRemainingMinutes: 0,
+    slaBreached: false,
+    priority: 'P4',
+    resolvedAt: '2026-10-01 09:15',
+    resolutionNotes: 'Preventive service complete. Firmware updated to 3.8.4-rev2. Passed 150kW load simulation check.',
+    diagnostics: {
+      connectionStatus: 'Online',
+      powerLevelKw: 0,
+      ratedPowerKw: 150,
+      temperatureC: 31,
+      connectorStatus: 'Healthy',
+      groundLeakageMa: 0.08,
+      lastHeartbeat: 'Just now',
+      voltageV: 415,
+      currentA: 0,
+    },
+    timeline: [
+      {
+        id: 'ev-41',
+        timestamp: '07:00:00',
+        actor: 'Scheduled Maintenance Cron',
+        action: 'Routine service work order dispatched',
+        type: 'system',
+      },
+      {
+        id: 'ev-42',
+        timestamp: '07:30:00',
+        actor: 'M. Kalyan Varma',
+        action: 'On-site arrival. Diagnostic tools plugged in.',
+        type: 'technician',
+      },
+      {
+        id: 'ev-43',
+        timestamp: '09:15:00',
+        actor: 'M. Kalyan Varma',
+        action: 'All tests passed. Marked as Resolved and returned to service.',
+        type: 'technician',
+      },
+    ],
+  },
+];
+
+export const PERMISSIONS_CATALOG: PermissionDefinition[] = [
+  // Grid Operations
+  {
+    id: 'perm_01',
+    code: 'VIEW_ZONES',
+    name: 'View Electrical Zones & Hubs',
+    description: 'Inspect state power zones, substation health, and charging point availability.',
+    category: 'Grid Operations',
+  },
+  {
+    id: 'perm_02',
+    code: 'MANAGE_GRID',
+    name: 'Manage Grid Balancing & Load Shedding',
+    description: 'Control feeder capacity allocations, peak power throttling, and emergency load shedding.',
+    category: 'Grid Operations',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_03',
+    code: 'RESTART_CHARGER',
+    name: 'Remote Charger Hard Reset',
+    description: 'Execute remote firmware restart and OCPP hard reset on live charging hardware.',
+    category: 'Grid Operations',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_04',
+    code: 'VIEW_SESSIONS',
+    name: 'View Live Charging Sessions',
+    description: 'Inspect active vehicle charging telemetry, energy throughput, and session durations.',
+    category: 'Grid Operations',
+  },
+  {
+    id: 'perm_05',
+    code: 'OVERRIDE_LOAD',
+    name: 'Override Dynamic Load Balancing',
+    description: 'Bypass automatic grid limiter policies during urgent commercial fleet operations.',
+    category: 'Grid Operations',
+    isDangerous: true,
+  },
+
+  // Field Maintenance & Diagnostics
+  {
+    id: 'perm_06',
+    code: 'VIEW_MAINTENANCE',
+    name: 'View Maintenance & Diagnostics',
+    description: 'Access field operations console, open hardware alerts, and error code telemetry.',
+    category: 'Maintenance',
+  },
+  {
+    id: 'perm_07',
+    code: 'UPDATE_TICKET',
+    name: 'Update & Triage Work Orders',
+    description: 'Change maintenance incident states, modify severity, and record technician field notes.',
+    category: 'Maintenance',
+  },
+  {
+    id: 'perm_08',
+    code: 'HARDWARE_TEST',
+    name: 'Execute Diagnostics & Self-Test',
+    description: 'Run remote solenoid latch tests, contactor cycle tests, and ground fault simulations.',
+    category: 'Maintenance',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_09',
+    code: 'DISPATCH_MAINTENANCE',
+    name: 'Dispatch Field Technicians',
+    description: 'Assign certified zone engineers and schedule on-site emergency recovery visits.',
+    category: 'Maintenance',
+  },
+  {
+    id: 'perm_10',
+    code: 'CLEAR_LOCKOUT',
+    name: 'Clear Safety Lockouts',
+    description: 'Override OCPP safety fault lockouts and return isolated hardware back to service.',
+    category: 'Maintenance',
+    isDangerous: true,
+  },
+
+  // Billing & Financial Control
+  {
+    id: 'perm_11',
+    code: 'VIEW_REVENUE',
+    name: 'View Revenue & Wallet Ledgers',
+    description: 'Inspect daily gross collections, wallet balances, transaction logs, and payout streams.',
+    category: 'Finance',
+  },
+  {
+    id: 'perm_12',
+    code: 'TARIFF_EDIT',
+    name: 'Modify Pricing & Tariff Rates',
+    description: 'Create, update, and publish per-kWh tariffs, peak multipliers, and parking penalties.',
+    category: 'Finance',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_13',
+    code: 'PROCESS_REFUNDS',
+    name: 'Authorize Session Refunds',
+    description: 'Approve disputed charging transactions and issue direct wallet and gateway refunds.',
+    category: 'Finance',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_14',
+    code: 'WALLET_ADJUST',
+    name: 'Adjust Driver Wallet Balances',
+    description: 'Perform manual debit/credit ledger adjustments on customer and corporate fleet accounts.',
+    category: 'Finance',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_15',
+    code: 'EXPORT_FINANCIALS',
+    name: 'Export Tax & GST Settlement Books',
+    description: 'Download audited GST statements, settlement batches, and revenue reconciliation records.',
+    category: 'Finance',
+  },
+
+  // User & Identity Management
+  {
+    id: 'perm_16',
+    code: 'USER_MANAGEMENT',
+    name: 'Manage Driver & Corporate Accounts',
+    description: 'Create, update, suspend, or terminate driver profiles, RFID tags, and vehicle associations.',
+    category: 'Users',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_17',
+    code: 'VIEW_PII',
+    name: 'Access Sensitive Identity Details',
+    description: 'Inspect unmasked personal phone numbers, billing addresses, and national identity tags.',
+    category: 'Users',
+  },
+  {
+    id: 'perm_18',
+    code: 'RESET_2FA',
+    name: 'Reset Multi-Factor Credentials',
+    description: 'Revoke and re-provision two-factor authentication tokens for staff and users.',
+    category: 'Users',
+    isDangerous: true,
+  },
+
+  // Security & Access Policies
+  {
+    id: 'perm_19',
+    code: 'ROLE_MANAGEMENT',
+    name: 'Configure RBAC & Role Policies',
+    description: 'Create security roles, define platform access matrices, and grant granular permissions.',
+    category: 'Security',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_20',
+    code: 'AUDIT_LOGS',
+    name: 'Inspect System Audit Logs',
+    description: 'View immutable chronological activity logs, admin operations, and security event trails.',
+    category: 'Security',
+  },
+  {
+    id: 'perm_21',
+    code: 'MANAGE_SECURITY',
+    name: 'Configure Security & IP Whitelists',
+    description: 'Manage API gateway keys, IP cidr restrictions, and enterprise SSO integrations.',
+    category: 'Security',
+    isDangerous: true,
+  },
+  {
+    id: 'perm_22',
+    code: 'ALL_PERMISSIONS',
+    name: 'Platform Superuser Bypass',
+    description: 'Unrestricted authorization bypass across all present and future platform endpoints.',
+    category: 'Security',
+    isDangerous: true,
+  },
+
+  // Reporting & Auditing
+  {
+    id: 'perm_23',
+    code: 'VIEW_REPORTS',
+    name: 'View Operational Analytics & Reports',
+    description: 'Inspect energy delivery charts, charger utilization heatmaps, and station performance metrics.',
+    category: 'Reporting',
+  },
+  {
+    id: 'perm_24',
+    code: 'EXPORT_REPORTS',
+    name: 'Export CSV & Excel Data Reports',
+    description: 'Export telemetry datasets, session summaries, and SLA operational reports.',
+    category: 'Reporting',
+  },
+  {
+    id: 'perm_25',
+    code: 'COMPLIANCE_EXPORT',
+    name: 'Export Regulatory Compliance Audits',
+    description: 'Download verified state energy compliance and grid carbon offset verification reports.',
+    category: 'Reporting',
+  },
+];
+
+const INITIAL_ROLES: AdminRolePermission[] = [
+  {
+    id: 'role_01',
+    name: 'Super Admin',
+    code: 'ROLE_SUPER_ADMIN',
+    type: 'System',
+    accessLevel: 'Critical',
+    userCount: 2,
+    description: 'Complete unrestricted access across state grid telemetry, financials, tariffs, security boundaries, and staff clearance.',
+    permissions: [
+      'ALL_PERMISSIONS',
+      'VIEW_ZONES',
+      'MANAGE_GRID',
+      'RESTART_CHARGER',
+      'VIEW_SESSIONS',
+      'OVERRIDE_LOAD',
+      'VIEW_MAINTENANCE',
+      'UPDATE_TICKET',
+      'HARDWARE_TEST',
+      'DISPATCH_MAINTENANCE',
+      'CLEAR_LOCKOUT',
+      'VIEW_REVENUE',
+      'TARIFF_EDIT',
+      'PROCESS_REFUNDS',
+      'WALLET_ADJUST',
+      'EXPORT_FINANCIALS',
+      'USER_MANAGEMENT',
+      'VIEW_PII',
+      'RESET_2FA',
+      'ROLE_MANAGEMENT',
+      'AUDIT_LOGS',
+      'MANAGE_SECURITY',
+      'VIEW_REPORTS',
+      'EXPORT_REPORTS',
+      'COMPLIANCE_EXPORT',
+    ],
+    isSystem: true,
+    isProtected: true,
+    status: 'Active',
+    lastModified: '2026-10-01',
+    modifiedBy: 'System Automation',
+    createdAt: '2024-01-01',
+  },
+  {
+    id: 'role_02',
+    name: 'Zone Operations Manager',
+    code: 'ROLE_ZONE_MANAGER',
+    type: 'System',
+    accessLevel: 'Elevated',
+    userCount: 8,
+    description: 'Supervises regional charging points, live charging sessions, connector status, dynamic load re-balancing, and technician dispatch.',
+    permissions: [
+      'VIEW_ZONES',
+      'MANAGE_GRID',
+      'RESTART_CHARGER',
+      'VIEW_SESSIONS',
+      'OVERRIDE_LOAD',
+      'VIEW_MAINTENANCE',
+      'UPDATE_TICKET',
+      'DISPATCH_MAINTENANCE',
+      'VIEW_REPORTS',
+      'EXPORT_REPORTS',
+    ],
+    isSystem: true,
+    isProtected: true,
+    status: 'Active',
+    lastModified: '2026-09-28',
+    modifiedBy: 'Super Admin',
+    createdAt: '2024-01-01',
+  },
+  {
+    id: 'role_03',
+    name: 'Field Service Engineer',
+    code: 'ROLE_FIELD_ENGINEER',
+    type: 'System',
+    accessLevel: 'Operational',
+    userCount: 14,
+    description: 'Handles physical charger maintenance, OCPP hardware alerts, solenoid actuator diagnostics, and on-site recovery procedures.',
+    permissions: [
+      'VIEW_MAINTENANCE',
+      'UPDATE_TICKET',
+      'HARDWARE_TEST',
+      'CLEAR_LOCKOUT',
+      'VIEW_SESSIONS',
+    ],
+    isSystem: true,
+    isProtected: false,
+    status: 'Active',
+    lastModified: '2026-09-15',
+    modifiedBy: 'Operations Lead',
+    createdAt: '2024-01-01',
+  },
+  {
+    id: 'role_04',
+    name: 'Financial Auditor',
+    code: 'ROLE_FINANCIAL_AUDITOR',
+    type: 'System',
+    accessLevel: 'Audit',
+    userCount: 3,
+    description: 'Read-only financial governance: inspects customer wallets, daily settlements, tariff structures, refund journals, and audit logs.',
+    permissions: [
+      'VIEW_REVENUE',
+      'EXPORT_FINANCIALS',
+      'AUDIT_LOGS',
+      'VIEW_REPORTS',
+      'EXPORT_REPORTS',
+      'COMPLIANCE_EXPORT',
+    ],
+    isSystem: true,
+    isProtected: false,
+    status: 'Active',
+    lastModified: '2026-08-20',
+    modifiedBy: 'Super Admin',
+    createdAt: '2024-01-01',
+  },
+  {
+    id: 'role_05',
+    name: 'Security Compliance Officer',
+    code: 'ROLE_SECURITY_COMPLIANCE',
+    type: 'Custom',
+    accessLevel: 'Elevated',
+    userCount: 2,
+    description: 'Conducts SOC2 & ISO 27001 regulatory reviews, monitors privilege escalation, audits role bindings, and reviews immutable system logs.',
+    permissions: [
+      'AUDIT_LOGS',
+      'ROLE_MANAGEMENT',
+      'VIEW_REPORTS',
+      'EXPORT_REPORTS',
+      'COMPLIANCE_EXPORT',
+      'VIEW_PII',
+    ],
+    isSystem: false,
+    isProtected: false,
+    status: 'Active',
+    lastModified: '2026-09-30',
+    modifiedBy: 'Super Admin',
+    createdAt: '2024-06-12',
+  },
+];
+
+const INITIAL_STAFF: RoleStaffMember[] = [
+  {
+    id: 'STF-001',
+    name: 'Manikantha N',
+    email: 'admin@powergrid.in',
+    roleId: 'role_01',
+    roleName: 'Super Admin',
+    department: 'Executive Operations',
+    city: 'Vijayawada',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-01-01',
+    avatar: 'MN',
+  },
+  {
+    id: 'STF-002',
+    name: 'Bhavani Shankar',
+    email: 'bhavani.shankar@powergrid.in',
+    roleId: 'role_01',
+    roleName: 'Super Admin',
+    department: 'Infrastructure Security',
+    city: 'Visakhapatnam',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-01-15',
+    avatar: 'BS',
+  },
+  {
+    id: 'STF-003',
+    name: 'Ravi Kumar Varma',
+    email: 'ravi.kumar@powergrid.in',
+    roleId: 'role_02',
+    roleName: 'Zone Operations Manager',
+    department: 'Grid Operations (AP-Z01)',
+    city: 'Vijayawada',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-02-01',
+    avatar: 'RK',
+  },
+  {
+    id: 'STF-004',
+    name: 'Suresh Babu',
+    email: 'suresh.babu@powergrid.in',
+    roleId: 'role_02',
+    roleName: 'Zone Operations Manager',
+    department: 'Grid Operations (AP-Z02)',
+    city: 'Visakhapatnam',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-02-10',
+    avatar: 'SB',
+  },
+  {
+    id: 'STF-005',
+    name: 'Anil Chowdary',
+    email: 'anil.chowdary@powergrid.in',
+    roleId: 'role_02',
+    roleName: 'Zone Operations Manager',
+    department: 'Grid Operations (AP-Z03)',
+    city: 'Tirupati',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-02-15',
+    avatar: 'AC',
+  },
+  {
+    id: 'STF-006',
+    name: 'K. Venkatesh',
+    email: 'k.venkatesh@powergrid.in',
+    roleId: 'role_03',
+    roleName: 'Field Service Engineer',
+    department: 'Field Maintenance (AP-Z05)',
+    city: 'Nellore',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-03-01',
+    avatar: 'KV',
+  },
+  {
+    id: 'STF-007',
+    name: 'S. Ramana',
+    email: 's.ramana@powergrid.in',
+    roleId: 'role_03',
+    roleName: 'Field Service Engineer',
+    department: 'Field Maintenance (AP-Z03)',
+    city: 'Tirupati',
+    status: 'Active',
+    twoFactorEnabled: false,
+    assignedAt: '2024-03-05',
+    avatar: 'SR',
+  },
+  {
+    id: 'STF-008',
+    name: 'P. Rajesh Kumar',
+    email: 'p.rajesh@powergrid.in',
+    roleId: 'role_03',
+    roleName: 'Field Service Engineer',
+    department: 'Field Maintenance (AP-Z01)',
+    city: 'Vijayawada',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-03-10',
+    avatar: 'PR',
+  },
+  {
+    id: 'STF-009',
+    name: 'A. Suresh Reddy',
+    email: 'a.suresh@powergrid.in',
+    roleId: 'role_03',
+    roleName: 'Field Service Engineer',
+    department: 'Field Maintenance (AP-Z02)',
+    city: 'Visakhapatnam',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-03-12',
+    avatar: 'AS',
+  },
+  {
+    id: 'STF-010',
+    name: 'M. Kalyan Varma',
+    email: 'm.kalyan@powergrid.in',
+    roleId: 'role_03',
+    roleName: 'Field Service Engineer',
+    department: 'Field Maintenance (AP-Z08)',
+    city: 'Amaravati',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-03-15',
+    avatar: 'MK',
+  },
+  {
+    id: 'STF-011',
+    name: 'T. Harish Babu',
+    email: 't.harish@powergrid.in',
+    roleId: 'role_03',
+    roleName: 'Field Service Engineer',
+    department: 'Field Maintenance (AP-Z06)',
+    city: 'Kurnool',
+    status: 'Active',
+    twoFactorEnabled: false,
+    assignedAt: '2024-03-20',
+    avatar: 'TH',
+  },
+  {
+    id: 'STF-012',
+    name: 'Lakshmi Narayana',
+    email: 'lakshmi.n@powergrid.in',
+    roleId: 'role_04',
+    roleName: 'Financial Auditor',
+    department: 'Finance & Treasury',
+    city: 'Vijayawada',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-04-01',
+    avatar: 'LN',
+  },
+  {
+    id: 'STF-013',
+    name: 'Swathi Priya',
+    email: 'swathi.p@powergrid.in',
+    roleId: 'role_04',
+    roleName: 'Financial Auditor',
+    department: 'Finance & Treasury',
+    city: 'Visakhapatnam',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-04-10',
+    avatar: 'SP',
+  },
+  {
+    id: 'STF-014',
+    name: 'G. Madhav',
+    email: 'g.madhav@powergrid.in',
+    roleId: 'role_04',
+    roleName: 'Financial Auditor',
+    department: 'Finance & Treasury',
+    city: 'Vijayawada',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-04-15',
+    avatar: 'GM',
+  },
+  {
+    id: 'STF-015',
+    name: 'V. Sandeep Raju',
+    email: 'sandeep.raju@powergrid.in',
+    roleId: 'role_05',
+    roleName: 'Security Compliance Officer',
+    department: 'InfoSec & Compliance',
+    city: 'Vijayawada',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-06-15',
+    avatar: 'SR',
+  },
+  {
+    id: 'STF-016',
+    name: 'Divya Sree',
+    email: 'divya.sree@powergrid.in',
+    roleId: 'role_05',
+    roleName: 'Security Compliance Officer',
+    department: 'InfoSec & Compliance',
+    city: 'Amaravati',
+    status: 'Active',
+    twoFactorEnabled: true,
+    assignedAt: '2024-06-20',
+    avatar: 'DS',
   },
 ];
 
@@ -893,6 +1781,9 @@ class AdminService {
   private sessions = [...INITIAL_SESSIONS];
   private tariffs = [...INITIAL_TARIFFS];
   private maintenance = [...INITIAL_MAINTENANCE];
+  private fieldEngineers = [...INITIAL_FIELD_ENGINEERS];
+  private roles = [...INITIAL_ROLES];
+  private staff = [...INITIAL_STAFF];
   private auditLogs = [...INITIAL_AUDIT_LOGS];
 
   constructor() {
@@ -928,6 +1819,270 @@ class AdminService {
         // use default
       }
     }
+    const savedEngineers = sessionStorage.getItem('vg_admin_engineers');
+    if (savedEngineers) {
+      try {
+        this.fieldEngineers = JSON.parse(savedEngineers);
+      } catch {
+        // use default
+      }
+    }
+    const savedRoles = sessionStorage.getItem('vg_admin_roles');
+    if (savedRoles) {
+      try {
+        this.roles = JSON.parse(savedRoles);
+      } catch {
+        // use default
+      }
+    }
+    const savedStaff = sessionStorage.getItem('vg_admin_staff');
+    if (savedStaff) {
+      try {
+        this.staff = JSON.parse(savedStaff);
+      } catch {
+        // use default
+      }
+    }
+  }
+
+  async getRoles(): Promise<AdminRolePermission[]> {
+    // Recalculate real staff count from staff members
+    const updated = this.roles.map(r => {
+      const count = this.staff.filter(s => s.roleId === r.id).length;
+      return {
+        ...r,
+        userCount: count,
+      };
+    });
+    return [...updated];
+  }
+
+  async getRoleById(id: string): Promise<AdminRolePermission | null> {
+    const role = this.roles.find(r => r.id === id);
+    if (!role) return null;
+    const count = this.staff.filter(s => s.roleId === role.id).length;
+    return {
+      ...role,
+      userCount: count,
+    };
+  }
+
+  async getPermissionsCatalog(): Promise<PermissionDefinition[]> {
+    return [...PERMISSIONS_CATALOG];
+  }
+
+  async getStaffMembers(roleId?: string): Promise<RoleStaffMember[]> {
+    if (roleId && roleId !== 'ALL') {
+      return this.staff.filter(s => s.roleId === roleId);
+    }
+    return [...this.staff];
+  }
+
+  async createRole(newRole: Partial<AdminRolePermission>): Promise<AdminRolePermission> {
+    await new Promise((res) => setTimeout(res, 350));
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0, 10);
+    const timeOnly = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+    const roleId = newRole.id || `role_${String(this.roles.length + 1).padStart(2, '0')}`;
+    const roleCode = newRole.code || `ROLE_${(newRole.name || 'CUSTOM').toUpperCase().replace(/\s+/g, '_')}`;
+
+    const created: AdminRolePermission = {
+      id: roleId,
+      name: newRole.name || 'Custom Security Role',
+      code: roleCode,
+      type: newRole.type || 'Custom',
+      accessLevel: newRole.accessLevel || 'Operational',
+      userCount: 0,
+      description: newRole.description || 'Custom administrative security clearance policy.',
+      permissions: newRole.permissions || ['VIEW_ZONES', 'VIEW_SESSIONS'],
+      isSystem: false,
+      isProtected: false,
+      status: newRole.status || 'Active',
+      lastModified: dateStr,
+      modifiedBy: 'Super Admin',
+      createdAt: dateStr,
+    };
+
+    this.roles.push(created);
+    sessionStorage.setItem('vg_admin_roles', JSON.stringify(this.roles));
+
+    // Audit log
+    this.auditLogs.unshift({
+      id: `A-${Date.now()}`,
+      actor: 'Super Admin',
+      adminName: 'Super Admin',
+      adminRole: 'Administrator',
+      adminEmail: 'admin@powergrid.in',
+      role: 'Super Admin',
+      action: `Created new security role: ${created.name}`,
+      actionType: 'Created',
+      module: 'Security',
+      target: created.name,
+      recordId: created.id,
+      details: `Granted ${created.permissions.length} initial permissions with access level ${created.accessLevel}.`,
+      ipAddress: '192.168.1.10',
+      timestamp: `${dateStr} ${timeOnly}`,
+      dateOnly: dateStr,
+      timeOnly,
+      severity: 'Notice',
+      status: 'Success',
+    });
+
+    return created;
+  }
+
+  async updateRole(id: string, updates: Partial<AdminRolePermission>): Promise<AdminRolePermission> {
+    await new Promise((res) => setTimeout(res, 300));
+    const idx = this.roles.findIndex(r => r.id === id);
+    if (idx === -1) {
+      throw new Error('Role not found');
+    }
+
+    const prevRole = this.roles[idx];
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0, 10);
+    const timeOnly = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+    const updated: AdminRolePermission = {
+      ...prevRole,
+      ...updates,
+      lastModified: dateStr,
+      modifiedBy: 'Super Admin',
+    };
+
+    this.roles[idx] = updated;
+    sessionStorage.setItem('vg_admin_roles', JSON.stringify(this.roles));
+
+    // Calculate changes for audit log
+    const prevPerms = new Set(prevRole.permissions || []);
+    const newPerms = new Set(updated.permissions || []);
+    const added = (updated.permissions || []).filter(p => !prevPerms.has(p));
+    const removed = (prevRole.permissions || []).filter(p => !newPerms.has(p));
+
+    this.auditLogs.unshift({
+      id: `A-${Date.now()}`,
+      actor: 'Super Admin',
+      adminName: 'Super Admin',
+      adminRole: 'Administrator',
+      adminEmail: 'admin@powergrid.in',
+      role: 'Super Admin',
+      action: `Updated permissions for role: ${updated.name}`,
+      actionType: 'Updated',
+      module: 'Security',
+      target: updated.name,
+      recordId: updated.id,
+      details: `Changes: +${added.length} permissions added, -${removed.length} permissions revoked. Total active permissions: ${updated.permissions.length}.`,
+      ipAddress: '192.168.1.10',
+      timestamp: `${dateStr} ${timeOnly}`,
+      dateOnly: dateStr,
+      timeOnly,
+      severity: 'Notice',
+      status: 'Success',
+    });
+
+    return updated;
+  }
+
+  async deleteRole(id: string): Promise<boolean> {
+    await new Promise((res) => setTimeout(res, 300));
+    const role = this.roles.find(r => r.id === id);
+    if (!role) {
+      throw new Error('Role not found');
+    }
+    if (role.isSystem || role.isProtected) {
+      throw new Error('System protected roles cannot be deleted');
+    }
+
+    const assignedCount = this.staff.filter(s => s.roleId === id).length;
+    if (assignedCount > 0) {
+      throw new Error(`Cannot delete role with ${assignedCount} active assigned staff members. Please reassign staff first.`);
+    }
+
+    this.roles = this.roles.filter(r => r.id !== id);
+    sessionStorage.setItem('vg_admin_roles', JSON.stringify(this.roles));
+
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0, 10);
+    const timeOnly = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+    this.auditLogs.unshift({
+      id: `A-${Date.now()}`,
+      actor: 'Super Admin',
+      adminName: 'Super Admin',
+      adminRole: 'Administrator',
+      adminEmail: 'admin@powergrid.in',
+      role: 'Super Admin',
+      action: `Deleted custom security role: ${role.name}`,
+      actionType: 'Deleted',
+      module: 'Security',
+      target: role.name,
+      recordId: role.id,
+      details: `Permanently removed role ${role.code || role.name} from RBAC registry.`,
+      ipAddress: '192.168.1.10',
+      timestamp: `${dateStr} ${timeOnly}`,
+      dateOnly: dateStr,
+      timeOnly,
+      severity: 'Critical',
+      status: 'Success',
+    });
+
+    return true;
+  }
+
+  async assignStaffRole(staffId: string, newRoleId: string): Promise<RoleStaffMember> {
+    await new Promise((res) => setTimeout(res, 300));
+    const sIdx = this.staff.findIndex(s => s.id === staffId);
+    if (sIdx === -1) {
+      throw new Error('Staff member not found');
+    }
+
+    const targetRole = this.roles.find(r => r.id === newRoleId);
+    if (!targetRole) {
+      throw new Error('Target role not found');
+    }
+
+    const prevRoleName = this.staff[sIdx].roleName;
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0, 10);
+    const timeOnly = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+    this.staff[sIdx] = {
+      ...this.staff[sIdx],
+      roleId: targetRole.id,
+      roleName: targetRole.name,
+      assignedAt: dateStr,
+    };
+
+    sessionStorage.setItem('vg_admin_staff', JSON.stringify(this.staff));
+
+    this.auditLogs.unshift({
+      id: `A-${Date.now()}`,
+      actor: 'Super Admin',
+      adminName: 'Super Admin',
+      adminRole: 'Administrator',
+      adminEmail: 'admin@powergrid.in',
+      role: 'Super Admin',
+      action: `Reassigned staff role: ${this.staff[sIdx].name}`,
+      actionType: 'Updated',
+      module: 'Security',
+      target: this.staff[sIdx].name,
+      recordId: this.staff[sIdx].id,
+      details: `Changed role clearance from "${prevRoleName}" to "${targetRole.name}".`,
+      ipAddress: '192.168.1.10',
+      timestamp: `${dateStr} ${timeOnly}`,
+      dateOnly: dateStr,
+      timeOnly,
+      severity: 'Notice',
+      status: 'Success',
+    });
+
+    return this.staff[sIdx];
+  }
+
+  async removeStaffFromRole(staffId: string): Promise<RoleStaffMember> {
+    // Default fallback to 'Field Service Engineer' or unassigned
+    const defaultRole = this.roles.find(r => r.id === 'role_03') || this.roles[0];
+    return this.assignStaffRole(staffId, defaultRole.id);
   }
 
   async getDashboardOverview(): Promise<AdminDashboardOverview> {
@@ -987,8 +2142,323 @@ class AdminService {
     return [...this.tariffs];
   }
 
+  async getFieldEngineers(): Promise<AdminFieldEngineer[]> {
+    return [...this.fieldEngineers];
+  }
+
   async getMaintenanceTickets(): Promise<AdminMaintenanceTicket[]> {
     return [...this.maintenance];
+  }
+
+  async getMaintenanceTicketById(id: string): Promise<AdminMaintenanceTicket | null> {
+    const ticket = this.maintenance.find((t) => t.id === id || t.ticketCode === id);
+    return ticket ? { ...ticket } : null;
+  }
+
+  async createMaintenanceTicket(newTicket: Partial<AdminMaintenanceTicket>): Promise<AdminMaintenanceTicket> {
+    await new Promise((res) => setTimeout(res, 350));
+    const count = this.maintenance.length + 1;
+    const ticketCode = newTicket.ticketCode || `MT-${1020 + count}`;
+    const id = newTicket.id || `MNT-${400 + count}`;
+
+    const charger = this.chargers.find(c => c.id === newTicket.chargerId || c.pointCode === newTicket.pointCode);
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const timeOnlyStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+    const created: AdminMaintenanceTicket = {
+      id,
+      ticketCode,
+      chargerId: newTicket.chargerId || charger?.id || 'CH-001',
+      pointCode: newTicket.pointCode || charger?.pointCode || 'CH-001',
+      stationName: newTicket.stationName || charger?.stationName || 'Vijayawada Central Hub',
+      zoneCode: newTicket.zoneCode || charger?.zoneCode || 'AP-Z01',
+      zoneName: newTicket.zoneName || charger?.zoneName || 'Vijayawada Central',
+      city: newTicket.city || charger?.city || 'Vijayawada',
+      faultCode: newTicket.faultCode || 'HARDWARE_ALERT_MANUAL',
+      issueDescription: newTicket.issueDescription || newTicket.description || 'Manual maintenance inspection ticket created.',
+      description: newTicket.description || newTicket.issueDescription || 'Manual maintenance ticket created by administrator.',
+      severity: newTicket.severity || 'Medium',
+      reportedAt: timeStr,
+      status: newTicket.status || 'Open',
+      assignedTechnician: newTicket.assignedTechnician || newTicket.technicianAssigned,
+      technicianAssigned: newTicket.technicianAssigned || newTicket.assignedTechnician,
+      technicianContact: newTicket.technicianContact,
+      technicianId: newTicket.technicianId,
+      slaMinutes: newTicket.slaMinutes || (newTicket.severity === 'Critical' ? 60 : newTicket.severity === 'High' ? 120 : 240),
+      slaRemainingMinutes: newTicket.slaMinutes || (newTicket.severity === 'Critical' ? 60 : newTicket.severity === 'High' ? 120 : 240),
+      slaBreached: false,
+      priority: newTicket.priority || (newTicket.severity === 'Critical' ? 'P1' : newTicket.severity === 'High' ? 'P2' : 'P3'),
+      diagnostics: newTicket.diagnostics || {
+        connectionStatus: 'Online',
+        powerLevelKw: 0,
+        ratedPowerKw: charger?.powerKw || 120,
+        temperatureC: 38,
+        connectorStatus: 'Warning',
+        groundLeakageMa: 0.12,
+        lastHeartbeat: 'Just now',
+        voltageV: 415,
+        currentA: 0,
+      },
+      timeline: [
+        {
+          id: `ev-${Date.now()}-1`,
+          timestamp: timeOnlyStr,
+          actor: 'Super Admin',
+          action: `Work order ticket #${ticketCode} created manually`,
+          type: 'admin',
+          note: newTicket.description,
+        },
+      ],
+      notes: newTicket.notes,
+    };
+
+    if (newTicket.technicianAssigned) {
+      created.timeline?.push({
+        id: `ev-${Date.now()}-2`,
+        timestamp: timeOnlyStr,
+        actor: 'Super Admin',
+        action: `Assigned field technician ${newTicket.technicianAssigned}`,
+        type: 'admin',
+      });
+    }
+
+    // Update charger status to 'Maintenance'
+    if (charger) {
+      charger.status = 'Maintenance';
+      sessionStorage.setItem('vg_admin_chargers', JSON.stringify(this.chargers));
+    }
+
+    this.maintenance.unshift(created);
+    sessionStorage.setItem('vg_admin_maintenance', JSON.stringify(this.maintenance));
+
+    // Audit log
+    this.auditLogs.unshift({
+      id: `A-${Date.now()}`,
+      actor: 'Super Admin',
+      adminName: 'Super Admin',
+      adminRole: 'Administrator',
+      adminEmail: 'admin@powergrid.in',
+      role: 'Super Admin',
+      actorRole: 'Administrator',
+      action: `Created maintenance ticket #${ticketCode} for ${created.pointCode}`,
+      actionType: 'Created',
+      module: 'Chargers',
+      target: ticketCode,
+      record: ticketCode,
+      recordId: id,
+      details: `Fault: ${created.faultCode} - ${created.issueDescription}`,
+      ipAddress: '192.168.1.10',
+      device: 'Admin Console',
+      timestamp: `${timeStr}:00`,
+      dateOnly: timeStr.slice(0, 10),
+      timeOnly: timeOnlyStr,
+      severity: created.severity === 'Critical' ? 'Critical' : 'Warning',
+      status: 'Success',
+    });
+
+    return created;
+  }
+
+  async updateMaintenanceTicket(id: string, updates: Partial<AdminMaintenanceTicket>): Promise<AdminMaintenanceTicket> {
+    await new Promise((res) => setTimeout(res, 300));
+    const idx = this.maintenance.findIndex((t) => t.id === id || t.ticketCode === id);
+    if (idx === -1) {
+      throw new Error('Maintenance ticket not found');
+    }
+
+    this.maintenance[idx] = {
+      ...this.maintenance[idx],
+      ...updates,
+    };
+
+    sessionStorage.setItem('vg_admin_maintenance', JSON.stringify(this.maintenance));
+    return this.maintenance[idx];
+  }
+
+  async assignTechnician(ticketId: string, technician: { name: string; contact?: string; id?: string }): Promise<AdminMaintenanceTicket> {
+    await new Promise((res) => setTimeout(res, 300));
+    const idx = this.maintenance.findIndex((t) => t.id === ticketId || t.ticketCode === ticketId);
+    if (idx === -1) {
+      throw new Error('Maintenance ticket not found');
+    }
+
+    const now = new Date();
+    const timeOnly = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+    const ticket = this.maintenance[idx];
+    const updatedTimeline = [
+      ...(ticket.timeline || []),
+      {
+        id: `ev-${Date.now()}`,
+        timestamp: timeOnly,
+        actor: 'Super Admin',
+        action: `Dispatched technician ${technician.name}`,
+        type: 'admin' as const,
+      },
+    ];
+
+    this.maintenance[idx] = {
+      ...ticket,
+      assignedTechnician: `${technician.name}`,
+      technicianAssigned: technician.name,
+      technicianContact: technician.contact || '+91 98480 00000',
+      technicianId: technician.id,
+      status: ticket.status === 'Open' ? 'In Progress' : ticket.status,
+      timeline: updatedTimeline,
+    };
+
+    // Update engineer active jobs
+    if (technician.id) {
+      const engIdx = this.fieldEngineers.findIndex(e => e.id === technician.id);
+      if (engIdx !== -1) {
+        this.fieldEngineers[engIdx].activeJobs += 1;
+        this.fieldEngineers[engIdx].status = 'On Site';
+        sessionStorage.setItem('vg_admin_engineers', JSON.stringify(this.fieldEngineers));
+      }
+    }
+
+    sessionStorage.setItem('vg_admin_maintenance', JSON.stringify(this.maintenance));
+
+    // Audit log
+    this.auditLogs.unshift({
+      id: `A-${Date.now()}`,
+      actor: 'Super Admin',
+      adminName: 'Super Admin',
+      adminRole: 'Administrator',
+      adminEmail: 'admin@powergrid.in',
+      role: 'Super Admin',
+      action: `Assigned ${technician.name} to ticket #${ticket.ticketCode || ticket.id}`,
+      actionType: 'Updated',
+      module: 'Support',
+      target: ticket.ticketCode || ticket.id,
+      recordId: ticket.id,
+      details: `Field technician dispatched with contact ${technician.contact || 'N/A'}`,
+      ipAddress: '192.168.1.10',
+      timestamp: `${new Date().toISOString().slice(0, 10)} ${timeOnly}`,
+      dateOnly: new Date().toISOString().slice(0, 10),
+      timeOnly,
+      severity: 'Notice',
+      status: 'Success',
+    });
+
+    return this.maintenance[idx];
+  }
+
+  async resolveMaintenanceTicket(ticketId: string, resolutionNotes?: string): Promise<AdminMaintenanceTicket> {
+    await new Promise((res) => setTimeout(res, 350));
+    const idx = this.maintenance.findIndex((t) => t.id === ticketId || t.ticketCode === ticketId);
+    if (idx === -1) {
+      throw new Error('Maintenance ticket not found');
+    }
+
+    const ticket = this.maintenance[idx];
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const timeOnly = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+    const updatedTimeline = [
+      ...(ticket.timeline || []),
+      {
+        id: `ev-${Date.now()}`,
+        timestamp: timeOnly,
+        actor: 'Super Admin',
+        action: 'Ticket marked as Resolved & Unit restored to Available',
+        note: resolutionNotes || 'All diagnostic checks cleared.',
+        type: 'admin' as const,
+      },
+    ];
+
+    this.maintenance[idx] = {
+      ...ticket,
+      status: 'Resolved',
+      resolvedAt: timeStr,
+      resolutionNotes: resolutionNotes || 'Service completed. Unit restored to operation.',
+      timeline: updatedTimeline,
+      slaRemainingMinutes: 0,
+      diagnostics: ticket.diagnostics ? {
+        ...ticket.diagnostics,
+        connectorStatus: 'Healthy',
+        connectionStatus: 'Online',
+      } : undefined,
+    };
+
+    // Restore charger status to 'Available'
+    const targetPoint = ticket.pointCode || ticket.chargerId;
+    if (targetPoint) {
+      const chargerIdx = this.chargers.findIndex(c => c.id === targetPoint || c.pointCode === targetPoint);
+      if (chargerIdx !== -1) {
+        this.chargers[chargerIdx].status = 'Available';
+        sessionStorage.setItem('vg_admin_chargers', JSON.stringify(this.chargers));
+      }
+    }
+
+    // Decrement engineer jobs
+    if (ticket.technicianId) {
+      const engIdx = this.fieldEngineers.findIndex(e => e.id === ticket.technicianId);
+      if (engIdx !== -1 && this.fieldEngineers[engIdx].activeJobs > 0) {
+        this.fieldEngineers[engIdx].activeJobs -= 1;
+        if (this.fieldEngineers[engIdx].activeJobs === 0) {
+          this.fieldEngineers[engIdx].status = 'Available';
+        }
+        sessionStorage.setItem('vg_admin_engineers', JSON.stringify(this.fieldEngineers));
+      }
+    }
+
+    sessionStorage.setItem('vg_admin_maintenance', JSON.stringify(this.maintenance));
+
+    // Audit log
+    this.auditLogs.unshift({
+      id: `A-${Date.now()}`,
+      actor: 'Super Admin',
+      adminName: 'Super Admin',
+      adminRole: 'Administrator',
+      adminEmail: 'admin@powergrid.in',
+      role: 'Super Admin',
+      action: `Resolved maintenance ticket #${ticket.ticketCode || ticket.id}`,
+      actionType: 'Updated',
+      module: 'Chargers',
+      target: ticket.ticketCode || ticket.id,
+      recordId: ticket.id,
+      details: `Resolution note: ${resolutionNotes || 'Operational checks passed'}. Restored charger to Available.`,
+      ipAddress: '192.168.1.10',
+      timestamp: `${timeStr}:00`,
+      dateOnly: timeStr.slice(0, 10),
+      timeOnly,
+      severity: 'Notice',
+      status: 'Success',
+    });
+
+    return this.maintenance[idx];
+  }
+
+  async addTicketTimelineNote(ticketId: string, note: string, author: string = 'Super Admin'): Promise<AdminMaintenanceTicket> {
+    await new Promise((res) => setTimeout(res, 200));
+    const idx = this.maintenance.findIndex((t) => t.id === ticketId || t.ticketCode === ticketId);
+    if (idx === -1) {
+      throw new Error('Maintenance ticket not found');
+    }
+
+    const ticket = this.maintenance[idx];
+    const now = new Date();
+    const timeOnly = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+    const newEvent: TicketTimelineItem = {
+      id: `ev-${Date.now()}`,
+      timestamp: timeOnly,
+      actor: author,
+      action: 'Added operational field note',
+      note,
+      type: 'admin',
+    };
+
+    this.maintenance[idx] = {
+      ...ticket,
+      timeline: [...(ticket.timeline || []), newEvent],
+    };
+
+    sessionStorage.setItem('vg_admin_maintenance', JSON.stringify(this.maintenance));
+    return this.maintenance[idx];
   }
 
   async getAuditLogs(): Promise<AdminAuditLog[]> {
