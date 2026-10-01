@@ -1,0 +1,144 @@
+.pg-create-role-modal {
+  width: 100%;
+  max-width: 660px;
+  max-height: 90vh;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: pg-modal-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.pg-create-role-modal__header {
+  padding: 12px 18px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+}
+
+.pg-create-role-modal__header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pg-create-role-modal__icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #060d19;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pg-create-role-modal__title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #071321;
+  margin: 0;
+}
+
+.pg-create-role-modal__subtitle {
+  font-size: 11.5px;
+  color: #64748b;
+  margin: 1px 0 0 0;
+}
+
+.pg-create-role-modal__close {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pg-create-role-modal__close:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.pg-create-role-modal__form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.pg-create-role-modal__body {
+  padding: 14px 18px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.pg-create-role-modal__error-alert {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.pg-create-role-modal__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.pg-create-role-modal__perms-section {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+}
+
+.pg-create-role-modal__perms-header {
+  margin-bottom: 8px;
+}
+
+.pg-create-role-modal__perms-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #071321;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.pg-create-role-modal__perms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.pg-create-role-modal__footer {
+  padding: 12px 18px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .pg-create-role-modal__grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .pg-create-role-modal__perms-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

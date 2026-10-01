@@ -1,0 +1,118 @@
+.pg-access-summary {
+  margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pg-access-summary__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pg-access-summary__card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.pg-access-summary__card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(7, 19, 33, 0.05);
+  border-color: #cbd5e1;
+}
+
+.pg-access-summary__card--clickable {
+  cursor: pointer;
+}
+
+.pg-access-summary__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.pg-access-summary__icon-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pg-access-summary__value {
+  font-size: 19px;
+  font-weight: 800;
+  color: #071321;
+  letter-spacing: -0.3px;
+  font-family: inherit;
+}
+
+.pg-access-summary__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.pg-access-summary__label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-access-summary__subtext {
+  font-size: 10.5px;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1280px) {
+  .pg-access-summary__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .pg-access-summary__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .pg-access-summary__card {
+    padding: 10px 12px;
+  }
+  .pg-access-summary__value {
+    font-size: 17px;
+  }
+  .pg-access-summary__label {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pg-access-summary__grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+

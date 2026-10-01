@@ -1,0 +1,82 @@
+.pg-roles-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.pg-roles-toast {
+  pointer-events: auto;
+  min-width: 320px;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid #e2e8f0;
+  animation: pg-toast-slide-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pg-toast-slide-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.pg-roles-toast--success {
+  border-left: 4px solid #10b981;
+}
+
+.pg-roles-toast--error {
+  border-left: 4px solid #f43f5e;
+}
+
+.pg-roles-toast--info {
+  border-left: 4px solid #0284c7;
+}
+
+.pg-roles-toast__icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.pg-roles-toast__content {
+  flex: 1;
+}
+
+.pg-roles-toast__title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #071321;
+}
+
+.pg-roles-toast__desc {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.pg-roles-toast__close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0;
+}
+
+.pg-roles-toast__close:hover {
+  color: #0f172a;
+}

@@ -180,6 +180,41 @@ export interface AdminWalletTransaction {
   status: 'Success' | 'Pending' | 'Failed' | 'Completed';
 }
 
+export interface TicketTimelineItem {
+  id: string;
+  timestamp: string;
+  actor: string;
+  action: string;
+  note?: string;
+  type?: 'system' | 'technician' | 'admin';
+}
+
+export interface TicketDiagnostics {
+  connectionStatus: 'Online' | 'Offline' | 'Degraded';
+  powerLevelKw: number;
+  ratedPowerKw: number;
+  temperatureC: number;
+  connectorStatus: 'Healthy' | 'Fault' | 'Interlocked' | 'Warning';
+  groundLeakageMa: number;
+  lastHeartbeat: string;
+  ocppErrorCode?: string;
+  vendorErrorCode?: string;
+  voltageV?: number;
+  currentA?: number;
+}
+
+export interface AdminFieldEngineer {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  zoneCode: string;
+  zoneName: string;
+  status: 'Available' | 'On Site' | 'Busy' | 'Off Duty';
+  activeJobs: number;
+  specialization: string;
+}
+
 export interface AdminMaintenanceTicket {
   id: string;
   ticketCode?: string;
@@ -187,6 +222,8 @@ export interface AdminMaintenanceTicket {
   pointCode?: string;
   stationName: string;
   zoneCode?: string;
+  zoneName?: string;
+  city?: string;
   faultCode?: string;
   issueDescription?: string;
   severity: 'Critical' | 'High' | 'Medium' | 'Low';
@@ -196,6 +233,16 @@ export interface AdminMaintenanceTicket {
   assignedTechnician?: string;
   technicianAssigned?: string;
   technicianContact?: string;
+  technicianId?: string;
+  slaMinutes?: number;
+  slaRemainingMinutes?: number;
+  slaBreached?: boolean;
+  priority?: 'P1' | 'P2' | 'P3' | 'P4';
+  diagnostics?: TicketDiagnostics;
+  timeline?: TicketTimelineItem[];
+  resolutionNotes?: string;
+  resolvedAt?: string;
+  notes?: string;
 }
 
 export interface AdminAuditLog {
@@ -227,13 +274,47 @@ export interface AdminAuditLog {
   status?: 'Success' | 'Warning' | 'Failed';
 }
 
+export type RoleAccessLevel = 'Critical' | 'Elevated' | 'Operational' | 'Audit' | 'Read Only';
+export type RoleType = 'System' | 'Custom';
+
+export interface PermissionDefinition {
+  id: string;
+  code: string;
+  name: string;
+  description: string;
+  category: 'Grid Operations' | 'Maintenance' | 'Finance' | 'Users' | 'Security' | 'Reporting';
+  isDangerous?: boolean;
+}
+
+export interface RoleStaffMember {
+  id: string;
+  name: string;
+  email: string;
+  roleId: string;
+  roleName: string;
+  department: string;
+  city?: string;
+  status: 'Active' | 'Inactive';
+  twoFactorEnabled: boolean;
+  assignedAt: string;
+  avatar?: string;
+}
+
 export interface AdminRolePermission {
   id: string;
   name: string;
+  code?: string;
+  type?: RoleType;
+  accessLevel?: RoleAccessLevel;
   userCount?: number;
   description: string;
   permissions: string[];
+  isSystem?: boolean;
+  isProtected?: boolean;
+  status?: 'Active' | 'Inactive';
   lastModified?: string;
+  modifiedBy?: string;
+  createdAt?: string;
 }
 
 export interface AdminDashboardOverview {

@@ -1,0 +1,109 @@
+.pg-mobile-filters-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 13, 25, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1100;
+  display: flex;
+  align-items: flex-end;
+}
+
+.pg-mobile-filters-sheet {
+  width: 100%;
+  background: #ffffff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  animation: pg-sheet-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+@keyframes pg-sheet-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.pg-mobile-filters-sheet__header {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.pg-mobile-filters-sheet__title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #071321;
+  margin: 0;
+}
+
+.pg-mobile-filters-sheet__close {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pg-mobile-filters-sheet__body {
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pg-mobile-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pg-mobile-filter-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.pg-mobile-filter-select {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0f172a;
+  box-sizing: border-box;
+}
+
+.pg-mobile-filters-sheet__footer {
+  padding: 12px 16px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  gap: 8px;
+}
+
+.pg-mobile-filters-sheet__footer .pg-btn {
+  flex: 1;
+  height: 38px;
+}
+

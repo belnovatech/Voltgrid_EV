@@ -1,98 +1,101 @@
-/* Scoped Roles & Permissions CSS */
+/* ==========================================================================
+   POWERGRID ADMIN — ROLES & ACCESS PERMISSIONS MODULE
+   Identity, Roles & Access Control Center (IAM / RBAC)
+   ========================================================================== */
+
 .pg-admin-roles {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 32px;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.pg-admin-roles__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
+/* ==========================================================================
+   CARDS GRID DIRECTORY
+   ========================================================================== */
 
-.pg-admin-roles__title {
-  font-size: 24px;
-  font-weight: 800;
-  color: #071321;
-  margin: 0;
-  letter-spacing: -0.4px;
-}
-
-.pg-admin-roles__subtitle {
-  font-size: 13.5px;
-  color: #64748b;
-  margin: 4px 0 0 0;
-}
-
-.pg-admin-roles__grid {
+.pg-admin-roles__cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.pg-admin-roles__card {
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-  display: flex;
-  flex-direction: column;
+/* ==========================================================================
+   RESPONSIVE LAYOUT BREAKPOINTS
+   ========================================================================== */
+
+/* Large Desktop (>= 1440px) */
+@media (min-width: 1440px) {
+  .pg-admin-roles__cards-grid {
+    gap: 16px;
+  }
 }
 
-.pg-admin-roles__card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
+/* Standard Desktop (1200px - 1439px) */
+@media (max-width: 1439px) {
+  .pg-admin-roles__cards-grid {
+    gap: 14px;
+  }
 }
 
-.pg-admin-roles__role-tag {
-  font-size: 16px;
-  font-weight: 700;
-  color: #0f172a;
+/* Medium Desktop / Tablet Landscape (992px - 1199px) */
+@media (max-width: 1199px) {
+  .pg-admin-roles__cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
 }
 
-.pg-admin-roles__users-badge {
-  font-size: 11.5px;
-  font-weight: 600;
-  background: #f1f5f9;
-  color: #475569;
-  padding: 3px 10px;
-  border-radius: 20px;
+/* Tablet Portrait (768px - 991px) */
+@media (max-width: 991px) {
+  .pg-admin-roles__cards-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
-.pg-admin-roles__desc {
-  font-size: 13px;
-  color: #64748b;
-  line-height: 1.5;
-  margin: 0 0 18px 0;
+/* Mobile Devices (<= 767px) */
+@media (max-width: 767px) {
+  .pg-admin-roles {
+    padding-bottom: 48px;
+  }
+
+  .pg-admin-roles__cards-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
-.pg-admin-roles__perms-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: #334155;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
+/* Small Mobile (<= 575px) */
+@media (max-width: 575px) {
+  .pg-admin-roles__cards-grid {
+    gap: 10px;
+  }
 }
 
-.pg-admin-roles__perms-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+/* Ultra Small Mobile (<= 479px) */
+@media (max-width: 479px) {
+  .pg-admin-roles__cards-grid {
+    gap: 8px;
+  }
 }
 
-.pg-admin-roles__perm-pill {
-  font-size: 11px;
-  font-weight: 600;
-  background: #ecfdf5;
-  color: #059669;
-  border: 1px solid #a7f3d0;
-  padding: 3px 8px;
-  border-radius: 6px;
-  font-family: monospace;
+/* Accessibility: Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
+
