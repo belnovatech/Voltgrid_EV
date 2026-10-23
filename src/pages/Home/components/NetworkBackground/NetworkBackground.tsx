@@ -38,7 +38,7 @@ export const NetworkBackground: React.FC = () => {
           cy="450"
           rx="340"
           ry="160"
-          stroke="rgba(154, 230, 0, 0.12)"
+          stroke="rgba(67, 213, 0, 0.16)"
           strokeWidth="1.2"
         />
         
@@ -61,8 +61,8 @@ export const NetworkBackground: React.FC = () => {
         />
 
         {/* Small subtle telemetry nodes */}
-        <circle cx="380" cy="450" r="3" fill="rgba(154, 230, 0, 0.4)" />
-        <circle cx="1060" cy="450" r="3" fill="rgba(56, 189, 248, 0.4)" />
+        <circle cx="380" cy="450" r="3" fill="rgba(67, 213, 0, 0.6)" />
+        <circle cx="1060" cy="450" r="3" fill="rgba(18, 207, 234, 0.6)" />
         <circle cx="720" cy="210" r="2.5" fill="rgba(255, 255, 255, 0.3)" />
         <circle cx="720" cy="690" r="2.5" fill="rgba(255, 255, 255, 0.3)" />
       </svg>

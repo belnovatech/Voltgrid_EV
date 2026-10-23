@@ -74,7 +74,7 @@ class AuthService {
         id: `user_${Date.now()}`,
         countryCode,
         phoneNumber,
-        name: role === 'admin' ? 'Operations Admin' : 'PowerGrid Driver',
+        name: role === 'admin' ? 'Operations Admin' : 'Eway EV Driver',
         role,
         createdAt: new Date().toISOString(),
       };
