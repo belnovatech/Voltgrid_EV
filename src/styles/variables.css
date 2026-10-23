@@ -1,66 +1,100 @@
 :root {
-  /* Brand Colors */
-  --color-primary: #00875a;
-  --color-primary-hover: #00744c;
-  --color-primary-active: #00603f;
-  --color-primary-light: #e8f7ee;
-  --color-primary-tint: #d1fae5;
-  --color-primary-border: #a7f3d0;
+  /* ==========================================================================
+     Eway to Your EVs — Official Brand Design System Tokens
+     Source of truth: Official Circular Brand Logo
+     ========================================================================== */
 
-  /* PowerGrid Enterprise Palette */
-  --color-pg-bg: #060c18;
-  --color-pg-bg-elevated: #0a1224;
-  --color-pg-card: #0d172e;
-  --color-pg-border: #1a2744;
-  --color-pg-border-subtle: rgba(255, 255, 255, 0.08);
-  --color-pg-lime: #9ae600;
-  --color-pg-lime-hover: #84cc16;
-  --color-pg-lime-light: rgba(154, 230, 0, 0.12);
-  --color-pg-lime-border: rgba(154, 230, 0, 0.28);
-  --color-pg-cyan: #38bdf8;
-  --color-pg-cyan-hover: #0ea5e9;
-  --color-pg-cyan-light: rgba(56, 189, 248, 0.12);
-  --color-pg-cyan-border: rgba(56, 189, 248, 0.3);
+  /* Brand Primary & Greens */
+  --brand-primary: #43D500;
+  --brand-primary-hover: #38c300;
+  --brand-primary-active: #2fa600;
+  --brand-primary-light: #F2FBEA;
+  --brand-primary-tint: #e5fad7;
+  --brand-primary-border: #c3f5a3;
+  --brand-deep-green: #159447;
+  --brand-deep-green-hover: #107a38;
+  --brand-deep-green-dark: #0a5225;
 
-  /* Accent & Status */
-  --color-accent-teal: #0d9488;
-  --color-success: #10b981;
-  --color-error: #ef4444;
+  /* Brand Deep Navy (from logo central emblem) */
+  --brand-navy: #0B1B2A;
+  --brand-navy-surface: #0f2438;
+  --brand-navy-card: #142d44;
+  --brand-navy-border: #1e3f5e;
+  --brand-navy-hover: #18334c;
+
+  /* Backward compatibility mappings for existing codebase */
+  --color-primary: #159447;
+  --color-primary-hover: #107a38;
+  --color-primary-active: #0a5225;
+  --color-primary-light: #F2FBEA;
+  --color-primary-tint: #e5fad7;
+  --color-primary-border: #c3f5a3;
+
+  /* PowerGrid / Eway enterprise tokens */
+  --color-pg-bg: #0B1B2A;
+  --color-pg-bg-elevated: #0f2438;
+  --color-pg-card: #142d44;
+  --color-pg-border: #1e3f5e;
+  --color-pg-border-subtle: rgba(255, 255, 255, 0.1);
+  --color-pg-lime: #43D500;
+  --color-pg-lime-hover: #38c300;
+  --color-pg-lime-light: rgba(67, 213, 0, 0.14);
+  --color-pg-lime-border: rgba(67, 213, 0, 0.35);
+  --color-pg-cyan: #159447;
+  --color-pg-cyan-hover: #107a38;
+  --color-pg-cyan-light: rgba(21, 148, 71, 0.14);
+  --color-pg-cyan-border: rgba(21, 148, 71, 0.35);
+
+  /* Accent & Status Colors */
+  --color-accent-teal: #159447;
+  --color-success: #16803D;
+  --color-success-light: #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-error: #DC2626;
   --color-error-light: #fef2f2;
   --color-error-border: #fecaca;
   --color-warning: #f59e0b;
+  --color-warning-light: #fffbeb;
+  --color-warning-border: #fde68a;
 
-  /* Neutral & Base Colors */
-  --color-background: #ffffff;
-  --color-background-subtle: #f8fafc;
-  --color-card: #ffffff;
-  --color-card-hover: #ffffff;
+  /* Neutral & Base Surfaces */
+  --color-background: #FFFFFF;
+  --color-background-subtle: #F8FCF5;
+  --color-background-card: #FFFFFF;
+  --color-surface-tint: #F2FBEA;
+  --color-card: #FFFFFF;
+  --color-card-hover: #FFFFFF;
 
-  /* Text Colors */
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #64748b;
-  --color-text-muted: #94a3b8;
-  --color-text-inverse: #ffffff;
+  /* Typography / Text Colors */
+  --color-text-primary: #0B1B2A;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+  --color-text-inverse: #FFFFFF;
 
   /* Borders & Dividers */
-  --color-border: #e2e8f0;
-  --color-border-light: #f1f5f9;
-  --color-border-focus: #00875a;
+  --color-border: #E2E8F0;
+  --color-border-light: #F1F5F9;
+  --color-border-subtle: #EDF2F7;
+  --color-border-focus: #159447;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-  --shadow-card: 0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.03);
-  --shadow-card-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
-  --shadow-auth: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
-  --shadow-button: 0 1px 3px rgba(0, 135, 90, 0.2);
-  --shadow-lime-glow: 0 0 24px rgba(154, 230, 0, 0.25);
-  --shadow-cyan-glow: 0 0 24px rgba(56, 189, 248, 0.25);
+  --shadow-xs: 0 1px 2px 0 rgba(11, 27, 42, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(11, 27, 42, 0.06), 0 1px 2px -1px rgba(11, 27, 42, 0.04);
+  --shadow-card: 0 4px 16px -2px rgba(11, 27, 42, 0.06), 0 2px 6px -1px rgba(11, 27, 42, 0.03);
+  --shadow-card-hover: 0 12px 28px -4px rgba(11, 27, 42, 0.1), 0 4px 8px -2px rgba(11, 27, 42, 0.04);
+  --shadow-modal: 0 20px 48px -8px rgba(11, 27, 42, 0.22), 0 10px 16px -4px rgba(11, 27, 42, 0.1);
+  --shadow-auth: 0 10px 30px -5px rgba(11, 27, 42, 0.08), 0 4px 10px -2px rgba(11, 27, 42, 0.04);
+  --shadow-button: 0 2px 6px rgba(21, 148, 71, 0.25);
+  --shadow-lime-glow: 0 0 24px rgba(67, 213, 0, 0.3);
+  --shadow-cyan-glow: 0 0 24px rgba(21, 148, 71, 0.25);
 
   /* Radii */
+  --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
 
   /* Spacing & Layout */
@@ -69,6 +103,7 @@
 
   /* Typography */
   --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.25s ease;
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }

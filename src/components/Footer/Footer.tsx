@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
     <footer className="vg-footer">
       <div className="container">
         <p className="vg-footer__text">
-          VoltGrid demo prototype · pricing and locations are sample data
+          © {new Date().getFullYear()} Eway to Your EVs · Intelligent Electric Mobility & Fast-Charging Network
         </p>
       </div>
     </footer>

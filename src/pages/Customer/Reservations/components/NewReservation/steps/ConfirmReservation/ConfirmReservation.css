@@ -79,6 +79,79 @@
   margin-top: 2px;
 }
 
+.pg-step-confirm__low-balance-box {
+  background-color: #fffbeb;
+  border: 1.5px solid #fde68a;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pg-step-confirm__low-bal-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pg-step-confirm__low-bal-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.pg-step-confirm__low-bal-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #92400e;
+  display: block;
+}
+
+.pg-step-confirm__low-bal-desc {
+  font-size: 0.82rem;
+  color: #b45309;
+  margin: 2px 0 0 0;
+}
+
+.pg-step-confirm__low-bal-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.pg-step-confirm__topup-btn {
+  padding: 10px 14px;
+  background-color: #071321;
+  color: #a3e635;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-step-confirm__topup-btn:hover {
+  background-color: #0f172a;
+}
+
+.pg-step-confirm__direct-pay-btn {
+  padding: 10px 14px;
+  background-color: #ffffff;
+  color: #071321;
+  border: 1.5px solid #071321;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pg-step-confirm__direct-pay-btn:hover {
+  background-color: #f8fafc;
+}
+
 .pg-step-confirm__error {
   background: #fef2f2;
   border: 1px solid #fecaca;

@@ -55,23 +55,16 @@ export const CustomerLogin: React.FC = () => {
       <div className="pg-clogin-container">
         {/* Centered Auth Box */}
         <div className="pg-clogin-header">
-          <div className="pg-clogin-badge" aria-hidden="true">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#9ae600"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
+          <div className="pg-clogin-logo-wrap" style={{ width: '64px', height: '64px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 16px auto', boxShadow: '0 0 20px rgba(67, 213, 0, 0.4)', backgroundColor: '#0B1B2A' }}>
+            <img
+              src="/eway-logo.png"
+              alt="Eway to Your EVs Official Logo"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
           </div>
 
-          <h1 className="pg-clogin-title">Enter Mobile Number</h1>
-          <p className="pg-clogin-subtitle">We'll send you a 6-digit OTP</p>
+          <h1 className="pg-clogin-title">Eway to Your EVs</h1>
+          <p className="pg-clogin-subtitle">Enter your mobile number to sign in or get started</p>
         </div>
 
         {/* Card */}

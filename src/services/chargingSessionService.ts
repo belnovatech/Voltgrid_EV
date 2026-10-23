@@ -5,6 +5,7 @@ import {
 } from '../types/charging';
 import { CustomerReservation, CustomerVehicle } from '../types/customer';
 import { customerService } from './customerService';
+import { authoritativeWalletService } from './walletService';
 
 const SESSION_STORAGE_KEY = 'vg_active_charging_session';
 const SUMMARY_STORAGE_KEY = 'vg_latest_charging_summary';
@@ -224,7 +225,23 @@ class ChargingSessionService {
 
     // Deduct cost and save history in customer service
     try {
-      await customerService.updateProfile({ walletBalance: session.walletRemaining });
+      if (session.currentCost > 0) {
+        await authoritativeWalletService.debitWallet({
+          amountINR: session.currentCost,
+          title: 'Charging Session Completed',
+          description: `${session.stationName} · ${session.energyDeliveredKwh} kWh delivered`,
+          category: 'charging_fee',
+          metadata: {
+            stationName: session.stationName,
+            chargerId: session.chargerId,
+            kwh: session.energyDeliveredKwh,
+            duration: summary.durationFormatted,
+          },
+        });
+      } else {
+        await customerService.updateProfile({ walletBalance: session.walletRemaining });
+      }
+
       if (session.reservationId) {
         // mark reservation completed
         const reservations = await customerService.getReservations();

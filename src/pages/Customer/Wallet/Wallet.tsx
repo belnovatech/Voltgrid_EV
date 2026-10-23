@@ -1,31 +1,45 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { CustomerLayout } from '../../../components/customer/CustomerLayout/CustomerLayout';
+import { authoritativeWalletService } from '../../../services/walletService';
+import { paymentGatewayService } from '../../../services/paymentGatewayService';
+import { AuthoritativeLedgerRecord, SavedPaymentMethod } from '../../../types/payment';
+import { CustomerProfile } from '../../../types/customer';
 import { customerService } from '../../../services/customerService';
-import { WalletTransaction, CustomerProfile } from '../../../types/customer';
+import { PaymentModal } from '../../../components/payment/PaymentModal/PaymentModal';
+import { AddPaymentMethodModal } from '../../../components/payment/AddPaymentMethodModal/AddPaymentMethodModal';
+import { ConfirmRemoveModal } from '../../../components/payment/ConfirmRemoveModal/ConfirmRemoveModal';
+import { TransactionDetailsModal } from '../../../components/payment/TransactionDetailsModal/TransactionDetailsModal';
 import './Wallet.css';
 
 type FilterType = 'all' | 'recharge' | 'charging' | 'refund';
-type PaymentMethodType = 'UPI' | 'Debit/Credit Card' | 'Net Banking';
-
-const PRESET_AMOUNTS = [100, 250, 500, 1000, 2000];
+type SortType = 'newest' | 'oldest' | 'amount_high' | 'amount_low';
 
 export const Wallet: React.FC = () => {
   const [profile, setProfile] = useState<CustomerProfile | null>(null);
-  const [transactions, setTransactions] = useState<WalletTransaction[]>([]);
+  const [balance, setBalance] = useState<number>(1250);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Filter tab state
+  // Filter & Search & Pagination State
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<SortType>('newest');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const pageSize = 8;
 
-  // Modal State
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedPreset, setSelectedPreset] = useState<number | 'custom'>(500);
-  const [customAmountStr, setCustomAmountStr] = useState<string>('');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('UPI');
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [modalFeedback, setModalFeedback] = useState<{ type: 'success' | 'error' | 'pending'; message: string } | null>(null);
-  const [inlineError, setInlineError] = useState<string | null>(null);
+  // Saved payment methods
+  const [savedMethods, setSavedMethods] = useState<SavedPaymentMethod[]>([]);
+
+  // Modals state
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
+  const [isAddMethodModalOpen, setIsAddMethodModalOpen] = useState<boolean>(false);
+  const [methodToRemove, setMethodToRemove] = useState<SavedPaymentMethod | null>(null);
+  const [selectedTxForDetails, setSelectedTxForDetails] = useState<AuthoritativeLedgerRecord | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState<boolean>(false);
+
+  // Refs for smooth navigation shortcuts
+  const savedMethodsRef = useRef<HTMLDivElement>(null);
+  const transactionsRef = useRef<HTMLDivElement>(null);
 
   // Toast / Global Notification
   const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -34,21 +48,20 @@ export const Wallet: React.FC = () => {
     setToastMessage({ type, text });
     setTimeout(() => {
       setToastMessage((prev) => (prev?.text === text ? null : prev));
-    }, 4000);
+    }, 4500);
   };
 
+  // Load wallet & profile data
   const loadWalletData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const [profData, txData] = await Promise.all([
-        customerService.getProfile(),
-        customerService.getWalletTransactions(),
-      ]);
-      setProfile(profData);
-      setTransactions(txData);
+      const prof = await customerService.getProfile();
+      setProfile(prof);
+      setBalance(authoritativeWalletService.getBalance());
+      setSavedMethods(paymentGatewayService.getSavedMethods());
     } catch {
-      setError('Unable to load wallet information.');
+      setError('Unable to load wallet information. Please check your connection.');
     } finally {
       setIsLoading(false);
     }
@@ -56,172 +69,83 @@ export const Wallet: React.FC = () => {
 
   useEffect(() => {
     loadWalletData();
+
+    // Subscribe to real-time wallet ledger updates
+    const unsubscribe = authoritativeWalletService.subscribe((newBal) => {
+      setBalance(newBal);
+      setProfile((prev) => (prev ? { ...prev, walletBalance: newBal } : prev));
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, [loadWalletData]);
 
-  // Compute live summaries
-  const summaries = useMemo(() => {
-    let totalRecharged = 0;
-    let chargingSpend = 0;
-    let totalRefunds = 0;
-    let totalSessions = 0;
-
-    transactions.forEach((tx) => {
-      const amt = Number(tx.amountINR) || 0;
-      const typeLower = (tx.type || '').toLowerCase();
-
-      if (typeLower === 'recharge' || typeLower === 'credit') {
-        totalRecharged += amt;
-      } else if (typeLower === 'charging' || typeLower === 'debit') {
-        chargingSpend += amt;
-        totalSessions += 1;
-      } else if (typeLower === 'refund') {
-        totalRefunds += amt;
-      }
+  // Query paginated and filtered ledger
+  const queryResult = useMemo(() => {
+    return authoritativeWalletService.queryLedger({
+      filter: activeFilter,
+      search: searchQuery,
+      page: currentPage,
+      pageSize,
+      sort: sortOrder,
     });
+  }, [activeFilter, searchQuery, currentPage, sortOrder, balance]);
 
-    // Fallback baseline from charging sessions if none yet in transactions
-    if (totalSessions === 0) {
-      totalSessions = 25; // Default reference baseline
-    } else if (totalSessions < 25) {
-      totalSessions += 22;
-    }
+  const { records: currentTransactions, total, totalPages, summary: summaries } = queryResult;
 
-    return {
-      totalRecharged: Math.round(totalRecharged || 2500),
-      chargingSpend: Math.round(chargingSpend || 1250),
-      refunds: Math.round(totalRefunds || 72),
-      sessions: totalSessions,
-    };
-  }, [transactions]);
-
-  // Filtered transactions
-  const filteredTransactions = useMemo(() => {
-    if (activeFilter === 'all') return transactions;
-
-    return transactions.filter((tx) => {
-      const t = (tx.type || '').toLowerCase();
-      if (activeFilter === 'recharge') return t === 'recharge' || t === 'credit';
-      if (activeFilter === 'charging') return t === 'charging' || t === 'debit';
-      if (activeFilter === 'refund') return t === 'refund';
-      return true;
-    });
-  }, [transactions, activeFilter]);
-
-  // Computed chosen amount
-  const resolvedAmount = useMemo(() => {
-    if (selectedPreset === 'custom') {
-      const parsed = parseFloat(customAmountStr);
-      return isNaN(parsed) ? 0 : parsed;
-    }
-    return selectedPreset;
-  }, [selectedPreset, customAmountStr]);
-
-  // Open modal handler
-  const handleOpenModal = () => {
-    setSelectedPreset(500);
-    setCustomAmountStr('');
-    setPaymentMethod('UPI');
-    setModalFeedback(null);
-    setInlineError(null);
-    setIsModalOpen(true);
+  // Handle Export CSV Statement
+  const handleExportStatement = () => {
+    const csvContent = authoritativeWalletService.generateCsvStatement();
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `eway_wallet_statement_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Official Eway Wallet Statement downloaded successfully!', 'success');
   };
 
-  // Close modal handler
-  const handleCloseModal = () => {
-    if (isSubmitting) return; // Prevent closing while processing
-    setIsModalOpen(false);
-    setModalFeedback(null);
-    setInlineError(null);
-  };
-
-  // Preset Selection
-  const handleSelectPreset = (preset: number | 'custom') => {
-    setSelectedPreset(preset);
-    setInlineError(null);
-    if (preset !== 'custom') {
-      setCustomAmountStr('');
+  // Set default payment method
+  const handleSetDefaultMethod = (id: string) => {
+    const ok = paymentGatewayService.setDefaultMethod(id);
+    if (ok) {
+      setSavedMethods(paymentGatewayService.getSavedMethods());
+      showToast('Default payment method updated successfully.', 'success');
     }
   };
 
-  // Custom Amount Change
-  const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/[^0-9.]/g, '');
-    // Allow only one decimal point
-    const parts = val.split('.');
-    if (parts.length > 2) return;
-    if (parts[1] && parts[1].length > 2) return;
-
-    setCustomAmountStr(val);
-    setInlineError(null);
+  // Request remove payment method (opens confirmation modal)
+  const handleRequestRemoveMethod = (method: SavedPaymentMethod) => {
+    setMethodToRemove(method);
   };
 
-  // Handle Add Money Submit
-  const handleAddMoneySubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-
-    // Validation
-    if (selectedPreset === 'custom') {
-      if (!customAmountStr.trim()) {
-        setInlineError('Please enter a recharge amount.');
-        return;
-      }
-      const num = parseFloat(customAmountStr);
-      if (isNaN(num) || num <= 0) {
-        setInlineError('Amount must be greater than ₹0.');
-        return;
-      }
-      if (num < 10) {
-        setInlineError('Minimum recharge amount is ₹10.');
-        return;
-      }
-      if (num > 50000) {
-        setInlineError('Maximum single recharge limit is ₹50,000.');
-        return;
-      }
-    } else {
-      if (!resolvedAmount || resolvedAmount <= 0) {
-        setInlineError('Please select a valid recharge amount.');
-        return;
-      }
+  // Confirm remove payment method
+  const handleConfirmRemoveMethod = () => {
+    if (!methodToRemove) return;
+    const ok = paymentGatewayService.deleteSavedMethod(methodToRemove.id);
+    if (ok) {
+      setSavedMethods(paymentGatewayService.getSavedMethods());
+      showToast(`Removed ${methodToRemove.title} from saved methods.`, 'success');
     }
-
-    setIsSubmitting(true);
-    setModalFeedback(null);
-    setInlineError(null);
-
-    try {
-      const result = await customerService.addMoney(resolvedAmount, paymentMethod);
-      
-      // Update local states from backend response
-      if (profile) {
-        setProfile({ ...profile, walletBalance: result.balance });
-      }
-      const updatedTxs = await customerService.getWalletTransactions();
-      setTransactions(updatedTxs);
-
-      setModalFeedback({
-        type: 'success',
-        message: `Successfully added ₹${resolvedAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })} via ${paymentMethod}!`,
-      });
-
-      showToast(`₹${resolvedAmount.toLocaleString('en-IN')} added to your wallet!`, 'success');
-
-      // Auto close after brief celebration
-      setTimeout(() => {
-        setIsModalOpen(false);
-        setIsSubmitting(false);
-      }, 1200);
-    } catch {
-      setModalFeedback({
-        type: 'error',
-        message: 'Payment failed. Your account has not been charged. Please try again.',
-      });
-      setIsSubmitting(false);
-    }
+    setMethodToRemove(null);
   };
 
-  // Helper formatting
+  // Add new payment method success callback
+  const handleAddMethodSuccess = (newMethod: SavedPaymentMethod) => {
+    setSavedMethods(paymentGatewayService.getSavedMethods());
+    showToast(`✓ Added ${newMethod.title} to your saved payment methods!`, 'success');
+  };
+
+  // Open details modal
+  const handleViewTransactionDetails = (tx: AuthoritativeLedgerRecord) => {
+    setSelectedTxForDetails(tx);
+    setIsDetailsModalOpen(true);
+  };
+
+  // Helper currency formatting
   const formatINR = (val: number, showDecimals: boolean = true) => {
     return `₹${val.toLocaleString('en-IN', {
       minimumFractionDigits: showDecimals ? 2 : 0,
@@ -229,71 +153,75 @@ export const Wallet: React.FC = () => {
     })}`;
   };
 
-  const getTransactionTypeVisual = (type: string) => {
+  const getTransactionVisual = (type: string) => {
     const t = (type || '').toLowerCase();
     if (t === 'recharge' || t === 'credit') {
       return {
         label: 'Recharge',
         icon: '↙',
-        iconClass: 'powergrid-wallet__type-icon--recharge',
-        textClass: 'powergrid-wallet__type-text--recharge',
+        iconClass: 'eway-wallet__type-icon--recharge',
+        textClass: 'eway-wallet__type-text--recharge',
         amountPrefix: '+',
-        amountClass: 'powergrid-wallet__amount--positive',
+        amountClass: 'eway-wallet__amount--positive',
       };
     }
     if (t === 'refund') {
       return {
         label: 'Refund',
         icon: '↻',
-        iconClass: 'powergrid-wallet__type-icon--refund',
-        textClass: 'powergrid-wallet__type-text--refund',
+        iconClass: 'eway-wallet__type-icon--refund',
+        textClass: 'eway-wallet__type-text--refund',
         amountPrefix: '+',
-        amountClass: 'powergrid-wallet__amount--positive',
+        amountClass: 'eway-wallet__amount--positive',
       };
     }
     return {
       label: 'Charging',
       icon: '↗',
-      iconClass: 'powergrid-wallet__type-icon--charging',
-      textClass: 'powergrid-wallet__type-text--charging',
-      amountPrefix: '',
-      amountClass: 'powergrid-wallet__amount--negative',
+      iconClass: 'eway-wallet__type-icon--charging',
+      textClass: 'eway-wallet__type-text--charging',
+      amountPrefix: '-',
+      amountClass: 'eway-wallet__amount--negative',
     };
+  };
+
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
     <CustomerLayout>
-      <div className="powergrid-wallet">
+      <div className="eway-wallet-page">
         {/* Toast Notification */}
         {toastMessage && (
-          <div className={`powergrid-wallet__toast powergrid-wallet__toast--${toastMessage.type}`} role="alert">
-            <span className="powergrid-wallet__toast-icon">✓</span>
-            <span className="powergrid-wallet__toast-text">{toastMessage.text}</span>
+          <div className={`eway-wallet__toast eway-wallet__toast--${toastMessage.type}`} role="alert">
+            <span className="eway-wallet__toast-icon">✓</span>
+            <span className="eway-wallet__toast-text">{toastMessage.text}</span>
           </div>
         )}
 
         {/* Loading Skeleton */}
         {isLoading && (
-          <div className="powergrid-wallet__loading-skeleton">
-            <div className="powergrid-wallet__skeleton-hero" />
-            <div className="powergrid-wallet__skeleton-summary-grid">
-              <div className="powergrid-wallet__skeleton-card" />
-              <div className="powergrid-wallet__skeleton-card" />
-              <div className="powergrid-wallet__skeleton-card" />
-              <div className="powergrid-wallet__skeleton-card" />
+          <div className="eway-wallet__loading-skeleton">
+            <div className="eway-wallet__skeleton-hero" />
+            <div className="eway-wallet__skeleton-summary-grid">
+              <div className="eway-wallet__skeleton-card" />
+              <div className="eway-wallet__skeleton-card" />
+              <div className="eway-wallet__skeleton-card" />
+              <div className="eway-wallet__skeleton-card" />
             </div>
-            <div className="powergrid-wallet__skeleton-table" />
+            <div className="eway-wallet__skeleton-table" />
           </div>
         )}
 
         {/* Error State */}
         {!isLoading && error && (
-          <div className="powergrid-wallet__error-state">
-            <div className="powergrid-wallet__error-icon">⚠️</div>
-            <h2 className="powergrid-wallet__error-title">Unable to load wallet information</h2>
-            <p className="powergrid-wallet__error-desc">There was an issue retrieving your wallet balance and transactions.</p>
-            <button type="button" className="powergrid-wallet__retry-btn" onClick={loadWalletData}>
-              Retry
+          <div className="eway-wallet__error-state">
+            <div className="eway-wallet__error-icon">⚠️</div>
+            <h2 className="eway-wallet__error-title">Unable to Load Wallet</h2>
+            <p className="eway-wallet__error-desc">{error}</p>
+            <button type="button" className="eway-wallet__retry-btn" onClick={loadWalletData}>
+              Try Again
             </button>
           </div>
         )}
@@ -301,180 +229,441 @@ export const Wallet: React.FC = () => {
         {/* Loaded Content */}
         {!isLoading && !error && (
           <>
-            {/* Wallet Hero Card */}
-            <div className="powergrid-wallet__hero">
-              <div className="powergrid-wallet__hero-content">
-                <span className="powergrid-wallet__hero-badge">POWERGRID WALLET</span>
-                <h1 className="powergrid-wallet__balance">
-                  {formatINR(profile?.walletBalance ?? 0, true)}
-                </h1>
-                <p className="powergrid-wallet__balance-label">Available Balance</p>
+            {/* ============================================================== */}
+            {/* 1. WALLET HERO & OVERVIEW */}
+            {/* ============================================================== */}
+            <div className="eway-wallet__hero">
+              <div className="eway-wallet__hero-content">
+                <div className="eway-wallet__hero-badge-row">
+                  <div className="eway-wallet__hero-logo-wrap">
+                    <img src="/eway-logo.png" alt="Eway to Your EVs" />
+                  </div>
+                  <span className="eway-wallet__hero-badge">
+                    EWAY SMART WALLET · {profile?.name ? profile.name.toUpperCase() : 'VERIFIED ACCOUNT'}
+                  </span>
+                  <span className="eway-wallet__active-pill">● ACTIVE & SECURED</span>
+                </div>
 
-                <button
-                  type="button"
-                  className="powergrid-wallet__add-money-btn"
-                  onClick={handleOpenModal}
-                  aria-label="Add Money to Wallet"
-                  id="wallet-add-money-trigger"
-                >
-                  <span className="powergrid-wallet__add-money-plus">+</span>
-                  <span>Add Money</span>
-                </button>
+                <div className="eway-wallet__balance-group">
+                  <span className="eway-wallet__balance-currency">₹</span>
+                  <h1 className="eway-wallet__balance">
+                    {balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </h1>
+                </div>
+
+                <p className="eway-wallet__balance-label">
+                  Available balance for ultra-fast EV charging across Andhra Pradesh & Telangana
+                </p>
+
+                {/* Primary Actions */}
+                <div className="eway-wallet__hero-actions">
+                  <button
+                    type="button"
+                    className="eway-wallet__add-money-btn"
+                    onClick={() => setIsPaymentModalOpen(true)}
+                    aria-label="Add Money to Eway Wallet"
+                    id="wallet-add-money-trigger"
+                  >
+                    <span className="eway-wallet__btn-icon">⚡</span>
+                    <span>Add Money</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="eway-wallet__add-card-btn"
+                    onClick={() => setIsAddMethodModalOpen(true)}
+                    id="wallet-add-payment-method-trigger"
+                  >
+                    <span className="eway-wallet__btn-icon">💳</span>
+                    <span>Add Payment Method</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="eway-wallet__statement-btn"
+                    onClick={handleExportStatement}
+                    title="Download official statement in CSV format"
+                  >
+                    <span>📥 Statement</span>
+                  </button>
+                </div>
+
+                {/* Shortcuts Row */}
+                <div className="eway-wallet__shortcuts">
+                  <span className="eway-wallet__shortcuts-label">Quick Jump:</span>
+                  <button
+                    type="button"
+                    className="eway-wallet__shortcut-link"
+                    onClick={() => scrollToSection(savedMethodsRef)}
+                  >
+                    Saved Methods ({savedMethods.length}) ↓
+                  </button>
+                  <button
+                    type="button"
+                    className="eway-wallet__shortcut-link"
+                    onClick={() => scrollToSection(transactionsRef)}
+                  >
+                    Recent Activity ({total}) ↓
+                  </button>
+                </div>
               </div>
 
-              {/* Decorative Concentric Rings Graphic */}
-              <div className="powergrid-wallet__hero-graphic" aria-hidden="true">
-                <div className="powergrid-wallet__graphic-ring powergrid-wallet__graphic-ring--outer" />
-                <div className="powergrid-wallet__graphic-ring powergrid-wallet__graphic-ring--inner" />
+              {/* Decorative Brand Accent Graphic */}
+              <div className="eway-wallet__hero-graphic" aria-hidden="true">
+                <div className="eway-wallet__graphic-glow" />
+                <div className="eway-wallet__graphic-ring eway-wallet__graphic-ring--outer" />
+                <div className="eway-wallet__graphic-ring eway-wallet__graphic-ring--inner" />
               </div>
             </div>
 
-            {/* 4 Summary Cards */}
-            <div className="powergrid-wallet__summary-grid">
+            {/* ============================================================== */}
+            {/* 2. SUMMARY METRICS (4 CARDS) */}
+            {/* ============================================================== */}
+            <div className="eway-wallet__summary-grid">
               {/* Card 1: Total Recharged */}
-              <div className="powergrid-wallet__summary-card">
-                <div className="powergrid-wallet__summary-icon powergrid-wallet__summary-icon--green">
+              <div className="eway-wallet__summary-card">
+                <div className="eway-wallet__summary-icon eway-wallet__summary-icon--green">
                   ↙
                 </div>
-                <div className="powergrid-wallet__summary-val">
-                  {formatINR(summaries.totalRecharged, false)}
+                <div className="eway-wallet__summary-meta">
+                  <div className="eway-wallet__summary-val">
+                    {formatINR(summaries.totalRecharged, false)}
+                  </div>
+                  <div className="eway-wallet__summary-label">Total Recharged</div>
                 </div>
-                <div className="powergrid-wallet__summary-label">Total Recharged</div>
               </div>
 
               {/* Card 2: Charging Spend */}
-              <div className="powergrid-wallet__summary-card">
-                <div className="powergrid-wallet__summary-icon powergrid-wallet__summary-icon--red">
+              <div className="eway-wallet__summary-card">
+                <div className="eway-wallet__summary-icon eway-wallet__summary-icon--navy">
                   ↗
                 </div>
-                <div className="powergrid-wallet__summary-val">
-                  {formatINR(summaries.chargingSpend, false)}
+                <div className="eway-wallet__summary-meta">
+                  <div className="eway-wallet__summary-val">
+                    {formatINR(summaries.chargingSpend, false)}
+                  </div>
+                  <div className="eway-wallet__summary-label">Charging Spend</div>
                 </div>
-                <div className="powergrid-wallet__summary-label">Charging Spend</div>
               </div>
 
               {/* Card 3: Refunds */}
-              <div className="powergrid-wallet__summary-card">
-                <div className="powergrid-wallet__summary-icon powergrid-wallet__summary-icon--blue">
+              <div className="eway-wallet__summary-card">
+                <div className="eway-wallet__summary-icon eway-wallet__summary-icon--emerald">
                   ↻
                 </div>
-                <div className="powergrid-wallet__summary-val">
-                  {formatINR(summaries.refunds, false)}
+                <div className="eway-wallet__summary-meta">
+                  <div className="eway-wallet__summary-val">
+                    {formatINR(summaries.refunds, false)}
+                  </div>
+                  <div className="eway-wallet__summary-label">Refunds Credited</div>
                 </div>
-                <div className="powergrid-wallet__summary-label">Refunds</div>
               </div>
 
-              {/* Card 4: Sessions */}
-              <div className="powergrid-wallet__summary-card">
-                <div className="powergrid-wallet__summary-icon powergrid-wallet__summary-icon--purple">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                    <polyline points="16 7 22 7 22 13" />
-                  </svg>
+              {/* Card 4: Sessions Count */}
+              <div className="eway-wallet__summary-card">
+                <div className="eway-wallet__summary-icon eway-wallet__summary-icon--lime">
+                  ⚡
                 </div>
-                <div className="powergrid-wallet__summary-val">
-                  {summaries.sessions}
+                <div className="eway-wallet__summary-meta">
+                  <div className="eway-wallet__summary-val">
+                    {summaries.sessionsCount} Sessions
+                  </div>
+                  <div className="eway-wallet__summary-label">Sessions Settled</div>
                 </div>
-                <div className="powergrid-wallet__summary-label">Sessions</div>
               </div>
             </div>
 
-            {/* Transaction History Section */}
-            <div className="powergrid-wallet__tx-container">
-              <div className="powergrid-wallet__tx-header">
-                <h2 className="powergrid-wallet__tx-title">Transaction History</h2>
+            {/* ============================================================== */}
+            {/* 3. SAVED PAYMENT METHODS SECTION (MANDATORY REDESIGN) */}
+            {/* ============================================================== */}
+            <div className="eway-wallet__saved-container" ref={savedMethodsRef}>
+              <div className="eway-wallet__saved-header">
+                <div>
+                  <h2 className="eway-wallet__section-title">Saved Payment Methods</h2>
+                  <p className="eway-wallet__section-sub">
+                    Secure 1-click methods for fast EV charging and automatic wallet top-ups
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="eway-wallet__add-method-btn"
+                  onClick={() => setIsAddMethodModalOpen(true)}
+                  id="wallet-add-method-section-btn"
+                >
+                  <span>+ Add Payment Method</span>
+                </button>
+              </div>
 
-                {/* Filter Tabs */}
-                <div className="powergrid-wallet__filters" role="tablist" aria-label="Transaction Filters">
+              {/* Empty State */}
+              {savedMethods.length === 0 ? (
+                <div className="eway-wallet__saved-empty">
+                  <div className="eway-wallet__empty-icon">💳</div>
+                  <h3 className="eway-wallet__empty-title">No Saved Payment Methods</h3>
+                  <p className="eway-wallet__empty-desc">
+                    Save a credit card, debit card, or UPI handle for frictionless 1-click charging
+                    sessions.
+                  </p>
+                  <button
+                    type="button"
+                    className="eway-wallet__add-method-btn"
+                    onClick={() => setIsAddMethodModalOpen(true)}
+                  >
+                    + Add Your First Payment Method
+                  </button>
+                </div>
+              ) : (
+                /* Dynamic Cards Grid */
+                <div className="eway-wallet__saved-cards-grid">
+                  {savedMethods.map((m) => {
+                    const isDefault = !!m.isDefault;
+                    return (
+                      <div
+                        key={m.id}
+                        className={`eway-wallet__method-card ${isDefault ? 'eway-wallet__method-card--default' : ''}`}
+                      >
+                        <div className="eway-wallet__card-top">
+                          <div className="eway-wallet__card-brand-box">
+                            <span className="eway-wallet__card-type-icon">
+                              {m.type === 'card' ? '💳' : '📱'}
+                            </span>
+                            <span className="eway-wallet__card-brand-name">
+                              {m.brand ? m.brand.toUpperCase() : m.type.toUpperCase()}
+                            </span>
+                          </div>
+                          {isDefault && (
+                            <span className="eway-wallet__badge-default">DEFAULT METHOD</span>
+                          )}
+                        </div>
+
+                        <div className="eway-wallet__card-mid">
+                          <h4 className="eway-wallet__card-title">{m.title}</h4>
+                          <span className="eway-wallet__card-sub">{m.subtitle}</span>
+                        </div>
+
+                        <div className="eway-wallet__card-actions">
+                          {!isDefault ? (
+                            <button
+                              type="button"
+                              className="eway-wallet__card-btn-default"
+                              onClick={() => handleSetDefaultMethod(m.id)}
+                              title="Make this your default payment method"
+                            >
+                              Set as Default
+                            </button>
+                          ) : (
+                            <span className="eway-wallet__card-primary-indicator">
+                              ✓ Primary Charging Card
+                            </span>
+                          )}
+
+                          <button
+                            type="button"
+                            className="eway-wallet__card-btn-delete"
+                            onClick={() => handleRequestRemoveMethod(m)}
+                            title="Remove payment method"
+                            aria-label={`Remove ${m.title}`}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* Add New Card Dashed Box */}
+                  <button
+                    type="button"
+                    className="eway-wallet__add-card-placeholder"
+                    onClick={() => setIsAddMethodModalOpen(true)}
+                  >
+                    <span className="eway-wallet__add-card-plus">+</span>
+                    <span className="eway-wallet__add-card-label">Add New Card or UPI</span>
+                    <span className="eway-wallet__add-card-hint">Instant verification</span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* ============================================================== */}
+            {/* 4. TRANSACTION HISTORY SECTION */}
+            {/* ============================================================== */}
+            <div className="eway-wallet__tx-container" ref={transactionsRef}>
+              <div className="eway-wallet__tx-header">
+                <div>
+                  <h2 className="eway-wallet__section-title">Authoritative Transaction Ledger</h2>
+                  <p className="eway-wallet__section-sub">
+                    Showing {total} verified transactions · Click any row for Tax Invoice & breakdown
+                  </p>
+                </div>
+
+                {/* Search Bar & Sort Dropdown */}
+                <div className="eway-wallet__controls-row">
+                  <div className="eway-wallet__search-wrap">
+                    <span className="eway-wallet__search-icon">🔍</span>
+                    <input
+                      type="text"
+                      className="eway-wallet__search-input"
+                      placeholder="Search ID, station, amount..."
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                    />
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        className="eway-wallet__search-clear"
+                        onClick={() => setSearchQuery('')}
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+
+                  <select
+                    className="eway-wallet__sort-select"
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value as SortType)}
+                  >
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="amount_high">Highest Amount</option>
+                    <option value="amount_low">Lowest Amount</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Filter Tabs */}
+              <div className="eway-wallet__filters-bar">
+                <div className="eway-wallet__filters" role="tablist" aria-label="Transaction Filters">
                   <button
                     type="button"
                     role="tab"
                     aria-selected={activeFilter === 'all'}
-                    className={`powergrid-wallet__filter-tab ${activeFilter === 'all' ? 'powergrid-wallet__filter-tab--active' : ''}`}
-                    onClick={() => setActiveFilter('all')}
+                    className={`eway-wallet__filter-tab ${activeFilter === 'all' ? 'eway-wallet__filter-tab--active' : ''}`}
+                    onClick={() => {
+                      setActiveFilter('all');
+                      setCurrentPage(1);
+                    }}
                   >
-                    All
+                    All Transactions
                   </button>
                   <button
                     type="button"
                     role="tab"
                     aria-selected={activeFilter === 'recharge'}
-                    className={`powergrid-wallet__filter-tab ${activeFilter === 'recharge' ? 'powergrid-wallet__filter-tab--active' : ''}`}
-                    onClick={() => setActiveFilter('recharge')}
+                    className={`eway-wallet__filter-tab ${activeFilter === 'recharge' ? 'eway-wallet__filter-tab--active' : ''}`}
+                    onClick={() => {
+                      setActiveFilter('recharge');
+                      setCurrentPage(1);
+                    }}
                   >
-                    Recharge
+                    Top-ups & Credits
                   </button>
                   <button
                     type="button"
                     role="tab"
                     aria-selected={activeFilter === 'charging'}
-                    className={`powergrid-wallet__filter-tab ${activeFilter === 'charging' ? 'powergrid-wallet__filter-tab--active' : ''}`}
-                    onClick={() => setActiveFilter('charging')}
+                    className={`eway-wallet__filter-tab ${activeFilter === 'charging' ? 'eway-wallet__filter-tab--active' : ''}`}
+                    onClick={() => {
+                      setActiveFilter('charging');
+                      setCurrentPage(1);
+                    }}
                   >
-                    Charging
+                    Charging Debits
                   </button>
                   <button
                     type="button"
                     role="tab"
                     aria-selected={activeFilter === 'refund'}
-                    className={`powergrid-wallet__filter-tab ${activeFilter === 'refund' ? 'powergrid-wallet__filter-tab--active' : ''}`}
-                    onClick={() => setActiveFilter('refund')}
+                    className={`eway-wallet__filter-tab ${activeFilter === 'refund' ? 'eway-wallet__filter-tab--active' : ''}`}
+                    onClick={() => {
+                      setActiveFilter('refund');
+                      setCurrentPage(1);
+                    }}
                   >
-                    Refund
+                    Refunds
                   </button>
                 </div>
               </div>
 
               {/* Desktop Table View */}
-              <div className="powergrid-wallet__table-wrapper">
-                <table className="powergrid-wallet__table">
+              <div className="eway-wallet__table-wrapper">
+                <table className="eway-wallet__table">
                   <thead>
                     <tr>
-                      <th className="powergrid-wallet__th">DATE</th>
-                      <th className="powergrid-wallet__th">TRANSACTION ID</th>
-                      <th className="powergrid-wallet__th">TYPE</th>
-                      <th className="powergrid-wallet__th">AMOUNT</th>
-                      <th className="powergrid-wallet__th">STATUS</th>
-                      <th className="powergrid-wallet__th">BALANCE</th>
+                      <th className="eway-wallet__th">DATE & TIME</th>
+                      <th className="eway-wallet__th">REF / ID</th>
+                      <th className="eway-wallet__th">TYPE & METHOD</th>
+                      <th className="eway-wallet__th">DESCRIPTION</th>
+                      <th className="eway-wallet__th">AMOUNT</th>
+                      <th className="eway-wallet__th">STATUS</th>
+                      <th className="eway-wallet__th">BALANCE AFTER</th>
+                      <th className="eway-wallet__th">ACTION</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredTransactions.length === 0 ? (
+                    {currentTransactions.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="powergrid-wallet__empty-cell">
-                          <div className="powergrid-wallet__empty-state">
-                            <p className="powergrid-wallet__empty-title">No transactions yet</p>
-                            <p className="powergrid-wallet__empty-desc">Your wallet activity will appear here.</p>
+                        <td colSpan={8} className="eway-wallet__empty-cell">
+                          <div className="eway-wallet__empty-state">
+                            <p className="eway-wallet__empty-title">No matching transactions</p>
+                            <p className="eway-wallet__empty-desc">
+                              {searchQuery ? `No records found for "${searchQuery}".` : 'Your wallet activity will appear here.'}
+                            </p>
                           </div>
                         </td>
                       </tr>
                     ) : (
-                      filteredTransactions.map((tx) => {
-                        const visual = getTransactionTypeVisual(tx.type);
+                      currentTransactions.map((tx) => {
+                        const visual = getTransactionVisual(tx.type);
                         return (
-                          <tr key={tx.id} className="powergrid-wallet__row">
-                            <td className="powergrid-wallet__td powergrid-wallet__td--date">
+                          <tr
+                            key={tx.id}
+                            className="eway-wallet__row"
+                            onClick={() => handleViewTransactionDetails(tx)}
+                            title="Click to view details and receipt"
+                          >
+                            <td className="eway-wallet__td eway-wallet__td--date">
                               {tx.date}
                             </td>
-                            <td className="powergrid-wallet__td powergrid-wallet__td--id">
-                              {tx.id}
+                            <td className="eway-wallet__td eway-wallet__td--id">
+                              <span className="eway-wallet__ref-code">{tx.id}</span>
                             </td>
-                            <td className="powergrid-wallet__td powergrid-wallet__td--type">
-                              <span className={`powergrid-wallet__type-badge ${visual.textClass}`}>
-                                <span className="powergrid-wallet__type-arrow">{visual.icon}</span>
+                            <td className="eway-wallet__td eway-wallet__td--type">
+                              <span className={`eway-wallet__type-badge ${visual.textClass}`}>
+                                <span className="eway-wallet__type-arrow">{visual.icon}</span>
                                 <span>{visual.label}</span>
                               </span>
+                              <span className="eway-wallet__method-sub">{tx.paymentMethod}</span>
                             </td>
-                            <td className={`powergrid-wallet__td powergrid-wallet__td--amount ${visual.amountClass}`}>
+                            <td className="eway-wallet__td eway-wallet__td--desc">
+                              <span className="eway-wallet__desc-main">{tx.title}</span>
+                              <span className="eway-wallet__desc-sub">{tx.description}</span>
+                            </td>
+                            <td className={`eway-wallet__td eway-wallet__td--amount ${visual.amountClass}`}>
                               {visual.amountPrefix}₹{Number(tx.amountINR).toFixed(2)}
                             </td>
-                            <td className="powergrid-wallet__td powergrid-wallet__td--status">
-                              <span className="powergrid-wallet__status-pill powergrid-wallet__status-pill--success">
-                                {tx.status || 'Success'}
+                            <td className="eway-wallet__td eway-wallet__td--status">
+                              <span className="eway-wallet__status-pill eway-wallet__status-pill--success">
+                                ✓ {tx.status || 'Success'}
                               </span>
                             </td>
-                            <td className="powergrid-wallet__td powergrid-wallet__td--balance">
-                              ₹{Number(tx.balanceAfterINR ?? profile?.walletBalance ?? 0).toFixed(2)}
+                            <td className="eway-wallet__td eway-wallet__td--balance">
+                              ₹{Number(tx.balanceAfterINR ?? 0).toFixed(2)}
+                            </td>
+                            <td className="eway-wallet__td eway-wallet__td--action">
+                              <button
+                                type="button"
+                                className="eway-wallet__view-btn"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleViewTransactionDetails(tx);
+                                }}
+                              >
+                                View ↗
+                              </button>
                             </td>
                           </tr>
                         );
@@ -485,38 +674,47 @@ export const Wallet: React.FC = () => {
               </div>
 
               {/* Mobile Card List View */}
-              <div className="powergrid-wallet__mobile-list">
-                {filteredTransactions.length === 0 ? (
-                  <div className="powergrid-wallet__empty-state">
-                    <p className="powergrid-wallet__empty-title">No transactions yet</p>
-                    <p className="powergrid-wallet__empty-desc">Your wallet activity will appear here.</p>
+              <div className="eway-wallet__mobile-list">
+                {currentTransactions.length === 0 ? (
+                  <div className="eway-wallet__empty-state">
+                    <p className="eway-wallet__empty-title">No transactions found</p>
+                    <p className="eway-wallet__empty-desc">Try clearing filters or search terms.</p>
                   </div>
                 ) : (
-                  filteredTransactions.map((tx) => {
-                    const visual = getTransactionTypeVisual(tx.type);
+                  currentTransactions.map((tx) => {
+                    const visual = getTransactionVisual(tx.type);
                     return (
-                      <div key={tx.id} className="powergrid-wallet__mobile-card">
-                        <div className="powergrid-wallet__mobile-card-top">
-                          <div className="powergrid-wallet__mobile-card-type">
-                            <span className={`powergrid-wallet__type-badge ${visual.textClass}`}>
-                              <span className="powergrid-wallet__type-arrow">{visual.icon}</span>
+                      <div
+                        key={tx.id}
+                        className="eway-wallet__mobile-card"
+                        onClick={() => handleViewTransactionDetails(tx)}
+                      >
+                        <div className="eway-wallet__mobile-card-top">
+                          <div className="eway-wallet__mobile-card-type">
+                            <span className={`eway-wallet__type-badge ${visual.textClass}`}>
+                              <span className="eway-wallet__type-arrow">{visual.icon}</span>
                               <span>{visual.label}</span>
                             </span>
-                            <span className="powergrid-wallet__mobile-tx-id">{tx.id}</span>
+                            <span className="eway-wallet__mobile-tx-id">{tx.id}</span>
                           </div>
-                          <span className={`powergrid-wallet__mobile-amount ${visual.amountClass}`}>
+                          <span className={`eway-wallet__mobile-amount ${visual.amountClass}`}>
                             {visual.amountPrefix}₹{Number(tx.amountINR).toFixed(2)}
                           </span>
                         </div>
 
-                        <div className="powergrid-wallet__mobile-card-bottom">
-                          <span className="powergrid-wallet__mobile-date">{tx.date}</span>
-                          <div className="powergrid-wallet__mobile-meta">
-                            <span className="powergrid-wallet__status-pill powergrid-wallet__status-pill--success">
-                              {tx.status || 'Success'}
+                        <div className="eway-wallet__mobile-card-mid">
+                          <span className="eway-wallet__mobile-title">{tx.title}</span>
+                          <span className="eway-wallet__mobile-desc">{tx.description}</span>
+                        </div>
+
+                        <div className="eway-wallet__mobile-card-bottom">
+                          <span className="eway-wallet__mobile-date">{tx.date}</span>
+                          <div className="eway-wallet__mobile-meta">
+                            <span className="eway-wallet__status-pill eway-wallet__status-pill--success">
+                              ✓ {tx.status || 'Success'}
                             </span>
-                            <span className="powergrid-wallet__mobile-balance">
-                              Bal: ₹{Number(tx.balanceAfterINR ?? profile?.walletBalance ?? 0).toFixed(2)}
+                            <span className="eway-wallet__mobile-balance">
+                              Bal: ₹{Number(tx.balanceAfterINR ?? 0).toFixed(2)}
                             </span>
                           </div>
                         </div>
@@ -525,227 +723,89 @@ export const Wallet: React.FC = () => {
                   })
                 )}
               </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="eway-wallet__pagination">
+                  <span className="eway-wallet__pagination-info">
+                    Page {currentPage} of {totalPages} ({total} items)
+                  </span>
+
+                  <div className="eway-wallet__pagination-btns">
+                    <button
+                      type="button"
+                      className="eway-wallet__page-btn"
+                      disabled={currentPage <= 1}
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    >
+                      ← Previous
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                      <button
+                        key={num}
+                        type="button"
+                        className={`eway-wallet__page-num ${num === currentPage ? 'eway-wallet__page-num--active' : ''}`}
+                        onClick={() => setCurrentPage(num)}
+                      >
+                        {num}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      className="eway-wallet__page-btn"
+                      disabled={currentPage >= totalPages}
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    >
+                      Next →
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
 
-        {/* ================================================================ */}
-        {/* ADD MONEY MODAL */}
-        {/* ================================================================ */}
-        {isModalOpen && (
-          <div
-            className="powergrid-wallet__modal-backdrop"
-            onClick={(e) => {
-              if (e.target === e.currentTarget && !isSubmitting) {
-                handleCloseModal();
-              }
-            }}
-          >
-            <div
-              className="powergrid-wallet__modal"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="add-money-modal-title"
-            >
-              {/* Modal Header */}
-              <div className="powergrid-wallet__modal-header">
-                <h3 id="add-money-modal-title" className="powergrid-wallet__modal-title">
-                  Add Money to Wallet
-                </h3>
-                <button
-                  type="button"
-                  className="powergrid-wallet__modal-close"
-                  onClick={handleCloseModal}
-                  disabled={isSubmitting}
-                  aria-label="Close"
-                >
-                  ✕
-                </button>
-              </div>
+        {/* Modal: Add Money to Wallet */}
+        <PaymentModal
+          isOpen={isPaymentModalOpen}
+          mode="wallet_topup"
+          defaultAmount={500}
+          orderTitle="Add Money to Eway Wallet"
+          orderDescription="Instant recharge for EV charging stations across AP & Telangana"
+          onClose={() => setIsPaymentModalOpen(false)}
+          onSuccess={() => {
+            showToast('✓ Wallet balance credited successfully!', 'success');
+          }}
+        />
 
-              {/* Modal Body */}
-              <form onSubmit={handleAddMoneySubmit} className="powergrid-wallet__modal-form">
-                {/* Feedback Notification */}
-                {modalFeedback && (
-                  <div
-                    className={`powergrid-wallet__modal-feedback powergrid-wallet__modal-feedback--${modalFeedback.type}`}
-                  >
-                    {modalFeedback.message}
-                  </div>
-                )}
+        {/* Modal: Add New Payment Method */}
+        <AddPaymentMethodModal
+          isOpen={isAddMethodModalOpen}
+          onClose={() => setIsAddMethodModalOpen(false)}
+          onSuccess={handleAddMethodSuccess}
+        />
 
-                {/* Amount Selection */}
-                <div className="powergrid-wallet__modal-section">
-                  <label className="powergrid-wallet__modal-label">Select Amount</label>
-                  <div className="powergrid-wallet__preset-grid">
-                    {PRESET_AMOUNTS.map((amt) => {
-                      const isSelected = selectedPreset === amt;
-                      return (
-                        <button
-                          key={amt}
-                          type="button"
-                          className={`powergrid-wallet__preset-pill ${
-                            isSelected ? 'powergrid-wallet__preset-pill--active' : ''
-                          }`}
-                          onClick={() => handleSelectPreset(amt)}
-                          disabled={isSubmitting}
-                        >
-                          ₹{amt.toLocaleString('en-IN')}
-                        </button>
-                      );
-                    })}
-                    <button
-                      type="button"
-                      className={`powergrid-wallet__preset-pill ${
-                        selectedPreset === 'custom' ? 'powergrid-wallet__preset-pill--active' : ''
-                      }`}
-                      onClick={() => handleSelectPreset('custom')}
-                      disabled={isSubmitting}
-                    >
-                      Custom
-                    </button>
-                  </div>
-                </div>
+        {/* Modal: Confirm Remove Payment Method */}
+        <ConfirmRemoveModal
+          isOpen={!!methodToRemove}
+          method={methodToRemove}
+          canRemoveDefault={savedMethods.length > 1}
+          onClose={() => setMethodToRemove(null)}
+          onConfirm={handleConfirmRemoveMethod}
+        />
 
-                {/* Custom Amount Input Field */}
-                {selectedPreset === 'custom' && (
-                  <div className="powergrid-wallet__modal-section">
-                    <label htmlFor="custom-amount-input" className="powergrid-wallet__modal-label">
-                      Custom Amount (₹)
-                    </label>
-                    <div className="powergrid-wallet__input-wrapper">
-                      <span className="powergrid-wallet__input-currency">₹</span>
-                      <input
-                        id="custom-amount-input"
-                        type="text"
-                        inputMode="decimal"
-                        className="powergrid-wallet__custom-input"
-                        placeholder="Enter amount"
-                        value={customAmountStr}
-                        onChange={handleCustomAmountChange}
-                        disabled={isSubmitting}
-                        autoFocus
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* Inline Error Message */}
-                {inlineError && (
-                  <div className="powergrid-wallet__inline-error">{inlineError}</div>
-                )}
-
-                {/* Payment Method Section */}
-                <div className="powergrid-wallet__modal-section">
-                  <label className="powergrid-wallet__modal-label">Payment Method</label>
-                  <div className="powergrid-wallet__payment-options">
-                    {/* Option 1: UPI */}
-                    <div
-                      className={`powergrid-wallet__payment-card ${
-                        paymentMethod === 'UPI' ? 'powergrid-wallet__payment-card--selected' : ''
-                      }`}
-                      onClick={() => !isSubmitting && setPaymentMethod('UPI')}
-                      role="radio"
-                      aria-checked={paymentMethod === 'UPI'}
-                      tabIndex={0}
-                    >
-                      <div className="powergrid-wallet__payment-icon powergrid-wallet__payment-icon--upi">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-                          <line x1="12" y1="18" x2="12.01" y2="18" />
-                        </svg>
-                      </div>
-                      <div className="powergrid-wallet__payment-details">
-                        <div className="powergrid-wallet__payment-name">UPI</div>
-                        <div className="powergrid-wallet__payment-desc">PhonePe, GPay, Paytm</div>
-                      </div>
-                      <div className="powergrid-wallet__radio-indicator">
-                        <div className="powergrid-wallet__radio-dot" />
-                      </div>
-                    </div>
-
-                    {/* Option 2: Debit/Credit Card */}
-                    <div
-                      className={`powergrid-wallet__payment-card ${
-                        paymentMethod === 'Debit/Credit Card'
-                          ? 'powergrid-wallet__payment-card--selected'
-                          : ''
-                      }`}
-                      onClick={() => !isSubmitting && setPaymentMethod('Debit/Credit Card')}
-                      role="radio"
-                      aria-checked={paymentMethod === 'Debit/Credit Card'}
-                      tabIndex={0}
-                    >
-                      <div className="powergrid-wallet__payment-icon powergrid-wallet__payment-icon--card">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-                          <line x1="1" y1="10" x2="23" y2="10" />
-                        </svg>
-                      </div>
-                      <div className="powergrid-wallet__payment-details">
-                        <div className="powergrid-wallet__payment-name">Debit/Credit Card</div>
-                        <div className="powergrid-wallet__payment-desc">Visa, Mastercard, RuPay</div>
-                      </div>
-                      <div className="powergrid-wallet__radio-indicator">
-                        <div className="powergrid-wallet__radio-dot" />
-                      </div>
-                    </div>
-
-                    {/* Option 3: Net Banking */}
-                    <div
-                      className={`powergrid-wallet__payment-card ${
-                        paymentMethod === 'Net Banking'
-                          ? 'powergrid-wallet__payment-card--selected'
-                          : ''
-                      }`}
-                      onClick={() => !isSubmitting && setPaymentMethod('Net Banking')}
-                      role="radio"
-                      aria-checked={paymentMethod === 'Net Banking'}
-                      tabIndex={0}
-                    >
-                      <div className="powergrid-wallet__payment-icon powergrid-wallet__payment-icon--bank">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="3" y1="22" x2="21" y2="22" />
-                          <line x1="6" y1="18" x2="6" y2="11" />
-                          <line x1="10" y1="18" x2="10" y2="11" />
-                          <line x1="14" y1="18" x2="14" y2="11" />
-                          <line x1="18" y1="18" x2="18" y2="11" />
-                          <polygon points="12 2 20 7 4 7" />
-                        </svg>
-                      </div>
-                      <div className="powergrid-wallet__payment-details">
-                        <div className="powergrid-wallet__payment-name">Net Banking</div>
-                        <div className="powergrid-wallet__payment-desc">All major banks</div>
-                      </div>
-                      <div className="powergrid-wallet__radio-indicator">
-                        <div className="powergrid-wallet__radio-dot" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Submit Action Button */}
-                <button
-                  type="submit"
-                  className="powergrid-wallet__submit-btn"
-                  disabled={isSubmitting || resolvedAmount <= 0}
-                  id="wallet-confirm-add-money"
-                >
-                  {isSubmitting ? (
-                    <span className="powergrid-wallet__submit-loader">
-                      <span className="powergrid-wallet__spinner" />
-                      Processing...
-                    </span>
-                  ) : (
-                    `Add ₹${resolvedAmount ? resolvedAmount.toLocaleString('en-IN') : 0} to Wallet`
-                  )}
-                </button>
-              </form>
-            </div>
-          </div>
-        )}
+        {/* Modal: Transaction Details & Printable Tax Invoice */}
+        <TransactionDetailsModal
+          transaction={selectedTxForDetails}
+          isOpen={isDetailsModalOpen}
+          onClose={() => {
+            setIsDetailsModalOpen(false);
+            setSelectedTxForDetails(null);
+          }}
+        />
       </div>
     </CustomerLayout>
   );
 };
+
 export default Wallet;

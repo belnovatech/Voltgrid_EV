@@ -25,12 +25,12 @@ export const AdminMobileHeader: React.FC<AdminMobileHeaderProps> = ({
       </button>
 
       <div className="pg-admin-mobile-header__brand">
-        <div className="pg-admin-mobile-header__logo">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-          </svg>
-        </div>
-        <span className="pg-admin-mobile-header__title">PowerGrid <span className="pg-admin-mobile-header__tag">Admin</span></span>
+        <img
+          src="/eway-logo.png"
+          alt="Eway to Your EVs"
+          style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}
+        />
+        <span className="pg-admin-mobile-header__title">Eway to Your EVs <span className="pg-admin-mobile-header__tag">Admin</span></span>
       </div>
 
       <div className="pg-admin-mobile-header__action">

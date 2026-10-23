@@ -216,22 +216,15 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
     >
       {/* 1. BRAND HEADER */}
       <div className="pg-admin-sidebar__brand">
-        <div className="pg-admin-sidebar__brand-badge" aria-hidden="true">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#060d19"
-            strokeWidth="2.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-          </svg>
+        <div style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 10px rgba(67, 213, 0, 0.35)', backgroundColor: '#0B1B2A' }}>
+          <img
+            src="/eway-logo.png"
+            alt="Eway to Your EVs"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
         </div>
         <div className="pg-admin-sidebar__brand-text">
-          <span className="pg-admin-sidebar__brand-name">PowerGrid</span>
+          <span className="pg-admin-sidebar__brand-name" style={{ fontSize: '0.98rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Eway to Your EVs</span>
           <span className="pg-admin-sidebar__brand-badge-pill">Admin</span>
         </div>
 

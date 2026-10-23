@@ -1,0 +1,885 @@
+/* ==========================================================================
+   Eway to Your EVs — Redesigned PaymentModal Styles
+   Fixes the cramped modal issues from Image 2
+   ========================================================================== */
+
+.eway-pay-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(11, 27, 42, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  animation: ewayPayFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eway-pay-container {
+  width: 100%;
+  max-width: 540px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px -12px rgba(11, 27, 42, 0.35), 0 0 0 1px rgba(11, 27, 42, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: ewayPayScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Header */
+.eway-pay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  background: linear-gradient(180deg, #F8FCF5 0%, #ffffff 100%);
+}
+
+.eway-pay-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eway-pay-logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #0B1B2A;
+  box-shadow: 0 0 12px rgba(67, 213, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.eway-pay-logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.eway-pay-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #159447;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.eway-pay-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0B1B2A;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.eway-pay-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eway-pay-security-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background-color: #F2FBEA;
+  border: 1px solid #C3F5A3;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #159447;
+}
+
+.eway-pay-close-btn {
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748B;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-pay-close-btn:hover {
+  background-color: #F1F5F9;
+  color: #0B1B2A;
+}
+
+/* Content Body */
+.eway-pay-content-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(85vh - 120px);
+  overflow-y: auto;
+}
+
+/* Amount Section */
+.eway-pay-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.eway-pay-section-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #0B1B2A;
+}
+
+.eway-pay-zero-fee-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #16803D;
+  background-color: #F0FDF4;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #BBF7D0;
+}
+
+.eway-pay-presets-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.eway-pay-preset-chip {
+  padding: 10px 4px;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background-color: #ffffff;
+  color: #0B1B2A;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.eway-pay-preset-chip:hover {
+  border-color: #CBD5E1;
+  background-color: #F8FCF5;
+}
+
+.eway-pay-preset-chip--active {
+  background: #0B1B2A !important;
+  color: #43D500 !important;
+  border-color: #0B1B2A !important;
+  box-shadow: 0 2px 8px rgba(11, 27, 42, 0.2);
+}
+
+.eway-pay-custom-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: 8px;
+}
+
+.eway-pay-currency-sign {
+  position: absolute;
+  left: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #159447;
+}
+
+.eway-pay-custom-input {
+  width: 100%;
+  padding: 11px 14px 11px 32px;
+  border-radius: 10px;
+  border: 1px solid #159447;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0B1B2A;
+  background-color: #F8FCF5;
+}
+
+.eway-pay-inline-error {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #DC2626;
+  margin-top: 4px;
+}
+
+/* Cost Breakdown */
+.eway-pay-breakdown-card {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.eway-pay-breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  color: #64748B;
+}
+
+.eway-pay-breakdown-val--free {
+  color: #159447;
+  font-weight: 700;
+}
+
+.eway-pay-breakdown-row--total {
+  border-top: 1px solid #E2E8F0;
+  padding-top: 6px;
+  margin-top: 2px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0B1B2A;
+}
+
+.eway-pay-breakdown-val--total {
+  font-size: 1.05rem;
+  color: #0B1B2A;
+}
+
+/* Method Selector Tabs */
+.eway-pay-method-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 8px;
+}
+
+.eway-pay-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #64748B;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-pay-tab-btn:hover {
+  background-color: #F1F5F9;
+  color: #0B1B2A;
+}
+
+.eway-pay-tab-btn--active {
+  background-color: #F2FBEA;
+  border-color: #C3F5A3;
+  color: #159447;
+}
+
+.eway-pay-tab-count {
+  font-size: 0.7rem;
+  background-color: #E2E8F0;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  color: #0B1B2A;
+}
+
+.eway-pay-tab-fast {
+  font-size: 0.65rem;
+  background-color: #DCFCE7;
+  color: #15803D;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* Tab Content */
+.eway-pay-tab-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Saved Items List */
+.eway-pay-saved-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eway-pay-saved-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-pay-saved-item:hover {
+  border-color: #CBD5E1;
+  background-color: #F8FCF5;
+}
+
+.eway-pay-saved-item--selected {
+  border-color: #159447 !important;
+  background-color: #F8FCF5 !important;
+  box-shadow: 0 0 0 2px rgba(67, 213, 0, 0.25);
+}
+
+.eway-pay-radio-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #CBD5E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.eway-pay-saved-item--selected .eway-pay-radio-circle {
+  border-color: #159447;
+}
+
+.eway-pay-radio-inner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #159447;
+}
+
+.eway-pay-saved-icon {
+  font-size: 1.25rem;
+}
+
+.eway-pay-saved-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.eway-pay-saved-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eway-pay-saved-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0B1B2A;
+}
+
+.eway-pay-default-pill {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #159447;
+  background-color: #F2FBEA;
+  border: 1px solid #C3F5A3;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.eway-pay-saved-sub {
+  font-size: 0.75rem;
+  color: #64748B;
+}
+
+.eway-pay-cvv-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.eway-pay-cvv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748B;
+}
+
+.eway-pay-cvv-input {
+  width: 50px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #CBD5E1;
+  font-size: 0.85rem;
+  text-align: center;
+  outline: none;
+}
+
+.eway-pay-cvv-input:focus {
+  border-color: #159447;
+}
+
+/* UPI Subnav */
+.eway-pay-upi-subnav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.eway-pay-subnav-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #E2E8F0;
+  background-color: #F8FAFC;
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.eway-pay-subnav-btn--active {
+  background-color: #0B1B2A;
+  color: #43D500;
+  border-color: #0B1B2A;
+}
+
+.eway-pay-upi-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.eway-pay-upi-app-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-pay-upi-app-btn:hover {
+  border-color: #CBD5E1;
+  background-color: #F8FCF5;
+}
+
+.eway-pay-upi-app-btn--active {
+  border-color: #159447 !important;
+  background-color: #F2FBEA !important;
+  box-shadow: 0 0 0 2px rgba(67, 213, 0, 0.25);
+}
+
+.eway-pay-upi-app-icon {
+  font-size: 1.2rem;
+}
+
+.eway-pay-upi-app-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0B1B2A;
+}
+
+/* QR Box */
+.eway-pay-qr-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #F8FCF5;
+  border: 1px solid #E2E8F0;
+  text-align: center;
+}
+
+.eway-pay-qr-graphic {
+  background-color: #ffffff;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.eway-pay-qr-desc {
+  font-size: 0.82rem;
+  color: #0B1B2A;
+  margin: 10px 0 4px 0;
+}
+
+.eway-pay-qr-timer {
+  font-size: 0.75rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+/* Card Fields */
+.eway-pay-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eway-pay-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eway-pay-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0B1B2A;
+}
+
+.eway-pay-input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  font-size: 0.92rem;
+  color: #0B1B2A;
+  box-sizing: border-box;
+}
+
+.eway-pay-input:focus {
+  outline: none;
+  border-color: #159447;
+  box-shadow: 0 0 0 3px rgba(67, 213, 0, 0.15);
+}
+
+.eway-pay-row {
+  display: flex;
+  gap: 10px;
+}
+
+.eway-pay-col {
+  flex: 1;
+}
+
+.eway-pay-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0B1B2A;
+  cursor: pointer;
+}
+
+.eway-pay-checkbox {
+  accent-color: #159447;
+}
+
+/* Net Banking Grid */
+.eway-pay-nb-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.eway-pay-nb-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-pay-nb-card:hover {
+  background-color: #F8FCF5;
+  border-color: #CBD5E1;
+}
+
+.eway-pay-nb-card--active {
+  border-color: #159447 !important;
+  background-color: #F2FBEA !important;
+  box-shadow: 0 0 0 2px rgba(67, 213, 0, 0.25);
+}
+
+.eway-pay-nb-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0B1B2A;
+}
+
+/* Footer Action */
+.eway-pay-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.eway-pay-footer-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.eway-pay-net-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+}
+
+.eway-pay-net-val {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0B1B2A;
+  line-height: 1.1;
+}
+
+.eway-pay-submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #43D500 0%, #159447 100%);
+  color: #ffffff;
+  font-size: 0.98rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(21, 148, 71, 0.3);
+  transition: all 0.15s ease;
+}
+
+.eway-pay-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(21, 148, 71, 0.4);
+}
+
+.eway-pay-submit-btn--full {
+  width: 100%;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* State Screens: Processing, OTP, Success, Failed */
+.eway-pay-state-screen {
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.eway-pay-spinner-large {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #E2E8F0;
+  border-top-color: #159447;
+  border-radius: 50%;
+  animation: ewaySpin 0.8s linear infinite;
+  margin-bottom: 20px;
+}
+
+.eway-pay-state-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0B1B2A;
+  margin: 0 0 8px 0;
+}
+
+.eway-pay-state-desc {
+  font-size: 0.88rem;
+  color: #64748B;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  max-width: 360px;
+}
+
+.eway-pay-security-note-mini {
+  font-size: 0.75rem;
+  color: #159447;
+  font-weight: 700;
+}
+
+/* OTP Screen */
+.eway-pay-otp-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #159447;
+  background-color: #F2FBEA;
+  border: 1px solid #C3F5A3;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+
+.eway-pay-otp-input {
+  width: 180px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #0B1B2A;
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  text-align: center;
+  font-weight: 800;
+  outline: none;
+}
+
+.eway-pay-otp-timer-row {
+  margin: 12px 0;
+  font-size: 0.82rem;
+  color: #64748B;
+}
+
+.eway-pay-resend-btn {
+  background: none;
+  border: none;
+  color: #159447;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Success Screen */
+.eway-pay-success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #43D500 0%, #159447 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  box-shadow: 0 0 24px rgba(67, 213, 0, 0.45);
+  margin-bottom: 16px;
+}
+
+.eway-pay-receipt-mini {
+  width: 100%;
+  background-color: #F8FCF5;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 8px 0 16px 0;
+}
+
+.eway-pay-rec-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #64748B;
+}
+
+.eway-pay-rec-row strong {
+  color: #0B1B2A;
+}
+
+.eway-pay-rec-row--bal {
+  border-top: 1px solid #E2E8F0;
+  padding-top: 8px;
+  font-size: 0.9rem;
+}
+
+.eway-pay-new-bal {
+  color: #159447 !important;
+  font-size: 1.1rem;
+}
+
+/* Failed Screen */
+.eway-pay-fail-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #DC2626;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.eway-pay-failed-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.eway-pay-btn-retry {
+  flex: 1;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  background-color: #0B1B2A;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.eway-pay-btn-close-sec {
+  padding: 11px 18px;
+  border-radius: 10px;
+  border: 1px solid #CBD5E1;
+  background-color: #ffffff;
+  color: #64748B;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes ewayPayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ewayPayScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes ewaySpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 540px) {
+  .eway-pay-presets-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .eway-pay-container {
+    border-radius: 16px;
+    max-height: 94vh;
+  }
+  .eway-pay-header,
+  .eway-pay-content-body {
+    padding: 16px;
+  }
+  .eway-pay-upi-apps-grid,
+  .eway-pay-nb-grid {
+    grid-template-columns: 1fr;
+  }
+}

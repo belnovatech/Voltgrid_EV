@@ -56,22 +56,15 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
       <div className="container vg-dash-header__container">
         {/* Left: Brand Logo */}
         <div className="vg-dash-header__left">
-          <Link to="/dashboard" className="vg-dash-header__brand" aria-label="VoltGrid Dashboard Home">
-            <div className="vg-dash-header__logo-icon" aria-hidden="true">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-              </svg>
+          <Link to="/dashboard" className="vg-dash-header__brand" aria-label="Eway to Your EVs Dashboard Home">
+            <div style={{ width: '38px', height: '38px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 10px rgba(67, 213, 0, 0.35)' }}>
+              <img
+                src="/eway-logo.png"
+                alt="Eway to Your EVs"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             </div>
-            <span className="vg-dash-header__brand-name">VoltGrid</span>
+            <span className="vg-dash-header__brand-name">Eway to Your EVs</span>
           </Link>
 
           {/* Desktop Navigation */}

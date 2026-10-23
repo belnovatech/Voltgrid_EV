@@ -1,0 +1,524 @@
+/* ==========================================================================
+   Eway to Your EVs — Add Payment Method Modal Styles
+   ========================================================================== */
+
+.eway-apm-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(11, 27, 42, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  animation: ewayFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eway-apm-modal {
+  width: 100%;
+  max-width: 520px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px -12px rgba(11, 27, 42, 0.35), 0 0 0 1px rgba(11, 27, 42, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: ewayScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Header */
+.eway-apm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  background: linear-gradient(180deg, #F8FCF5 0%, #ffffff 100%);
+}
+
+.eway-apm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.eway-apm-logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #0B1B2A;
+  box-shadow: 0 0 14px rgba(67, 213, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.eway-apm-logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.eway-apm-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #159447;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.eway-apm-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #0B1B2A;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.eway-apm-close {
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748B;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-apm-close:hover {
+  background-color: #F1F5F9;
+  color: #0B1B2A;
+}
+
+/* Tabs */
+.eway-apm-tabs {
+  display: flex;
+  padding: 12px 24px 0 24px;
+  gap: 8px;
+  border-bottom: 1px solid #E2E8F0;
+  background-color: #F8FCF5;
+  overflow-x: auto;
+}
+
+.eway-apm-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: transparent;
+  color: #64748B;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.eway-apm-tab:hover {
+  color: #0B1B2A;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.eway-apm-tab--active {
+  background-color: #ffffff;
+  color: #0B1B2A;
+  border-color: #E2E8F0;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.02);
+  position: relative;
+}
+
+.eway-apm-tab--active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #43D500;
+}
+
+.eway-apm-tab-icon {
+  font-size: 1rem;
+}
+
+/* Body & Forms */
+.eway-apm-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(85vh - 140px);
+  overflow-y: auto;
+}
+
+.eway-apm-card-form,
+.eway-apm-upi-form,
+.eway-apm-nb-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.eway-apm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.eway-apm-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eway-apm-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #0B1B2A;
+}
+
+.eway-apm-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.eway-apm-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #CBD5E1;
+  background-color: #ffffff;
+  color: #0B1B2A;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+
+.eway-apm-input:focus {
+  outline: none;
+  border-color: #159447;
+  box-shadow: 0 0 0 3px rgba(67, 213, 0, 0.15);
+}
+
+.eway-apm-input--error {
+  border-color: #DC2626 !important;
+  background-color: #FEF2F2;
+}
+
+.eway-apm-lock-icon {
+  position: absolute;
+  right: 12px;
+  font-size: 0.9rem;
+  color: #94A3B8;
+  pointer-events: none;
+}
+
+.eway-apm-error-msg {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #DC2626;
+  margin-top: 2px;
+}
+
+.eway-apm-row {
+  display: flex;
+  gap: 12px;
+}
+
+.eway-apm-col {
+  flex: 1;
+}
+
+/* Brand pills */
+.eway-apm__brand-pill {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.eway-apm__brand-pill--visa {
+  background-color: #00579f;
+  color: #ffffff;
+}
+
+.eway-apm__brand-pill--mc {
+  background-color: #eb001b;
+  color: #ffffff;
+}
+
+.eway-apm__brand-pill--rupay {
+  background-color: #097938;
+  color: #ffffff;
+}
+
+.eway-apm__brand-pill--amex {
+  background-color: #007bc1;
+  color: #ffffff;
+}
+
+.eway-apm__brand-pill--card {
+  background-color: #E2E8F0;
+  color: #475569;
+}
+
+/* Checkbox */
+.eway-apm-checkbox-row {
+  display: flex;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.eway-apm-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0B1B2A;
+  cursor: pointer;
+  user-select: none;
+}
+
+.eway-apm-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #159447;
+  cursor: pointer;
+}
+
+/* Security Note */
+.eway-apm-security-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background-color: #F2FBEA;
+  border: 1px solid #C3F5A3;
+  font-size: 0.78rem;
+  color: #159447;
+  line-height: 1.4;
+}
+
+.eway-apm-shield {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.eway-apm-security-note strong {
+  color: #0B1B2A;
+}
+
+/* Quick Handles for UPI */
+.eway-apm-handle-pills {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.eway-apm-handle-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.eway-apm-handle-pill {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #E2E8F0;
+  background-color: #F8FAFC;
+  color: #0B1B2A;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-apm-handle-pill:hover {
+  border-color: #159447;
+  background-color: #F2FBEA;
+  color: #159447;
+}
+
+/* Net Banking Grid */
+.eway-apm-banks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.eway-apm-bank-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-apm-bank-btn:hover {
+  border-color: #CBD5E1;
+  background-color: #F8FAFC;
+}
+
+.eway-apm-bank-btn--selected {
+  border-color: #159447 !important;
+  background-color: #F2FBEA !important;
+  box-shadow: 0 0 0 2px rgba(67, 213, 0, 0.25);
+}
+
+.eway-apm-bank-logo {
+  font-size: 1.25rem;
+}
+
+.eway-apm-bank-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0B1B2A;
+}
+
+/* Alert */
+.eway-apm-alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  margin: 12px 24px 0 24px;
+}
+
+.eway-apm-alert--error {
+  background-color: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+}
+
+/* Footer Actions */
+.eway-apm-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #E2E8F0;
+  margin-top: 4px;
+}
+
+.eway-apm-btn-cancel {
+  padding: 11px 20px;
+  border-radius: 10px;
+  border: 1px solid #CBD5E1;
+  background-color: #ffffff;
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.eway-apm-btn-cancel:hover {
+  background-color: #F1F5F9;
+  color: #0B1B2A;
+}
+
+.eway-apm-btn-submit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #43D500 0%, #159447 100%);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(21, 148, 71, 0.28);
+  transition: all 0.15s ease;
+}
+
+.eway-apm-btn-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(21, 148, 71, 0.35);
+}
+
+.eway-apm-btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.eway-apm-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: ewaySpin 0.7s linear infinite;
+}
+
+/* Animations */
+@keyframes ewayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ewayScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes ewaySpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 540px) {
+  .eway-apm-modal {
+    border-radius: 16px;
+    max-height: 94vh;
+  }
+  .eway-apm-header,
+  .eway-apm-body {
+    padding: 16px;
+  }
+  .eway-apm-tabs {
+    padding: 10px 16px 0 16px;
+  }
+  .eway-apm-banks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .eway-apm-btn-submit,
+  .eway-apm-btn-cancel {
+    flex: 1;
+    justify-content: center;
+  }
+}

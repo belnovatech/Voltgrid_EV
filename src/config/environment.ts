@@ -10,4 +10,8 @@ export const ENV = {
   COUNTRY_CODE: '+91',
   PHONE_LENGTH: 10,
   OTP_LENGTH: 6,
+  PAYMENT_GATEWAY_PROVIDER: import.meta.env.VITE_PAYMENT_GATEWAY_PROVIDER || 'sandbox',
+  PAYMENT_CURRENCY: import.meta.env.VITE_PAYMENT_CURRENCY || 'INR',
+  RAZORPAY_KEY_ID: import.meta.env.VITE_RAZORPAY_KEY_ID || '',
+  STRIPE_PUBLISHABLE_KEY: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '',
 } as const;

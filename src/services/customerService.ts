@@ -10,6 +10,7 @@ import {
   SupportTicket,
 } from '../types/customer';
 import { apiClient } from './apiClient';
+import { authoritativeWalletService } from './walletService';
 
 const INITIAL_PROFILE: CustomerProfile = {
   id: 'usr_bala_01',
@@ -178,75 +179,6 @@ const INITIAL_HISTORY: ChargingHistoryItem[] = [
   },
 ];
 
-const INITIAL_TRANSACTIONS: WalletTransaction[] = [
-  {
-    id: 'TXN-10041',
-    type: 'recharge',
-    title: 'Wallet Recharge',
-    description: 'UPI · Google Pay',
-    amountINR: 1000.0,
-    date: '2024-12-15 09:00',
-    status: 'Success',
-    balanceAfterINR: 1250.0,
-    paymentMethod: 'UPI',
-  },
-  {
-    id: 'TXN-10040',
-    type: 'charging',
-    title: 'Charging Session',
-    description: 'Vijayawada Central · 31.5 kWh',
-    amountINR: 457.84,
-    date: '2024-12-15 11:06',
-    status: 'Success',
-    balanceAfterINR: 792.16,
-    paymentMethod: 'Wallet',
-  },
-  {
-    id: 'TXN-10039',
-    type: 'charging',
-    title: 'Charging Session',
-    description: 'Vijayawada Central · 3.8 kWh',
-    amountINR: 41.78,
-    date: '2024-12-14 08:00',
-    status: 'Success',
-    balanceAfterINR: 1250.0,
-    paymentMethod: 'Wallet',
-  },
-  {
-    id: 'TXN-10038',
-    type: 'recharge',
-    title: 'Wallet Recharge',
-    description: 'Debit Card · HDFC Bank',
-    amountINR: 500.0,
-    date: '2024-12-10 14:30',
-    status: 'Success',
-    balanceAfterINR: 1291.78,
-    paymentMethod: 'Debit/Credit Card',
-  },
-  {
-    id: 'TXN-10037',
-    type: 'refund',
-    title: 'Reservation Refund',
-    description: 'Cancelled Slot Refund',
-    amountINR: 72.0,
-    date: '2024-12-08 10:00',
-    status: 'Success',
-    balanceAfterINR: 791.78,
-    paymentMethod: 'UPI',
-  },
-  {
-    id: 'TXN-10036',
-    type: 'charging',
-    title: 'Charging Session',
-    description: 'Benz Circle Hub · 28.5 kWh',
-    amountINR: 413.88,
-    date: '2024-12-07 16:20',
-    status: 'Success',
-    balanceAfterINR: 719.78,
-    paymentMethod: 'Wallet',
-  },
-];
-
 const INITIAL_NOTIFICATIONS: CustomerNotification[] = [
   {
     id: 'notif_01',
@@ -351,7 +283,6 @@ class CustomerService {
   private vehicles: CustomerVehicle[] = [...INITIAL_VEHICLES];
   private reservations: CustomerReservation[] = [...INITIAL_RESERVATIONS];
   private history: ChargingHistoryItem[] = [...INITIAL_HISTORY];
-  private transactions: WalletTransaction[] = [...INITIAL_TRANSACTIONS];
   private notifications: CustomerNotification[] = [...INITIAL_NOTIFICATIONS];
   private tickets: SupportTicket[] = [...INITIAL_TICKETS];
 
@@ -370,14 +301,6 @@ class CustomerService {
     if (savedVehicles) {
       try {
         this.vehicles = JSON.parse(savedVehicles);
-      } catch {
-        // use default
-      }
-    }
-    const savedTransactions = sessionStorage.getItem('vg_customer_transactions');
-    if (savedTransactions) {
-      try {
-        this.transactions = JSON.parse(savedTransactions);
       } catch {
         // use default
       }
@@ -428,9 +351,10 @@ class CustomerService {
   async getDashboardData(): Promise<CustomerDashboardData> {
     if (ENV.IS_DEMO_MODE) {
       await new Promise((res) => setTimeout(res, 200));
+      const authBal = authoritativeWalletService.getBalance();
       return {
-        profile: this.profile,
-        walletBalance: this.profile.walletBalance,
+        profile: { ...this.profile, walletBalance: authBal },
+        walletBalance: authBal,
         activeSession: null,
         lastCharging: {
           amountINR: 457,
@@ -478,7 +402,11 @@ class CustomerService {
   }
 
   async getProfile(): Promise<CustomerProfile> {
-    return this.profile;
+    const authoritativeBalance = authoritativeWalletService.getBalance();
+    return {
+      ...this.profile,
+      walletBalance: authoritativeBalance,
+    };
   }
 
   async updateProfile(updates: Partial<CustomerProfile>): Promise<CustomerProfile> {
@@ -610,39 +538,48 @@ class CustomerService {
   }
 
   async getWalletTransactions(): Promise<WalletTransaction[]> {
-    return [...this.transactions];
+    return authoritativeWalletService.toWalletTransactions();
   }
 
   async addMoney(amountINR: number, paymentMethod: string = 'UPI'): Promise<{ balance: number; transaction: WalletTransaction }> {
-    // Simulate real gateway latency
-    await new Promise((res) => setTimeout(res, 600));
+    const txnNum = Math.floor(100000 + Math.random() * 900000);
+    const dateStr = new Date().toISOString().replace(/\D/g, '').slice(0, 8);
+    const { balance, record } = await authoritativeWalletService.creditFromPayment({
+      verification: {
+        success: true,
+        transactionId: `VG-TXN-${dateStr}-${txnNum}`,
+        gatewayReferenceId: `pay_rzp_${Math.random().toString(36).substring(2, 10)}`,
+        amountINR,
+        currency: 'INR',
+        paymentMethod,
+        paymentDetailsSummary: `${paymentMethod} Top-up`,
+        timestamp: new Date().toISOString(),
+        orderId: `ord_${Date.now()}`,
+        idempotencyKey: `topup_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
+        receiptNumber: `RCP-${dateStr}-${Math.floor(1000 + Math.random() * 9000)}`,
+      },
+      customerName: this.profile.name,
+      customerPhone: this.profile.phoneNumber,
+    });
 
-    this.profile.walletBalance = Number((this.profile.walletBalance + amountINR).toFixed(2));
-    
-    const now = new Date();
-    const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-    const txnNumber = Math.floor(10042 + Math.random() * 89900);
+    this.profile.walletBalance = balance;
 
     const newTxn: WalletTransaction = {
-      id: `TXN-${txnNumber}`,
-      type: 'recharge',
-      title: 'Wallet Recharge',
-      description: `${paymentMethod} · Successful Top-up`,
-      amountINR: amountINR,
-      date: formattedDate,
-      status: 'Success',
-      balanceAfterINR: this.profile.walletBalance,
-      paymentMethod,
+      id: record.id,
+      type: record.type,
+      title: record.title,
+      description: record.description,
+      amountINR: record.amountINR,
+      date: record.date,
+      status: record.status,
+      balanceAfterINR: record.balanceAfterINR,
+      paymentMethod: record.paymentMethod,
     };
 
-    this.transactions.unshift(newTxn);
-    sessionStorage.setItem('vg_customer_profile', JSON.stringify(this.profile));
-    sessionStorage.setItem('vg_customer_transactions', JSON.stringify(this.transactions));
-    
     this.notifications.unshift({
       id: `notif_${Date.now()}`,
       title: 'Wallet Recharged',
-      message: `₹${amountINR.toLocaleString('en-IN')} has been added to your wallet. New balance: ₹${this.profile.walletBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`,
+      message: `₹${amountINR.toLocaleString('en-IN')} has been added to your wallet. New balance: ₹${balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`,
       timestamp: 'Just now',
       isRead: false,
       type: 'wallet',
@@ -651,7 +588,7 @@ class CustomerService {
     this.notifyNotifChange();
 
     return {
-      balance: this.profile.walletBalance,
+      balance,
       transaction: newTxn,
     };
   }

@@ -158,7 +158,7 @@ class QRScannerService {
     if (!payload) {
       return {
         success: false,
-        error: 'Invalid QR Code. Please scan an authentic VoltGrid / PowerGrid charger QR code.',
+        error: 'Invalid QR Code. Please scan an authentic Eway to Your EVs charger QR code.',
       };
     }
 
