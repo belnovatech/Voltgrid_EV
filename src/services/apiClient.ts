@@ -90,6 +90,6 @@ export async function apiClient<T>(endpoint: string, options: ApiRequestOptions 
     }
 
     // Network error or fetch failure
-    throw new ApiError(0, 'Network request failed', 'Unable to connect to VoltGrid services. Please check your network connection.');
+    throw new ApiError(0, 'Network request failed', 'Unable to connect to Eway to Your EVs services. Please check your network connection.');
   }
 }

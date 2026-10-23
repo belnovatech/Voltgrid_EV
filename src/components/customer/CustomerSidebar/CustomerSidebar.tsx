@@ -156,23 +156,16 @@ export const CustomerSidebar: React.FC<CustomerSidebarProps> = ({
     >
       {/* 1. BRAND HEADER (FIXED TOP) */}
       <div className="powergrid-customer-sidebar__brand">
-        <div className="powergrid-customer-sidebar__brand-badge" aria-hidden="true">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#060d19"
-            strokeWidth="2.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-          </svg>
+        <div className="powergrid-customer-sidebar__brand-logo-wrap" aria-label="Eway to Your EVs">
+          <img
+            src="/eway-logo.png"
+            alt="Eway to Your EVs Official Logo"
+            className="powergrid-customer-sidebar__brand-logo-img"
+          />
         </div>
         <div className="powergrid-customer-sidebar__brand-text">
-          <span className="powergrid-customer-sidebar__brand-name">PowerGrid</span>
-          <span className="powergrid-customer-sidebar__brand-sub">EV Charging</span>
+          <span className="powergrid-customer-sidebar__brand-name">Eway to Your EVs</span>
+          <span className="powergrid-customer-sidebar__brand-sub">EV Charging Network</span>
         </div>
 
         {isOpenMobile && (

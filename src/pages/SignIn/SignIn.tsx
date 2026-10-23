@@ -67,7 +67,7 @@ export const SignIn: React.FC = () => {
 
         <div className="vg-auth-page__center-box">
           <AuthCard
-            title="Sign in to VoltGrid"
+            title="Sign in to Eway to Your EVs"
             subtitle="We'll send a one-time password to your mobile."
             footerContent={demoFooter}
           >

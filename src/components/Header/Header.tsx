@@ -15,22 +15,15 @@ export const Header: React.FC = () => {
   return (
     <header className="vg-header">
       <div className="container vg-header__container">
-        <Link to="/" className="vg-header__brand" aria-label="VoltGrid Home">
-          <div className="vg-header__logo-icon" aria-hidden="true">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
+        <Link to="/" className="vg-header__brand" aria-label="Eway to Your EVs Home">
+          <div className="vg-header__logo-wrap" style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
+            <img
+              src="/eway-logo.png"
+              alt="Eway to Your EVs Logo"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
           </div>
-          <span className="vg-header__brand-name">VoltGrid</span>
+          <span className="vg-header__brand-name">Eway to Your EVs</span>
         </Link>
 
         <nav className="vg-header__nav" aria-label="Main Navigation">

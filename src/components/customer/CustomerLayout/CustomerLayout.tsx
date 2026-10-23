@@ -92,7 +92,12 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({ children, dark =
           </button>
 
           <div className="powergrid-customer-shell__mobile-brand">
-            <span className="powergrid-customer-shell__mobile-brand-name">PowerGrid</span>
+            <img
+              src="/eway-logo.png"
+              alt="Eway to Your EVs"
+              className="powergrid-customer-shell__mobile-logo"
+            />
+            <span className="powergrid-customer-shell__mobile-brand-name">Eway to Your EVs</span>
           </div>
 
           <button

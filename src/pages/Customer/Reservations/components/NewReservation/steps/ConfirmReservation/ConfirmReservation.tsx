@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ReservationDraft } from '../../../../hooks/useReservationFlow';
+import { PaymentModal } from '../../../../../../../components/payment/PaymentModal/PaymentModal';
+import { authoritativeWalletService } from '../../../../../../../services/walletService';
 import './ConfirmReservation.css';
 
 interface ConfirmReservationProps {
@@ -19,7 +21,34 @@ export const ConfirmReservation: React.FC<ConfirmReservationProps> = ({
   onConfirm,
   onBack,
 }) => {
-  const isBalanceLow = walletBalance < draft.estimatedCostINR;
+  const [currentBal, setCurrentBal] = useState<number>(walletBalance);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
+  const [paymentMode, setPaymentMode] = useState<'wallet_topup' | 'checkout'>('wallet_topup');
+
+  const requiredAmount = draft.estimatedCostINR || 72;
+  const isBalanceLow = currentBal < requiredAmount;
+  const shortfall = Math.max(0, requiredAmount - currentBal);
+
+  const handleOpenTopup = () => {
+    setPaymentMode('wallet_topup');
+    setIsPaymentModalOpen(true);
+  };
+
+  const handleOpenDirectPay = () => {
+    setPaymentMode('checkout');
+    setIsPaymentModalOpen(true);
+  };
+
+  const handlePaymentSuccess = () => {
+    const updatedBal = authoritativeWalletService.getBalance();
+    setCurrentBal(updatedBal);
+    setIsPaymentModalOpen(false);
+
+    // If direct checkout was completed, proceed to confirm reservation immediately
+    if (paymentMode === 'checkout') {
+      onConfirm();
+    }
+  };
 
   return (
     <div className="pg-step-confirm">
@@ -69,14 +98,14 @@ export const ConfirmReservation: React.FC<ConfirmReservationProps> = ({
           <div className="pg-step-confirm__row pg-step-confirm__row--highlight">
             <span className="pg-step-confirm__label">Est. Cost</span>
             <span className="pg-step-confirm__value pg-step-confirm__value--cost">
-              ~₹{draft.estimatedCostINR}
+              ~₹{requiredAmount}
             </span>
           </div>
 
           <div className="pg-step-confirm__row">
             <span className="pg-step-confirm__label">Wallet Balance</span>
             <span className={`pg-step-confirm__value ${isBalanceLow ? 'pg-step-confirm__value--low' : ''}`}>
-              ₹{walletBalance.toLocaleString('en-IN')}
+              ₹{currentBal.toLocaleString('en-IN')}
             </span>
           </div>
 
@@ -85,6 +114,38 @@ export const ConfirmReservation: React.FC<ConfirmReservationProps> = ({
             <span className="pg-step-confirm__value">15 minutes</span>
           </div>
         </div>
+
+        {/* Low Balance Warning with Instant Top-up or Direct Pay CTAs */}
+        {isBalanceLow && (
+          <div className="pg-step-confirm__low-balance-box">
+            <div className="pg-step-confirm__low-bal-header">
+              <span className="pg-step-confirm__low-bal-icon">⚠️</span>
+              <div>
+                <strong className="pg-step-confirm__low-bal-title">Insufficient Wallet Balance</strong>
+                <p className="pg-step-confirm__low-bal-desc">
+                  You need at least ₹{requiredAmount} (Shortfall: ₹{shortfall.toFixed(2)}).
+                </p>
+              </div>
+            </div>
+
+            <div className="pg-step-confirm__low-bal-actions">
+              <button
+                type="button"
+                className="pg-step-confirm__topup-btn"
+                onClick={handleOpenTopup}
+              >
+                ⚡ Top Up Wallet (+₹{Math.max(250, Math.ceil(shortfall / 100) * 100)})
+              </button>
+              <button
+                type="button"
+                className="pg-step-confirm__direct-pay-btn"
+                onClick={handleOpenDirectPay}
+              >
+                💳 Pay Directly (UPI / Card)
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="pg-step-confirm__notice">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -118,11 +179,22 @@ export const ConfirmReservation: React.FC<ConfirmReservationProps> = ({
                 <span>Confirming...</span>
               </>
             ) : (
-              <span>Confirm Reservation</span>
+              <span>Confirm via Wallet</span>
             )}
           </button>
         </div>
       </div>
+
+      {/* Payment Modal for Topup or Direct Pay */}
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        mode={paymentMode}
+        defaultAmount={paymentMode === 'checkout' ? requiredAmount : Math.max(250, Math.ceil(shortfall / 100) * 100)}
+        orderTitle={paymentMode === 'checkout' ? 'Reserve Charger Slot' : 'Top Up Wallet for Reservation'}
+        orderDescription={`${draft.station?.name || 'EV Station'} · ${draft.startTime} (${draft.durationText})`}
+        onClose={() => setIsPaymentModalOpen(false)}
+        onSuccess={handlePaymentSuccess}
+      />
     </div>
   );
 };

@@ -27,21 +27,14 @@ export const PowerGridHero: React.FC<PowerGridHeroProps> = ({
       {/* Top Header / Branding */}
       <header className="pg-hero__header">
         <div className="pg-hero__brand">
-          <div className="pg-hero__logo-icon" aria-hidden="true">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
+          <div className="pg-hero__logo-wrap" style={{ width: '48px', height: '48px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 16px rgba(67, 213, 0, 0.4)', backgroundColor: '#0B1B2A' }}>
+            <img
+              src="/eway-logo.png"
+              alt="Eway to Your EVs Logo"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
           </div>
-          <span className="pg-hero__brand-name">PowerGrid</span>
+          <span className="pg-hero__brand-name">Eway to Your EVs</span>
         </div>
       </header>
 

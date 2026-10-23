@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AdminWalletTransaction } from '../../types/admin';
 import { AdminDataTable, Column } from '../../components/AdminDataTable/AdminDataTable';
+import { authoritativeWalletService } from '../../../services/walletService';
 import './AdminWalletPayments.css';
 
 export const AdminWalletPayments: React.FC = () => {
@@ -9,67 +10,59 @@ export const AdminWalletPayments: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Generate realistic transactions
-    const mockTx: AdminWalletTransaction[] = [
-      {
-        id: 'tx_01',
-        transactionRef: 'PG-TX-901824',
-        userName: 'Praveen Kumar',
-        userId: 'usr_01',
-        amountINR: 1000,
-        type: 'Topup',
-        paymentGateway: 'Razorpay UPI',
+    const updateTransactions = () => {
+      const ledger = authoritativeWalletService.getAllRecords();
+      const dynamicTx: AdminWalletTransaction[] = ledger.map((l) => ({
+        id: l.id,
+        transactionRef: l.referenceId,
+        gatewayTxnId: l.gatewayReferenceId || 'Internal Ledger',
+        userName: l.customerName || 'Bala Krishna',
+        userId: l.customerPhone || '8074407557',
+        amountINR: l.amountINR,
+        type: (l.type === 'recharge' ? 'Topup' : l.type === 'charging' ? 'SessionDebit' : 'Refund') as AdminWalletTransaction['type'],
+        paymentGateway: l.paymentMethod,
         status: 'Completed',
-        timestamp: 'Today, 02:40 PM',
-      },
-      {
-        id: 'tx_02',
-        transactionRef: 'PG-TX-901823',
-        userName: 'Lakshmi Narayana',
-        userId: 'usr_02',
-        amountINR: 420,
-        type: 'SessionDebit',
-        paymentGateway: 'PowerGrid Wallet',
-        status: 'Completed',
-        timestamp: 'Today, 02:15 PM',
-      },
-      {
-        id: 'tx_03',
-        transactionRef: 'PG-TX-901822',
-        userName: 'Divya Sri',
-        userId: 'usr_03',
-        amountINR: 500,
-        type: 'Topup',
-        paymentGateway: 'HDFC NetBanking',
-        status: 'Completed',
-        timestamp: 'Today, 01:50 PM',
-      },
-      {
-        id: 'tx_04',
-        transactionRef: 'PG-TX-901821',
-        userName: 'Srinivas Rao',
-        userId: 'usr_04',
-        amountINR: 50,
-        type: 'ReservationFee',
-        paymentGateway: 'PowerGrid Wallet',
-        status: 'Completed',
-        timestamp: 'Today, 12:30 PM',
-      },
-      {
-        id: 'tx_05',
-        transactionRef: 'PG-TX-901820',
-        userName: 'Kalyan Chakravarthy',
-        userId: 'usr_05',
-        amountINR: 50,
-        type: 'Refund',
-        paymentGateway: 'PowerGrid Wallet',
-        status: 'Completed',
-        timestamp: 'Today, 11:00 AM',
-      },
-    ];
-    setTransactions(mockTx);
-    setFiltered(mockTx);
-    setIsLoading(false);
+        timestamp: l.date,
+      }));
+
+      // Additional driver activity records
+      const otherDriverTx: AdminWalletTransaction[] = [
+        {
+          id: 'tx_other_01',
+          transactionRef: 'PG-TX-901824',
+          userName: 'Praveen Kumar',
+          userId: '9848011223',
+          amountINR: 1000,
+          type: 'Topup',
+          paymentGateway: 'Razorpay UPI',
+          status: 'Completed',
+          timestamp: '2024-12-16 14:40',
+        },
+        {
+          id: 'tx_other_02',
+          transactionRef: 'PG-TX-901822',
+          userName: 'Divya Sri',
+          userId: '9701234567',
+          amountINR: 500,
+          type: 'Topup',
+          paymentGateway: 'HDFC NetBanking',
+          status: 'Completed',
+          timestamp: '2024-12-16 13:50',
+        },
+      ];
+
+      const combined = [...dynamicTx, ...otherDriverTx];
+      setTransactions(combined);
+      setFiltered(combined);
+      setIsLoading(false);
+    };
+
+    updateTransactions();
+    const unsub = authoritativeWalletService.subscribe(() => {
+      updateTransactions();
+    });
+
+    return () => unsub();
   }, []);
 
   const handleSearch = (term: string) => {
