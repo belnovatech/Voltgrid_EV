@@ -542,3 +542,4 @@ class AuthoritativeWalletService {
 }
 
 export const authoritativeWalletService = new AuthoritativeWalletService();
+export const walletService = authoritativeWalletService;

@@ -1,0 +1,234 @@
+/* ==========================================================================
+   Eway AI Smart Insights & Quick Actions Component Styling
+   ========================================================================== */
+
+.eway-ai-insights {
+  margin-bottom: 26px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(7, 27, 50, 0.96) 0%, rgba(11, 37, 68, 0.94) 100%);
+  border: 1px solid rgba(18, 207, 234, 0.25);
+  box-shadow: 0 10px 30px -4px rgba(7, 27, 50, 0.25), 0 0 20px rgba(67, 213, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+.eway-ai-insights::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(18, 207, 234, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.eway-ai-insights::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 30%;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(67, 213, 0, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.eway-ai-insights__container {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 28px;
+  padding: 26px 30px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Content Left */
+.eway-ai-insights__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.eway-ai-insights__tag-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.eway-ai-insights__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.725rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--brand-primary);
+  background: rgba(67, 213, 0, 0.12);
+  border: 1px solid rgba(67, 213, 0, 0.35);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.eway-ai-insights__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  box-shadow: 0 0 8px var(--brand-primary);
+  animation: ewayPulse 1.5s infinite;
+}
+
+@keyframes ewayPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.eway-ai-insights__telemetry-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #94A3B8;
+}
+
+.eway-ai-insights__headline {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+}
+
+.eway-ai-insights__description {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #94A3B8;
+  margin: 0 0 18px 0;
+}
+
+.eway-ai-insights__description strong {
+  color: #F8FAFC;
+}
+
+.eway-ai-insights__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.eway-ai-insights__metric-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 14px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eway-ai-insights__metric-label {
+  font-size: 0.675rem;
+  color: #64748B;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.eway-ai-insights__metric-val {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.eway-ai-insights__metric-chip--cyan .eway-ai-insights__metric-val {
+  color: var(--brand-cyan);
+}
+
+/* Actions Right */
+.eway-ai-insights__actions-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: 28px;
+}
+
+.eway-ai-insights__actions-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #64748B;
+  margin-bottom: 12px;
+}
+
+.eway-ai-insights__actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.eway-ai-insights__action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eway-ai-insights__action-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(18, 207, 234, 0.4);
+  transform: translateY(-2px);
+  color: #FFFFFF;
+}
+
+.eway-ai-insights__action-btn--primary {
+  background: var(--brand-primary);
+  color: #071B32;
+  border: none;
+  box-shadow: 0 4px 14px rgba(67, 213, 0, 0.3);
+}
+
+.eway-ai-insights__action-btn--primary:hover {
+  background: var(--brand-primary-hover);
+  color: #071B32;
+  box-shadow: 0 6px 20px rgba(67, 213, 0, 0.45);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .eway-ai-insights__container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .eway-ai-insights__actions-panel {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-left: 0;
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 580px) {
+  .eway-ai-insights {
+    border-radius: 16px;
+  }
+
+  .eway-ai-insights__container {
+    padding: 20px 16px;
+  }
+
+  .eway-ai-insights__actions-grid {
+    grid-template-columns: 1fr;
+  }
+}

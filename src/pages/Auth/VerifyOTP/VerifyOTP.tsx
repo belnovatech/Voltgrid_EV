@@ -65,8 +65,7 @@ export const VerifyOTP: React.FC = () => {
         if (response.user.role === 'admin') {
           navigate('/admin');
         } else {
-          // Navigate to Complete Profile onboarding screen!
-          navigate('/auth/complete-profile');
+          navigate('/customer/dashboard');
         }
       }
     } catch (err) {

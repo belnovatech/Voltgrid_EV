@@ -8,45 +8,51 @@
   --brand-primary: #43D500;
   --brand-primary-hover: #38c300;
   --brand-primary-active: #2fa600;
-  --brand-primary-light: #F2FBEA;
+  --brand-primary-light: #F3FBEF;
   --brand-primary-tint: #e5fad7;
   --brand-primary-border: #c3f5a3;
   --brand-deep-green: #159447;
   --brand-deep-green-hover: #107a38;
   --brand-deep-green-dark: #0a5225;
 
+  /* Brand Cyan Accent (from logo electric lightning bolt) */
+  --brand-cyan: #12CFEA;
+  --brand-cyan-hover: #0fb8d1;
+  --brand-cyan-light: rgba(18, 207, 234, 0.12);
+  --brand-cyan-border: rgba(18, 207, 234, 0.35);
+
   /* Brand Deep Navy (from logo central emblem) */
-  --brand-navy: #0B1B2A;
-  --brand-navy-surface: #0f2438;
-  --brand-navy-card: #142d44;
-  --brand-navy-border: #1e3f5e;
-  --brand-navy-hover: #18334c;
+  --brand-navy: #071B32;
+  --brand-navy-surface: #0b233f;
+  --brand-navy-card: #0f2c4e;
+  --brand-navy-border: #1a3e66;
+  --brand-navy-hover: #14355b;
 
   /* Backward compatibility mappings for existing codebase */
   --color-primary: #159447;
   --color-primary-hover: #107a38;
   --color-primary-active: #0a5225;
-  --color-primary-light: #F2FBEA;
+  --color-primary-light: #F3FBEF;
   --color-primary-tint: #e5fad7;
   --color-primary-border: #c3f5a3;
 
-  /* PowerGrid / Eway enterprise tokens */
-  --color-pg-bg: #0B1B2A;
-  --color-pg-bg-elevated: #0f2438;
-  --color-pg-card: #142d44;
-  --color-pg-border: #1e3f5e;
-  --color-pg-border-subtle: rgba(255, 255, 255, 0.1);
+  /* Eway Enterprise & Hero tokens */
+  --color-pg-bg: #071B32;
+  --color-pg-bg-elevated: #0b233f;
+  --color-pg-card: #0f2c4e;
+  --color-pg-border: #1a3e66;
+  --color-pg-border-subtle: rgba(255, 255, 255, 0.12);
   --color-pg-lime: #43D500;
   --color-pg-lime-hover: #38c300;
-  --color-pg-lime-light: rgba(67, 213, 0, 0.14);
-  --color-pg-lime-border: rgba(67, 213, 0, 0.35);
-  --color-pg-cyan: #159447;
-  --color-pg-cyan-hover: #107a38;
-  --color-pg-cyan-light: rgba(21, 148, 71, 0.14);
-  --color-pg-cyan-border: rgba(21, 148, 71, 0.35);
+  --color-pg-lime-light: rgba(67, 213, 0, 0.15);
+  --color-pg-lime-border: rgba(67, 213, 0, 0.4);
+  --color-pg-cyan: #12CFEA;
+  --color-pg-cyan-hover: #0fb8d1;
+  --color-pg-cyan-light: rgba(18, 207, 234, 0.15);
+  --color-pg-cyan-border: rgba(18, 207, 234, 0.4);
 
   /* Accent & Status Colors */
-  --color-accent-teal: #159447;
+  --color-accent-teal: #12CFEA;
   --color-success: #16803D;
   --color-success-light: #f0fdf4;
   --color-success-border: #bbf7d0;
@@ -59,9 +65,9 @@
 
   /* Neutral & Base Surfaces */
   --color-background: #FFFFFF;
-  --color-background-subtle: #F8FCF5;
+  --color-background-subtle: #F3FBEF;
   --color-background-card: #FFFFFF;
-  --color-surface-tint: #F2FBEA;
+  --color-surface-tint: #F3FBEF;
   --color-card: #FFFFFF;
   --color-card-hover: #FFFFFF;
 
@@ -75,18 +81,25 @@
   --color-border: #E2E8F0;
   --color-border-light: #F1F5F9;
   --color-border-subtle: #EDF2F7;
-  --color-border-focus: #159447;
+  --color-border-focus: #43D500;
 
-  /* Shadows */
+  /* Shadows & Glows */
   --shadow-xs: 0 1px 2px 0 rgba(11, 27, 42, 0.04);
   --shadow-sm: 0 1px 3px 0 rgba(11, 27, 42, 0.06), 0 1px 2px -1px rgba(11, 27, 42, 0.04);
-  --shadow-card: 0 4px 16px -2px rgba(11, 27, 42, 0.06), 0 2px 6px -1px rgba(11, 27, 42, 0.03);
-  --shadow-card-hover: 0 12px 28px -4px rgba(11, 27, 42, 0.1), 0 4px 8px -2px rgba(11, 27, 42, 0.04);
-  --shadow-modal: 0 20px 48px -8px rgba(11, 27, 42, 0.22), 0 10px 16px -4px rgba(11, 27, 42, 0.1);
-  --shadow-auth: 0 10px 30px -5px rgba(11, 27, 42, 0.08), 0 4px 10px -2px rgba(11, 27, 42, 0.04);
-  --shadow-button: 0 2px 6px rgba(21, 148, 71, 0.25);
-  --shadow-lime-glow: 0 0 24px rgba(67, 213, 0, 0.3);
-  --shadow-cyan-glow: 0 0 24px rgba(21, 148, 71, 0.25);
+  --shadow-card: 0 4px 20px -2px rgba(11, 27, 42, 0.06), 0 2px 6px -1px rgba(11, 27, 42, 0.03);
+  --shadow-card-hover: 0 14px 32px -4px rgba(11, 27, 42, 0.12), 0 4px 10px -2px rgba(11, 27, 42, 0.04);
+  --shadow-modal: 0 24px 54px -8px rgba(7, 27, 50, 0.28), 0 12px 20px -4px rgba(7, 27, 50, 0.12);
+  --shadow-auth: 0 12px 34px -5px rgba(11, 27, 42, 0.09), 0 4px 12px -2px rgba(11, 27, 42, 0.04);
+  --shadow-button: 0 3px 10px rgba(67, 213, 0, 0.3);
+  --shadow-lime-glow: 0 0 28px rgba(67, 213, 0, 0.4);
+  --shadow-cyan-glow: 0 0 28px rgba(18, 207, 234, 0.4);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-bg-dark: rgba(7, 27, 50, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-border-dark: rgba(18, 207, 234, 0.2);
+  --glass-blur: blur(14px);
 
   /* Radii */
   --radius-xs: 4px;

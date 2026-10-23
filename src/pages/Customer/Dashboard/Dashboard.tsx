@@ -5,6 +5,7 @@ import { customerService } from '../../../services/customerService';
 import { CustomerDashboardData, CustomerVehicle } from '../../../types/customer';
 import { DashboardHeader } from './components/DashboardHeader/DashboardHeader';
 import { SearchHero } from './components/SearchHero/SearchHero';
+import { SmartAIInsights } from './components/SmartAIInsights/SmartAIInsights';
 import { StatsGrid } from './components/StatsGrid/StatsGrid';
 import { VehicleSection } from './components/VehicleSection/VehicleSection';
 import {
@@ -117,6 +118,9 @@ export const Dashboard: React.FC = () => {
 
         {/* 2. Main Dark Navy Search Hero */}
         <SearchHero onSearch={handleSearch} />
+
+        {/* 2.5 Eway AI Smart Range & Telemetry Insights */}
+        <SmartAIInsights data={data} isLoading={isLoading} />
 
         {/* 3. 4 KPI Cards */}
         <StatsGrid data={data} isLoading={isLoading} />

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { CustomerSidebar } from '../CustomerSidebar/CustomerSidebar';
 import { customerService } from '../../../services/customerService';
 import { CustomerProfile } from '../../../types/customer';
+import { EwayAIAssistant } from '../../ai/EwayAIAssistant/EwayAIAssistant';
 import './CustomerLayout.css';
 
 interface CustomerLayoutProps {
@@ -118,6 +119,9 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({ children, dark =
         <main className="powergrid-customer-shell__content" role="main">
           {children}
         </main>
+
+        {/* Global Eway AI Copilot Widget */}
+        <EwayAIAssistant />
       </div>
     </div>
   );
