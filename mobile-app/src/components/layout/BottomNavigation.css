@@ -1,0 +1,98 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background-color: rgba(7, 27, 50, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--color-border);
+  padding-bottom: max(6px, var(--safe-area-bottom));
+  box-shadow: var(--shadow-bottom-nav);
+}
+
+.bottom-nav-inner {
+  height: var(--bottom-nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 var(--space-xs);
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 100%;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.bottom-nav-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.bottom-nav-label {
+  font-size: 11px;
+  letter-spacing: -0.2px;
+  transition: color 0.2s ease;
+}
+
+/* Active State */
+.bottom-nav-item--active {
+  color: var(--color-neon-green);
+}
+
+.bottom-nav-item--active .bottom-nav-icon-wrapper {
+  color: var(--color-neon-green);
+  filter: drop-shadow(0 0 8px rgba(57, 230, 0, 0.5));
+}
+
+.bottom-nav-item--active .bottom-nav-label {
+  color: var(--color-neon-green);
+  font-weight: var(--font-weight-bold);
+}
+
+.bottom-nav-active-pill {
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 2.5px;
+  background-color: var(--color-neon-green);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px var(--color-neon-green);
+}
+
+/* Live Charging Pulse Indicator on Activity tab */
+.charging-live-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  background-color: var(--color-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--color-cyan);
+  animation: pulseGlow 1.2s infinite;
+}

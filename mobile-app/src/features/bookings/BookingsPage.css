@@ -1,0 +1,142 @@
+.bookings-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-deep);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-xl) + var(--safe-area-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bookings-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.bookings-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Booking Card */
+.booking-card {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.booking-status-tag {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  text-transform: uppercase;
+}
+
+.booking-status-tag--upcoming {
+  background-color: var(--color-neon-green-subtle);
+  color: var(--color-neon-green);
+  border: 1px solid var(--color-neon-green-border);
+}
+
+.booking-status-tag--completed {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-muted);
+}
+
+.booking-status-tag--cancelled {
+  background-color: var(--color-status-error-subtle);
+  color: var(--color-status-error);
+}
+
+.booking-station-name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-white);
+}
+
+.booking-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-xs);
+  margin-top: 4px;
+}
+
+.booking-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.booking-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+/* Create Booking Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(6, 27, 53, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-sheet {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top-left-radius: var(--radius-2xl);
+  border-top-right-radius: var(--radius-2xl);
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: var(--space-xl);
+  padding-bottom: max(var(--space-2xl), var(--safe-area-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  animation: slideUp 0.25s ease-out;
+}
+
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-white);
+}
+
+.modal-close-btn {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+}

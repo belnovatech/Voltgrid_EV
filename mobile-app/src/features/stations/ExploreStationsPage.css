@@ -1,0 +1,209 @@
+.explore-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-deep);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-xl) + var(--safe-area-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.explore-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Search Bar */
+.search-bar-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0 var(--space-md);
+  min-height: 48px;
+  transition: all 0.2s ease;
+}
+
+.search-bar-wrapper:focus-within {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 14px rgba(0, 212, 242, 0.25);
+}
+
+.search-icon {
+  color: var(--color-text-muted);
+  margin-right: var(--space-sm);
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-white);
+  font-size: var(--font-size-base);
+  min-height: 44px;
+}
+
+.search-input::placeholder {
+  color: var(--color-text-disabled);
+}
+
+/* Filter Chips Carousel */
+.filter-chips-row {
+  display: flex;
+  gap: var(--space-xs);
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-chip {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  background-color: var(--color-surface);
+  color: var(--color-text-subtle);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-chip--active {
+  background-color: var(--color-neon-green-subtle);
+  color: var(--color-neon-green);
+  border-color: var(--color-neon-green);
+  box-shadow: 0 0 10px rgba(57, 230, 0, 0.2);
+}
+
+/* Station Card */
+.station-card {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: border-color 0.2s ease;
+}
+
+.station-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.station-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-white);
+  margin-bottom: 2px;
+}
+
+.station-address {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.station-distance-badge {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-cyan);
+  white-space: nowrap;
+}
+
+/* Specs pills */
+.station-specs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.spec-pill {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-subtle);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.spec-pill--highlight {
+  background-color: var(--color-neon-green-subtle);
+  color: var(--color-neon-green);
+  border-color: var(--color-neon-green-border);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Detailed Charger List within card */
+.station-chargers-drawer {
+  background-color: var(--color-bg-deep);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.charger-point-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+}
+
+.charger-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.charger-status-dot--available {
+  background-color: var(--color-neon-green);
+  box-shadow: 0 0 6px var(--color-neon-green);
+}
+
+.charger-status-dot--charging {
+  background-color: var(--color-cyan);
+  box-shadow: 0 0 6px var(--color-cyan);
+}
+
+.charger-status-dot--reserved {
+  background-color: var(--color-status-warning);
+}
+
+.charger-status-dot--offline {
+  background-color: var(--color-status-offline);
+}
+
+.station-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-border-subtle);
+}

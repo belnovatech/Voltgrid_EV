@@ -1,0 +1,123 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-top: var(--safe-area-top);
+  transition: background-color 0.2s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.app-header-inner {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.app-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.app-header-back-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  color: var(--color-text-white);
+  border: 1px solid var(--color-border);
+  transition: all 0.15s ease;
+}
+
+.app-header-back-btn:active {
+  transform: scale(0.92);
+  background-color: var(--color-surface-hover);
+}
+
+.app-header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+}
+
+.app-header-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(57, 230, 0, 0.3);
+}
+
+.app-header-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-white);
+  letter-spacing: -0.3px;
+}
+
+.app-header-title-accent {
+  color: var(--color-neon-green);
+}
+
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.app-header-icon-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  color: var(--color-text-subtle);
+  border: 1px solid var(--color-border);
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.app-header-icon-btn:active {
+  transform: scale(0.92);
+}
+
+.app-header-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-neon-green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-neon-green);
+}
+
+.app-header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-neon-green), var(--color-cyan));
+  color: #071B32;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-bg-primary);
+  box-shadow: 0 0 8px rgba(0, 212, 242, 0.4);
+}
