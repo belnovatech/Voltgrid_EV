@@ -1,0 +1,220 @@
+.activity-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-deep);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-xl) + var(--safe-area-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.activity-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Live Session Dashboard Monitor */
+.live-session-container {
+  background: radial-gradient(circle at 50% 30%, #0d3863 0%, #071b32 80%);
+  border: 1.5px solid var(--color-neon-green-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-xl);
+  box-shadow: 0 12px 40px rgba(57, 230, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.live-badge-glow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-neon-green-subtle);
+  border: 1px solid var(--color-neon-green-border);
+  color: var(--color-neon-green);
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-lg);
+}
+
+/* Circular Battery SoC Gauge */
+.soc-gauge-wrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+}
+
+.soc-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.soc-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 12;
+}
+
+.soc-progress {
+  fill: none;
+  stroke: var(--color-neon-green);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s ease;
+  filter: drop-shadow(0 0 10px rgba(57, 230, 0, 0.6));
+}
+
+.soc-inner-info {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.soc-percentage {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-text-white);
+  line-height: 1;
+}
+
+.soc-label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+/* Live Session Stats Grid */
+.live-stats-3col {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  background-color: rgba(6, 27, 53, 0.7);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.live-stat-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.live-stat-label {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.live-stat-val {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-white);
+}
+
+/* Wallet Card */
+.wallet-card {
+  background: linear-gradient(135deg, #0d2948 0%, #071b32 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wallet-balance-num {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-neon-green);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+/* Quick Start Charger Card */
+.quick-charge-launcher {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* History Card */
+.history-item-card {
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history-item-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.history-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-neon-green);
+}
+
+.history-station-name {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-white);
+}
+
+.history-date {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.history-cost {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-white);
+  text-align: right;
+}
+
+.history-kwh {
+  font-size: 11px;
+  color: var(--color-cyan);
+  text-align: right;
+}

@@ -1,0 +1,102 @@
+.app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.app-btn:active {
+  transform: scale(0.97);
+}
+
+.app-btn--full-width {
+  width: 100%;
+}
+
+/* Sizes */
+.app-btn--sm {
+  padding: 8px 14px;
+  font-size: var(--font-size-xs);
+  min-height: 36px;
+}
+
+.app-btn--md {
+  padding: 12px 20px;
+  font-size: var(--font-size-base);
+  min-height: 48px;
+}
+
+.app-btn--lg {
+  padding: 16px 24px;
+  font-size: var(--font-size-md);
+  min-height: 54px;
+  border-radius: var(--radius-lg);
+}
+
+/* Primary Variant (Voltgrid Neon Green) */
+.app-btn--primary {
+  background: linear-gradient(135deg, #39E600 0%, #2cb300 100%);
+  color: #071B32;
+  box-shadow: 0 4px 14px rgba(57, 230, 0, 0.3);
+  font-weight: var(--font-weight-bold);
+}
+
+.app-btn--primary:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(57, 230, 0, 0.45);
+}
+
+/* Secondary Variant (Cyan Outline / Accent) */
+.app-btn--secondary {
+  background-color: var(--color-cyan-subtle);
+  color: var(--color-cyan);
+  border-color: var(--color-cyan-border);
+}
+
+.app-btn--secondary:hover:not(:disabled) {
+  background-color: rgba(0, 212, 242, 0.2);
+}
+
+/* Outline Variant */
+.app-btn--outline {
+  background-color: transparent;
+  color: var(--color-text-white);
+  border-color: var(--color-border);
+}
+
+.app-btn--outline:hover:not(:disabled) {
+  background-color: var(--color-surface);
+  border-color: var(--color-text-muted);
+}
+
+/* Danger Variant */
+.app-btn--danger {
+  background-color: var(--color-status-error-subtle);
+  color: var(--color-status-error);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+/* Disabled */
+.app-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Spinner */
+.app-btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: rotateSpinner 0.8s linear infinite;
+}
