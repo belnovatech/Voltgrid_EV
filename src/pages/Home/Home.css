@@ -1482,8 +1482,28 @@
 
 .eway-footer__legal-links {
   display: flex;
+  align-items: center;
   gap: 10px;
   color: #64748B;
+}
+
+.eway-footer__superadmin-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.825rem;
+  color: #64748B;
+  cursor: pointer;
+  transition: color 0.15s ease, opacity 0.15s ease;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.eway-footer__superadmin-link:hover {
+  color: var(--brand-primary, #9ae600);
+  opacity: 1;
 }
 
 /* ==========================================================================

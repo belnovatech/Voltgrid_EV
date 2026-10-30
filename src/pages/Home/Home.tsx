@@ -729,6 +729,15 @@ export const Home: React.FC = () => {
               <span>Terms of Service</span>
               <span>·</span>
               <span>GST Compliance</span>
+              <span>·</span>
+              <button
+                type="button"
+                onClick={() => navigate('/super-admin/login')}
+                className="eway-footer__superadmin-link"
+                title="Super Admin Audit & Executive Portal"
+              >
+                Executive Portal
+              </button>
             </div>
           </div>
         </div>
