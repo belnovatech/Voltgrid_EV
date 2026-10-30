@@ -33,6 +33,19 @@ import { AdminAuditLogs } from '../admin/pages/AuditLogs/AdminAuditLogs';
 import { AdminSettings } from '../admin/pages/Settings/AdminSettings';
 import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
 
+// Super Admin Executive Module
+import { SuperAdminLogin } from '../super-admin/pages/Login/SuperAdminLogin';
+import { SuperAdminLayout } from '../super-admin/components/SuperAdminLayout/SuperAdminLayout';
+import { SuperAdminDashboard } from '../super-admin/pages/Dashboard/SuperAdminDashboard';
+import { SuperAdminAreas } from '../super-admin/pages/Areas/SuperAdminAreas';
+import { SuperAdminAdmins } from '../super-admin/pages/Admins/SuperAdminAdmins';
+import { SuperAdminCustomers } from '../super-admin/pages/Customers/SuperAdminCustomers';
+import { SuperAdminPayments } from '../super-admin/pages/Payments/SuperAdminPayments';
+import { SuperAdminSettlements } from '../super-admin/pages/Settlements/SuperAdminSettlements';
+import { SuperAdminReports } from '../super-admin/pages/Reports/SuperAdminReports';
+import { SuperAdminAuditLogs } from '../super-admin/pages/AuditLogs/SuperAdminAuditLogs';
+import { SuperAdminSettings } from '../super-admin/pages/Settings/SuperAdminSettings';
+
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -188,6 +201,31 @@ export const AppRoutes: React.FC = () => {
       </Route>
 
       <Route path="/operations" element={<Navigate to="/admin/dashboard" replace />} />
+
+      {/* ================================================================
+          SUPER ADMIN EXECUTIVE MODULE
+          Protected to 'super_admin' role
+          ================================================================ */}
+      <Route path="/super-admin/login" element={<SuperAdminLogin />} />
+      <Route
+        path="/super-admin"
+        element={
+          <ProtectedRoute allowedRoles={['super_admin']}>
+            <SuperAdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<SuperAdminDashboard />} />
+        <Route path="areas" element={<SuperAdminAreas />} />
+        <Route path="admins" element={<SuperAdminAdmins />} />
+        <Route path="customers" element={<SuperAdminCustomers />} />
+        <Route path="payments" element={<SuperAdminPayments />} />
+        <Route path="settlements" element={<SuperAdminSettlements />} />
+        <Route path="reports" element={<SuperAdminReports />} />
+        <Route path="audit-logs" element={<SuperAdminAuditLogs />} />
+        <Route path="settings" element={<SuperAdminSettings />} />
+      </Route>
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
